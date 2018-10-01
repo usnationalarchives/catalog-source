@@ -1,0 +1,144 @@
+<div id="workspaceResponsiveModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="workspaceResponsiveModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <a class="link" ng-click="closeWorkspace()"><span class="glyphicons glyphicons-chevron-left"></span>&nbsp;&nbsp;Return to content</a>
+        <a class="link pull-right" ng-click="visorSvc.toggleLogin(true)" ng-hide="Auth.isLoggedIn() || visorSvc.showLogin">Login&nbsp;&nbsp;<span class="glyphicons glyphicons-chevron-right"></span></a>
+        <div class="text pull-right" ng-show="Auth.isLoggedIn()">Welcome, <span ng-bind="Auth.userName()"></span> </div>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div login-page ng-show="visorSvc.showLogin"></div>
+          <div ng-hide="visorSvc.showLogin">
+            <div ng-controller="visorCtrl">
+              <span class="col-xs-12 title" ng-bind="title"></span>
+              <div class="col-xs-12 paging control-bar">
+                <div class="col-xs-1 text-center noPaddingSides"><a ng-click="firstMedia()"><<</a></div>
+                <div class="col-xs-2 text-center noPaddingSides"><a ng-click="previousMedia()"><</a></div>
+                <div class="paging-header col-xs-6 noPaddingSides no-wrap">
+                  <label for="imageContentDetails">Image</label>
+                  <input id="imageContentDetails" ng-change="goTo()" type="text" class="visor-input" ng-model="index">
+                  of
+                  <span ng-bind="total"></span>
+                </div>
+                <div class="col-xs-2 text-center noPaddingSides"><a ng-click="nextMedia()" >></a></div>
+                <div class="col-xs-1 text-center noPaddingSides"><a ng-click="lastMedia()">>></a></div>
+              </div>
+              <div id="rowWorkspaceVisor" class="row noMarginsSides">
+                <div id="workspaceVisor" class="col-xs-12">
+                  <div visor="true" class="dataVisor"></div>
+                </div>
+              </div>
+            </div>
+            <div id="rowWorkspaceEditArea" class="row noMarginsSides">
+              <div class="height100">
+                <div class="col-xs-12 height100">
+                  <div id="workspaceTabs">
+                    <ul class="nav nav-tabs" data-tabs="tabs">
+                      <!--According to issue NARA-146:-->
+                      <!--Completely remove the Comments and Translation tabs and content code from the modals. They are for a later release-->
+                      <li ng-class="{active: visorSvc.currentTab === 1}"><a data-target="#tag" data-toggle="tab" ng-click="setTab(1, 'tag');">Tag</a></li>
+                      <li ng-class="{active: visorSvc.currentTab === 2}"><a href="" rel="#" data-target="#comment" data-toggle="tab" ng-click="setTab(2, 'comment');">Comment</a></li>
+                      <li ng-class="{active: visorSvc.currentTab === 3}"><a data-target="#transcribe" data-toggle="tab" ng-click="setTab(3, 'transcription');" class="padding-5-sides">Transcribe</a></li>
+                      <!--<li ng-class="{active: visorSvc.currentTab === 4}"><a data-target="#translation" data-toggle="tab" ng-click="setTab(4, 'translation');" class="padding-5-sides">Translation</a></li>-->
+                    </ul>
+                  </div>
+                  <div id="workspaceArea" class="tab-content">
+                    <!--TAGS -->
+                    <div class="tab-pane" ng-class="{active: visorSvc.currentTab === 1}" id="tag" >
+                      <div ng-if="tagsCount == 0 && !Auth.isLoggedIn()" class="emptyTab">
+                        <p><a ng-click="visorSvc.showLogin=true;">Tag this image!</a></p>
+                      </div>
+                      <div id="tagsInput" class="row noMarginsSides" ng-show="Auth.isLoggedIn()">
+                        <form role="form" ng-submit="addTagWorkspace(tagTextw)">
+                            <div class="col-xs-10">
+                                <label for="newTagInput" class="sr-only">Enter new tags</label>
+                                <input type="text" class="form-control" id="newTagInput" ng-model="tagTextWorkspace" placeholder="Enter new tags...">
+                            </div>
+                            <button type="submit" class="btn btn-primary pull-left">Add</button>
+                        </form>
+                      </div>
+                      <div class="row noMarginsSides tagList" ng-show="tagsCount > 0">
+                        <ul class="list-inline">
+                          <li ng-repeat="tag in tags">
+                            <span id="{{'tagw'+$index}}" ng-class="{userTag:checkUserTagWorkspace(tag)}">
+                                <a ng-href='#/search?q=*:*&filter=(tagsExact:"{{tag["@text"] | encodeString}}" or objectTagsExact:"{{tag["@text"] | encodeString}}")' target="_blank">{{tag['@text'] | decodeString}}</a>
+                                <a class="deleteButtonTag glyphicons glyphicons-circle-remove" ng-show="checkUserTagWorkspace(tag)" ng-click="deleteTagWorkspace(tag['@text'],'tagw'+$index)"></a>
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <!-- COMMENTS -->
+                    <div class="tab-pane" ng-class="{active: visorSvc.currentTab === 2}" id="comment" ng-show="visorSvc.currentTab == 2">
+                      <div ng-if="showAddCommentScreen && !Auth.isLoggedIn()" class="emptyTab">
+                        <p>
+                          <a ng-if="!Auth.isLoggedIn()" href="" rel="#" ng-click="showLogin()">Comment on this image!</a>
+                          <a ng-if="Auth.isLoggedIn()" href="" rel="#" ng-click="addComment()">Comment on this image!</a>
+                        </p>
+                      </div>
+                      <div ng-show="!showAddCommentScreen" comments="comments" workspace="true" class="row noMarginsSides col-xs-12 noPaddingSides"></div>
+                    </div>
+
+                    <!--TRANSCRIPTIONS -->
+                    <div class="tab-pane" ng-class="{active: visorSvc.currentTab === 3}" id="transcribe" ng-if="visorSvc.currentTab == 3">
+
+                      <div id="transcription" class="row noMarginsSides">
+                        <div class="col-xs-12 noPaddingSides height100">
+                          <textarea class="form-control transcription-text" ng-show="(visorSvc.currentTab === 3)" ng-model="transcription.text"
+                                    ng-change="editTranscription()" ng-disabled="!Auth.isLoggedIn() || transcriptionLocked && !transcriptionLockedByMe"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <!--TRANSLATIONS -->
+                    <!--<div class="tab-pane" ng-class="{active: visorSvc.currentTab === 4}" id="translation" ng-if="visorSvc.currentTab == 4"/>-->
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="actionButtonsTranscription" ng-show="Auth.isLoggedIn() && visorSvc.currentTab == 3">
+                            <span id="saveArea" ng-show="transcriptionLockedByMe" class="bottomLeft float-right">
+                                <button id="saveButton" class="btn btn-primary"  ng-click="saveTranscription()">Save</button>
+                                <a class="btn btn-link blue-link" ng-click="cancelEditionTranscription()">Cancel</a>
+                            </span>
+            </div>
+            <div id="contributors" ng-show="visorSvc.currentTab == 3">
+                            <span ng-show="!transcriptionLockedByMe">
+                                <ul class="list-inline">
+                                  <li ng-repeat="contributor in contributors | orderBy:'lastModified'" ng-show="$index < 3 || showAllContributors">
+                                    <span ng-if="$index == 0">Contributors:</span>
+                                    <span ng-if="$index != 0">,</span>
+                                    <a ng-href="/accounts/{{contributor.username}}/contributions?contributionType=transcription" target="_blank" ng-bind="contributor.name"></a>
+                                  </li>
+                                  <li><a class="tag-link" ng-show="contributors.length>3 && showAllContributors==false" ng-click="showAllContributors=true">More ...</a></li>
+                                  <li><a class="tag-link" ng-show="contributors.length>3 && showAllContributors==true" ng-click="showAllContributors=false">Less ...</a></li>
+                                  <li id="lastModified" ng-if="fancyLastModified"><span ng-bind-template="(Last updated {{fancyLastModified}})"></span></li>
+                                </ul>
+                            </span>
+              <span class="lastSaveTranscription" ng-show="lastSaveDate" ng-bind-template="Last saved: {{lastSaveDate}}"></span>
+            </div>
+
+            <div id="workspaceLinksFooter">
+              <ul class="list-inline">
+                <li><a id="workspaceResponsiveAddthis" addthis-toolbox></a></li>
+                <li class="gray-pipe">|</li>
+                <li>
+                  <a target="_blank" href="http://www.archives.gov/social-media/policies/tagging-policy.html">Policy</a>
+                </li>
+                <li class="gray-pipe">|</li>
+                <li>
+                  <a target="_blank" href="https://www.archives.gov/citizen-archivist/resources">Need Help?</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div footer></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="modal fade" id="deleteListConfirmation" tabindex="-1" role="dialog" aria-labelledby="deleteListLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close &times;</button>
+                <span class="modal-title" id="deleteListLabel">Delete List</span>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <p class="dialog-text col-sm-12 no-margin-bottom">Are you sure you want to delete - <strong>{{selectedList}}</strong>?<br><br>
+                        Deleting a list(s) cannot be undone.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer no-margin-top">
+                <button type="button" class="btn btn-primary" ng-click="DeleteCurrentList()">Delete</button>
+                <a href="" rel="#"  data-dismiss="modal">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>

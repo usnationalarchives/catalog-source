@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	                    http://www.springframework.org/schema/context 
+	                    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	                    http://www.springframework.org/schema/batch 
+	                    http://www.springframework.org/schema/batch/spring-batch-3.0.xsd
+	                    http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<batch:job id="exportJob ">
+		<batch:step id="readAccountExportDefinitionStep" next="searchQueryExecutorMasterStep" allow-start-if-complete="true">
+			<batch:tasklet ref="readAccountExportDefinition" />
+		</batch:step>
+
+		<batch:step id="searchQueryExecutorMasterStep" next="recordProcessorMasterStep" allow-start-if-complete="true">
+			<batch:partition partitioner="searchQueryPartitioner"
+				step="searchQueryExecutorSlaveStep">
+				<batch:handler grid-size="${noOfConcurrentSearchers}"
+					task-executor="asyncTaskExector" />
+			</batch:partition>
+		</batch:step>
+
+		<batch:step id="recordProcessorMasterStep" next="partialFileAppenderMasterStep" allow-start-if-complete="true">
+			<batch:partition partitioner="recordProcessorPartitioner"
+				step="recordProcessorSlaveStep">
+				<batch:handler grid-size="${noOfConcurrentRecordsProcessors}"
+					task-executor="asyncTaskExector" />
+			</batch:partition>
+		</batch:step>
+
+		<batch:step id="partialFileAppenderMasterStep" next="finalizerStep" allow-start-if-complete="true">
+			<batch:partition partitioner="partialFileAppenderPartitioner"
+				step="partialFileAppenderSlaveStep">
+				<batch:handler grid-size="${noOfConcurrentSearchers}"
+					task-executor="asyncTaskExector" />
+			</batch:partition>
+		</batch:step>
+
+		<batch:step id="finalizerStep" allow-start-if-complete="true">
+			<batch:tasklet ref="finalizer" />
+		</batch:step>
+	</batch:job>
+
+	<batch:step id="searchQueryExecutorSlaveStep">
+		<batch:tasklet ref="searchQueryExecutor" />
+	</batch:step>
+
+	<batch:step id="recordProcessorSlaveStep">
+		<batch:tasklet>
+			<batch:chunk reader="recordProcessorReader" writer="recordProcessorWriter"
+				commit-interval="${recordsProcessorBatchSize}" />
+		</batch:tasklet>
+	</batch:step>
+
+	<batch:step id="partialFileAppenderSlaveStep">
+		<batch:tasklet ref="partialFileAppender" />
+	</batch:step>
+
+	<bean id="asyncTaskExector" class="org.springframework.core.task.SimpleAsyncTaskExecutor" />
+</beans>

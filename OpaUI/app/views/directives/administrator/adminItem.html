@@ -1,0 +1,24 @@
+<tr>
+  <td headers="userId_AccountAdmin">
+    <span text="user.internalId" ng-bind="user.internalId"></span>
+  </td>
+  <td headers="userType_AccountAdmin">
+    <label class="hidden" for="userType{{$index}}">user type</label>
+    <select id="userType{{$index}}" ng-model="user.userRights" ng-options="s.value as s.text for s in usertypes"></select>
+  </td>
+  <td headers="username_AccountAdmin">
+    <span text="user.id" ng-bind="user.id" ng-model="user.userRights"></span>
+  </td>
+  <td headers="fullName_AccountAdmin">
+    <label class="hidden" for="FullName{{$index}}">full name</label>
+    <input id="FullName{{$index}}" type="text" name="fullName" class="no-margin-top" ng-model="user.fullName">
+  </td>
+  <td headers="email_AccountAdmin">
+    <label class="hidden" for="email{{$index}}">Email</label>
+    <input id="email{{$index}}" type="email" name="email" ng-model="user.email">
+  </td>
+  <td headers="accountStatus_AccountAdmin">
+    <label class="hidden" for="status{{$index}}">Status</label>
+    <select id="status{{$index}}" ng-model="user.status" name="status" ng-options="s.value as s.text for s in statuses"></select>
+  </td>
+</tr>

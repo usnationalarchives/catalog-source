@@ -1,0 +1,75 @@
+<availableApps>
+    <!--
+		This file holds a list of available applications on the system that can be installed on Aspire server instances. 
+
+		Notice that the list specified here works as a shortcut for the user when selecting which application to install in a server.
+		This list won't restrict in any way the list of applications administrators can install, but to actually help them to select
+		which ones to install from a known list.
+
+		Also, note that an application can be a maven bundle (JAR file reachable using Maven coordinates) or simply and XML file (location
+		specified as a file system path).
+
+		To use this file, rename it to 'available-applications.xml' and place it under config folder of your distribution.	
+
+		To add a new list entry, simply type a new <application> in the list below with the following format:
+
+		<application name="Sample App" category="myCategory">
+			<location> *** Maven coordinates to the JAR or a file system path to the application XML goes here *** </location>
+			<description>This description will show on the user interface. Provide a summary of the application contents or function.</description>
+		</application>
+		
+		Example of Maven bundle app:
+		
+		<application name="CIFS Connector" category="Connectors">
+			<location>com.searchtechnologies.appbundles:app-cifs-connector</location>
+			<description>Application bundle for CIFS connector. Crawls and process content from a CIFS share. Documents from this
+			application bundle are ready to be submitted to a search engine</description>
+		</application>
+		
+		Example of file system app:
+		
+		<application name="File uploader" category="Document Processing">
+			<location>config/httpFeeder.xml</location>
+			<description>Registers a servlet where third party applications can submit documents to Aspire.</description>
+		</application>
+
+		The "category" attribute allows you to classify your applications. You can create new categories on this file, by simple adding a different 
+		value to the "category" attribute. On the user interface, the list of available categories is dynamically created from this
+		list. Notice that category names are converted to lower case, and displayed with the first letter capitalized (for example "coNnEctors"
+		changes to "Connectors").
+
+		If no category is provided, your application will be added automatically to the "Other" category. 
+	-->
+  <application name="CSManager" category="Managers">
+    <location>com.searchtechnologies.appbundles:app-csmanager:1.2-SNAPSHOT</location>
+    <description>Contains components and database connections required to manage the database of content sources.</description>
+  </application>
+  <application name="File System Connector" category="Connectors">
+    <location>com.searchtechnologies.appbundles:app-filesystem-connector:1.2-SNAPSHOT</location>
+    <description>Crawls and processes content from the file system. Output includes documents with folder hierarchy metadata but no ACLs. Documents from this application bundle can be routed to a "Publish to" search engine bundle.</description>
+  </application>
+  <application name="RDBMS Connector" category="Connectors">
+    <location>com.searchtechnologies.appbundles:app-rdbms-connector:1.2-SNAPSHOT</location>
+    <description>Crawls and processes content from relational database tables. Output includes all fields from the relational database, which can include a field with ACLs for document level security. Documents from this application bundle can be routed to a "Publish to" search engine bundle.</description>
+  </application>
+  <application name="Publish to CloudSearch" category="Publishers">
+    <location>com.searchtechnologies.appbundles:app-publish-to-cloudsearch:1.2-SNAPSHOT</location>
+    <description>CloudSearch document submitter application. Publishes documents to Amazon CloudSearch by HTTP using the feed XML format.</description>
+  </application>
+  <application name="Publish to GSA" category="Publishers">
+    <location>com.searchtechnologies.appbundles:app-publish-to-gsa:1.2-SNAPSHOT</location>
+    <description>GSA document submitter application. Publishes documents to the Google Search Appliance (GSA) by HTTP using the feed XML format.</description>
+  </application>
+  <application name="Publish to File" category="Publishers">
+    <location>com.searchtechnologies.appbundles:app-publish-to-file:1.2-SNAPSHOT</location>
+    <description>Debug document submitter. Writes all documents to a file.</description>
+  </application>
+  <application name="Publish to Solr" category="Publishers">
+    <description>Solr document submitter application. Publishes documents to the Solr/Lucene by HTTP using update XML messages format.</description>
+    <location>com.searchtechnologies.appbundles:app-publish-to-solr:1.2-SNAPSHOT</location>
+  </application>
+  <application name="Scripting" category="Document Processing">
+    <location>com.searchtechnologies.appbundles:app-scripting:1.2-SNAPSHOT</location>
+    <description>A basic scripting application which can be added to routing tables and applied to documents acquired by connectors.</description>
+  </application>
+</availableApps>

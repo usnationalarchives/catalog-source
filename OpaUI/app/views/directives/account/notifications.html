@@ -1,0 +1,40 @@
+<div id="myNotifications" class="container">
+    <div class="row margin-10-left">
+        <hr>
+        <span class="title pull-left">My Notifications</span>
+        <a href="" rel="#" class="pull-right" ng-click="navigateToAccount()">
+            <span class="glyphicons glyphicons-restart"></span> Go back to My Account</a>
+    </div>
+    <br>
+
+    <div class="row margin-10-left" ng-show="notifications['total'] != 0">
+        <a href="" rel="#" class="notificationAction btn btn-link no-padding-left" ng-click="clearNotifications()">Clear
+            Notifications</a>
+        <table class="table" summary="My Notifications">
+            <thead>
+            <tr>
+                <th class="notificationTableHeader">TITLE</th>
+                <th class="notificationTableHeader">IMAGE</th>
+                <th class="notificationTableHeader">USER</th>
+                <th class="notificationTableHeader">NOTIFICATION</th>
+                <th class="notificationTableHeader">MODIFIED</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="notification in notifications">
+                <td><a target='_blank' ng-href="{{getUrl(notification.item['@naId'], notification.item['@pageNum'], notification.event['@on'])}}">{{notification['title']}}</a></td>
+                <td class="centered">
+                    <a target='_blank' ng-href="{{getUrl(notification.item['@naId'], notification.item['@pageNum'], notification.event['@on'])}}">
+                        {{getImage(notification.item['@pageNum'], notification.item['@totalPages'])}}</a>
+                </td>
+                <td class="centered">
+                    <a target='_blank' ng-href="#/accounts/{{notification.event['@otherUser']}}/contributions">{{getNotificationUser(notification.event).user}}</a>
+                </td>
+                <td>{{getNotificationAction(notification.event['@type'], notification.event['@on'])}}</td>
+                <td class="centered">{{getNotificationMoment(notification.event['@when'])}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="" rel="#" class="notificationAction btn btn-link no-padding-left" ng-click="getAllNotifications()" ng-if="!showAllNotifications">Show all</a>
+    </div>
+</div>

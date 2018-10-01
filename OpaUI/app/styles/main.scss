@@ -1,0 +1,25 @@
+@import "partials/_colors.scss";
+@import "partials/_fonts.scss";
+@import "partials/_font-size.scss";
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+@import "opa";
+@import "dialogs";
+@import "result";
+@import "account";
+@import "workspace";
+@import "contentDetails";
+@import "moderator";
+@import "manageAccounts";
+@import "visor";
+@import "statistics";
+@import "interactiveDoc";
+@import "advanceSearch";
+@import "comments";

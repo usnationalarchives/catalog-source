@@ -1,0 +1,22 @@
+<div class="modal fade" id="deleteListsConfirmation" tabindex="-1" data-role="dialog" aria-labelledby="deleteListsLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close &times;</button>
+                <span class="modal-title" id="deleteListsLabel">Delete All Lists</span>
+            </div>
+            <div class="modal-body no-padding-bottom no-padding-top">
+                <div class="row">
+                    <p class="dialog-text col-sm-12 no-margin-bottom no-padding-bottom">Are you sure you want to delete all <strong>{{userList.length}}</strong> lists?<br><br>
+                        Deleting a list(s) cannot be undone.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer no-margin-top">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                <a href="" rel="#" data-ng-click="deleteAllLists()">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>

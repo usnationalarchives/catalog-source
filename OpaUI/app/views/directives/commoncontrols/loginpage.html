@@ -1,0 +1,37 @@
+<div class="row col-md-12 logintp">
+	<div class="login-panel">
+		<div class="login-title">
+			<h2><!--Or, use your -->National Archives registered user account</h2>
+		</div>
+		<div class="login-area">
+			<form class="form-inline" role="form" ng-submit="login()">
+				<div class="form-group padding-5-top padding-5-bottom">
+					<label class="control-label hidden-inline-xs" for="InputUsername">Username:</label>
+					<input type="text" id="InputUsername" ng-model="user.username" placeholder="Enter your username" auto-fill-sync>
+				</div>
+				<div class="form-group padding-5-top padding-5-bottom">
+					<label class="control-label hidden-inline-xs" for="InputPassword">Password:</label>
+					<input type="password" id="InputPassword" ng-model="user.password" placeholder="Enter your password" auto-fill-sync>
+				</div>
+				<div class="form-group login-buttons padding-5-top padding-5-bottom">
+					<button type="submit" class="btn btn-primary">Login</button>
+                    <span ng-hide="showCancelButton()">
+                        <a href="" rel="#" class="blue-link hidden-inline-xs" ng-click="goBack()">Cancel</a>
+					</span>
+					<a href="" rel="#" class="blue-link visible-inline-xs" ng-click="goBack()">Cancel</a>
+				</div><br>
+                <div class="form-group">
+                    <span class="error" ng-show="error" ng-bind="error"></span>
+                </div>
+			</form>
+            <em class="col-xs-offset-2 col-xs-8">The National Archives online catalog is undergoing some changes! If you had an existing OPA Pilot account you will need to set up
+                a password for the new site. Please click the forgot password link to have a temporary password assigned and emailed to you.
+                New users without an existing Catalog account should click the not registered button.</em>
+		</div>
+	</div>
+	<div class="center col-xs-12 login-links">
+		<a href="" rel="#" class="btn btn-link blue-link" ng-click="showRegistration()">Not Registered?</a>
+		<button class="btn btn-link blue-link" ng-click="showforgotUsernameModal()">Forgot Username?</button>
+		<button class="btn btn-link blue-link"  ng-click="showForgetPasswordModal()">Forgot Password?</button>
+	</div>
+</div>

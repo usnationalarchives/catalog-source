@@ -1,0 +1,114 @@
+<div class="row noMarginsSides center-div">
+  <div id="returnLink" class="col-xs-6 center-vertical">
+    <a href="/" ng-click="passSearchStringToBasicSearch()"><span class="glyphicons glyphicons-chevron-left"></span><span>&nbsp;Return </span><span
+      class="hidden-inline-xs"> to new basic search</span> </a>
+  </div>
+  <div class="center-vertical">
+    <ul class="list-inline pull-right noMargins">
+      <li>
+        <a class="noPaddingSides" addthis-toolbox></a>
+      </li>
+      <li class="divider-vertical-multibar hidden-inline-xs noPaddingSides"></li>
+      <li class="hidden-inline-xs noPaddingSides" ng-controller="loginCtrl">
+        <a href="/login" class="btn btn-link" ng-hide="Auth.isLoggedIn()">Login</a>
+        <a ng-href="/accounts/{{Auth.userName()}}" class="btn btn-link" ng-show="Auth.isLoggedIn()">{{Auth.getDisplayName()}}</a>
+        <a href="/" class="btn btn-link" ng-show="Auth.isLoggedIn()" ng-click="logout()">Log out</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<hr class="noMargins"/>
+
+<div id="advancedSearch" class="container">
+  <form class="advancedSearchForm" name="advancedSearchForm" role="form">
+    <div class="row noMarginsSides">
+      <div class="headerNav headerNav-xs col-xs-12">
+        <p class="headerNav col-sm-4 hidden-xs">Advanced Search</p>
+
+        <p class="visible-xs col-xs-6">Advanced Search</p>
+
+        <div class="pull-right">
+          <button type="submit" class="btn btn-primary" ng-click="setSearchUrl()">Search</button>
+          <button type="button" class="btn btn-primary" ng-click="reset()">Clear</button>
+        </div>
+      </div>
+      <div class="note-datasource"><em>The advanced search is dynamic and search fields will change or become inactive
+        based on the categories
+        (e.g., archival descriptions, authority records, webpages) selected. For more search tips,
+        <a href="http://www.archives.gov/research/catalog/help/using.html" target="_blank">visit our Help page</a>.</em>
+      </div>
+    </div>
+    <div class="row noMarginsSides">
+      <div class="form-group">
+        <div class="labelWithSomeChilds col-xs-3 col-sm-2 padding-5-left" title="{{toolTips.LIMIT_SEARCH}}">
+          Limit search to:<span class="sr-only" ng-bind="toolTips.LIMIT_SEARCH"></span>
+        </div>
+
+        <div class="no-padding-sides col-xs-9 col-sm-10">
+          <div ng-repeat="item in SourceItems" class="checkbox-inline noMarginsSides no-padding-right col-xs-12 col-sm-3" title="{{item.ToolTip}}">
+            <label class="full-width">
+              <input type="checkbox" ng-model="item.Selected" ng-change="selectedSourceChange($index)">
+              <span class="table-cell">{{item.Name}}</span><span class="sr-only" ng-bind="item.ToolTip"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row noMarginsSides">
+      <hr/>
+    </div>
+    <div class="row noMarginsSides">
+      <fieldset class="col-xs-12">
+        <div class="form-group">
+          <label for="searchterm" class="control-label col-xs-12 col-sm-3" title="{{toolTips.SEARCH_TERM}}">
+            Search Term:
+          </label>
+          <input type="text" id="searchterm" ng-model="searchTerm" class="col-xs-12 col-sm-9"
+                 title="{{toolTips.SEARCH_TERM}}">
+        </div>
+        <!--TODO: merge recordGroupNumber and collectionId-->
+        <div class="form-group">
+          <label for="recordGroupNumber" class="control-label col-xs-12 col-sm-3"
+                 title="{{toolTips.RECORD_GROUP_NUMBER_COLLECTION_ID}}" ng-class="{grayedOut: !showSection(sections.DESCRIPTIONS)}">
+            Record Group Number / Collection ID:
+          </label>
+          <input type="text" ng-disabled="!showSection(sections.DESCRIPTIONS)" id="recordGroupNumber"
+                 ng-model="recordGroupNumber" class="col-xs-12 col-sm-9"
+                 title="{{toolTips.RECORD_GROUP_NUMBER_COLLECTION_ID}}">
+        </div>
+        <div class="form-group">
+          <label for="advancedSearchName" class="control-label col-xs-12 col-sm-3"
+                 title="{{toolTips.PERSON_OR_ORGANIZATION_NAME}}" ng-class="{grayedOut: !showSection(sections.COMMON)}">
+            Person or Organization Name:
+          </label>
+          <input type="text" ng-disabled="!showSection(sections.COMMON)" id="advancedSearchName" ng-model="name"
+                 title="{{toolTips.PERSON_OR_ORGANIZATION_NAME}}" class="col-xs-12 col-sm-9">
+        </div>
+        <div class="form-group">
+          <label for="userTags" class="control-label col-xs-12 col-sm-3" title="{{toolTips.TAGS}}" ng-class="{grayedOut: !showSection(sections.COMMON)}">
+            Tags:
+          </label>
+          <input type="text" ng-disabled="!showSection(sections.COMMON)" id="userTags" ng-model="userTags"
+                 title="{{toolTips.TAGS}}" class="col-xs-12 col-sm-9">
+        </div>
+
+        <div class="labelWithSomeChilds col-sm-3 col-xs-12" title="{{toolTips.DATES}}" ng-class="{grayedOut: !showSection(sections.COMMON)}">Dates:</div>
+
+        <div data-range-dates-advance-search="" class="controlAdvanceSearch" ng-class="{grayedOut: !showSection(sections.COMMON)}"
+             data-date-range="dateRange"
+             data-disabled="!showSection(sections.COMMON)"
+             data-authority-record-selected="showSection(sections.ONLY_AUTHORITY)" ></div>
+      </fieldset>
+
+      <div data-archival-descriptions></div>
+      <div data-presidential-vice-electronic-records></div>
+    </div>
+    <div class="row noMarginsSides">
+      <hr/>
+      <div class="pull-right padding-10-right">
+        <button type="submit" class="btn btn-primary" ng-click="setSearchUrl()">Search</button>
+        <button type="button" class="btn btn-primary" ng-click="reset()">Clear</button>
+      </div>
+    </div>
+  </form>
+</div>

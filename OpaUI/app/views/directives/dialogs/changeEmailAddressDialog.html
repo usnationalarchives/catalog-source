@@ -1,0 +1,33 @@
+<div class="modal fade" id="changeEmail" tabindex="-1" role="dialog" aria-labelledby="changeEmailLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">Close <span class="glyphicons glyphicons-remove-2"></span></button>
+        <span class="modal-title" id="changeEmailLabel">Change Email</span>
+      </div>
+      <div class="modal-body">
+        <div class="col-sm-offset-2 col-sm-10 dialog-error" ng-show="error">
+          <span class="glyphicons glyphicons-warning-sign">
+            <em ng-bind="error"></em>
+          </span>
+        </div>
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label for="inputNewEmail" class="col-sm-4 control-label">New Email:</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control no-margin-top" id="inputNewEmail" placeholder="" ng-model="newEmail">
+            </div>
+            <label for="passwordChangeEmail" class="col-sm-4 control-label">Password:</label>
+            <div class="col-sm-6">
+              <input type="password" class="form-control no-margin-top" id="passwordChangeEmail" placeholder="" ng-model="password">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="changeEmail()">Save</button>
+        <a href="" rel="#" data-dismiss="modal">Cancel</a>
+      </div>
+    </div>
+  </div>
+</div>

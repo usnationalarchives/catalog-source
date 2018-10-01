@@ -1,0 +1,377 @@
+<div class="container-fluid">
+  <div class="row noMarginsSides">
+    <div data-multibar-actions-common></div>
+  </div>
+
+  <div id="headerAdministrator" class="row noMarginsSides">
+    <h1>Account Administrator Workbench</h1>
+  </div>
+
+  <div id="tabsAdministrator" class="row noMarginsSides">
+    <ul class="nav nav-tabs" data-tabs="tabs">
+      <li id="tagTab" ng-class="{active: selectedTab == 'register'}"><a href="" rel="#" data-target="#createAccount"
+                                                                        ng-click="SelectTab('register');"
+                                                                        data-toggle="tab">Create an Account</a></li>
+      <li id="transcriptionTab" ng-class="{active: selectedTab == 'manage'}"><a href="" rel="#"
+                                                                                data-target="#manageAccounts"
+                                                                                ng-click="SelectTab('manage');"
+                                                                                data-toggle="tab">Manage Accounts</a>
+      </li>
+    </ul>
+  </div>
+  <div id="tabsContentAdministrator" class="tab-content row noMarginsSides">
+    <div class="tab-pane" ng-class="{active: selectedTab == 'register'}" id="createAccount">
+        <form name="createAccountForm" ng-submit="registerUser(createAccountForm.$valid)">
+        <div class="col-sm-12 col-xs-12" data-ng-show="showCreateForm">
+            <span class="help-block-triangle error-message-style margin-5-top"
+                  ng-show="invalid && generalError != '' && generalError">{{generalError}}</span>
+
+          <div class="col-sm-7 padding-15-top">
+            <label for="userType" class="col-sm-3 col-xs-12">User Type:</label> <select id="userType"
+                                                                                        class="col-sm-8 col-xs-12 noPaddingSides padding-select"
+                                                                                        ng-class="{disabledOption:userType==0}"
+                                                                                        ng-model="userType"
+                                                                                        required autofocus>
+            <option value="" disabled class="disabledOption">Select...</option>
+            <option value="standard:regular" class="enabledOption">Registered User</option>
+            <option value="power:regular" class="enabledOption">Power User</option>
+            <option value="power:moderator" class="enabledOption">Moderator</option>
+            <option value="power:accountAdmin" class="enabledOption">Account Administrator</option>
+            <option value="power:accountAdminMod" class="enabledOption">Account Administrator/Moderator
+            </option>
+          </select>
+          </div>
+          <div class="col-sm-5 margin-5-top"><span class="help-block-triangle error-message-style"
+                                                   ng-show="invalid && userTypeError && userTypeError != ''">{{userTypeError}}</span>
+          </div>
+          <div class="col-sm-7 padding-15-top">
+            <label for="userName" class="col-sm-3 col-xs-12">User Name:</label> <input type="text" id="userName"
+                                                                                       ng-model="userName"
+                                                                                       name="username"
+                                                                                       class="col-sm-8 col-xs-12 noPaddingSides"
+                                                                                       placeholder="Enter username"
+                                                                                       required>
+          </div>
+          <div class="col-sm-5 margin-5-top"><span class="help-block-triangle error-message-style"
+                                                   ng-show="userNameError != '' && userNameError">{{userNameError}}</span>
+          </div>
+          <div class="col-sm-7 padding-15-top">
+            <label for="fullName" class="col-sm-3 col-xs-12">Full Name:</label> <input type="text" id="fullName"
+                                                                                       name="fullName"
+                                                                                       ng-model="fullName"
+                                                                                       class="col-sm-8 col-xs-12 noPaddingSides"
+                                                                                       placeholder="Enter fullname"
+                                                                                       specialchars>
+          </div>
+          <div class="col-sm-5 margin-5-top"><span class="help-block-triangle error-message-style"
+                                                   ng-show="fullNameError">{{fullNameError}}</span></div>
+          <div class="col-sm-7 padding-15-top">
+            <div class="col-sm-offset-3 col-sm-6 col-xs-12 noPaddingSides">
+              <label for="displayFullNameN" class="hidden">Display full name to public</label> <input type="checkbox"
+                                                                                                      id="displayFullNameN"
+                                                                                                      ng-model="displayFullName"
+                                                                                                      ng-disabled="enableNARA"
+                                                                                                      ng-checked="enableNARA">
+              <span ng-bind="userNARA" class="info-nara"></span>
+            </div>
+          </div>
+          <div class="col-sm-7 padding-15-top">
+            <label for="email" class="col-sm-3 col-xs-12">Email:</label> <input type="email" id="email" email
+                                                                                ng-model="email" name="email"
+                                                                                class="col-sm-8 col-xs-12 noPaddingSides"
+                                                                                placeholder="Enter user email" required>
+          </div>
+          <div class="col-sm-5"><span class="help-block-triangle error-message-style margin-5-top"
+                                      data-ng-show="userEmailError">{{userEmailError}}</span></div>
+          <div class="col-sm-7 col-sm-offset-5 margin-10-top margin-10-bottom">
+            <button type="submit" class="btn btn-primary">
+              Create
+            </button>
+            <a href="" rel="#" data-dismiss="modal" data-ng-click="clearCreateAccountForm()">Cancel</a>
+          </div>
+        </div>
+        <div class="col-sm-10 col-xs-12" data-ng-if="!showCreateForm">
+          <div class="col-sm-7 padding-20-top">
+            <label class="col-sm-3 col-xs-12">User ID:</label> <label
+            class="font-weight-style">{{userID}}</label>
+          </div>
+          <div class="col-sm-5 successMessage"><span class="glyphicons glyphicons-circle-ok"></span> Account successfully created
+          </div>
+          <div class="col-sm-7 padding-20-top">
+            <label for="userType" class="col-sm-3 col-xs-12">User Type:</label>
+            <label>{{GetUserTypeDisplay(userType)}}</label>
+          </div>
+          <div class="col-sm-7 padding-20-top">
+            <label for="userName" class="col-sm-3 col-xs-12">User Name: </label> <label>{{userName}}</label>
+          </div>
+          <div class="col-sm-7 padding-20-top">
+            <label for="fullName" class="col-sm-3 col-xs-12">Full Name:</label> <label> {{fullName}}</label>
+          </div>
+          <div class="col-sm-7 padding-20-top">
+            <label for="displayFullName" class="col-sm-3 col-xs-12"></label>
+
+            <div class="col-sm-5 col-xs-12 noPaddingSides">
+              <input type="checkbox" disabled="disabled" id="displayFullName" ng-model="displayFullName"> Display full
+              name to public
+            </div>
+          </div>
+          <div class="col-sm-7 padding-20-top">
+            <label for="email" class="col-sm-3 col-xs-12">Email: </label> <label>{{email}}</label>
+          </div>
+          <div class="col-sm-7 col-sm-offset-3  margin-10-bottom margin-15-top">
+            <button type="submit" class="btn btn-primary" data-ng-click="createAnotherAccount()">Create Another Account
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="tab-pane" ng-class="{active: selectedTab == 'manage'}" id="manageAccounts">
+      <form>
+        <div class="col-sm-11 col-xs-12">
+          <div class="row col-sm-12">
+            <span class="col-sm-1 col-xs-12 no-padding-left no-padding-right font-weight-style">Search
+                by:</span> <label for="userIdCreate" class="col-sm-2 col-xs-12">User ID:</label> <input type="text"
+                                                                                                        id="userIdCreate"
+                                                                                                        ng-model="userId"
+                                                                                                        class="col-sm-3 col-xs-12 noPaddingSides"
+                                                                                                        placeholder="Enter user ID"
+                                                                                                        autofocus>
+
+            <label for="fullNameCreate" class="col-sm-3 col-xs-12">Full Name (contains):</label> <input type="text"
+                                                                                                        id="fullNameCreate"
+                                                                                                        ng-model="fullNameFilter"
+                                                                                                        class="col-sm-3 col-xs-12 noPaddingSides"
+                                                                                                        placeholder="Enter full name">
+          </div>
+          <div class="row col-sm-12">
+            <label for="userTypeCreate" class="col-sm-3 col-xs-12">User Type:</label> <select
+            id="userTypeCreate"
+            ng-class="{disabledOption:typeFilter==0}"
+            ng-model="typeFilter"
+            class="col-sm-3 col-xs-12 noPaddingSides padding-select">
+            <option value="0" selected class="disabledOption">Select...</option>
+            <option value="standard:regular" class="enabledOption">Registered User</option>
+            <option value="power:regular" class="enabledOption">Power User</option>
+            <option value="power:moderator" class="enabledOption">Moderator</option>
+            <option value="power:accountAdmin" class="enabledOption">Account Administrator</option>
+            <option value="power:accountAdminMod" class="enabledOption">Account Administrator/Moderator</option>
+          </select>
+
+            <label for="emailCreate" class="col-sm-3 col-xs-12">Email:</label> <input type="text" id="emailCreate"
+                                                                                      ng-model="emailFilter"
+                                                                                      class="col-sm-3 col-xs-12 noPaddingSides"
+                                                                                      placeholder="Enter user email">
+          </div>
+          <div class="row col-sm-12">
+            <label for="usernameCreate" class="col-sm-3 col-xs-12">Username:</label> <input type="text"
+                                                                                            id="usernameCreate"
+                                                                                            ng-model="usernameFilter"
+                                                                                            class="col-sm-3 col-xs-12 noPaddingSides"
+                                                                                            placeholder="Enter username">
+
+            <label for="statusdropdown" class="col-sm-3 col-xs-12">Account Status:</label> <select
+            ng-class="{disabledOption:status==0}" id="statusdropdown" ng-model="status"
+            class="col-sm-3 col-xs-12 noPaddingSides">
+            <option value="0" selected>Select</option>
+            <option value="active" class="enabledOption">Active</option>
+            <option value="inactive" class="enabledOption">Inactive</option>
+          </select>
+          </div>
+        </div>
+        <div class="col-sm-1 col-sm-offset-9 no-margin-right no-padding-right">
+          <button type="submit" data-ng-click="searchAccounts()" class="btn btn-primary pull-right">
+            Search
+          </button>
+        </div>
+      </form>
+      <div class="col-sm-12">
+        <hr>
+      </div>
+      <div class="col-sm-12 account-manager-pagin" data-ng-show="users.length > 0">
+        <div id="navigationRow" class="row noMarginsSides">
+          <div id="numberResultModeratorWorkbench" class="col-xs-3 text-left">
+            <span
+              ng-bind-template="{{offset + 1}} – {{(offsetEnd)}} of {{totalRecords}}"></span>
+          </div>
+
+          <div paging-dynamic class="col-xs-4"></div>
+
+          <div id="resultPerPageModeratorWorkbench" class="col-xs-2 text-center">
+            <label for="resultsPerPageSelectModerator">Rows per page:</label>
+
+            <div class="btn-group">
+              <select id="resultsPerPageSelectModerator" class="btn btn-default btn-sm" ng-model="resultPerPage">
+                <option value=25>25</option>
+                <option value=50>50</option>
+                <option value=100>100</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-xs-3 text-left">
+            <label for="sortBy" class="margin-20-right">Sort by:</label> <select ng-class="{disabledOption:sortBy==0}"
+                                                                                 id="sortBy" ng-model="sortBy">
+            <option value="0" selected disabled>Select</option>
+            <option value="internalId" class="enabledOption">User ID</option>
+            <option value="userRights" class="enabledOption">User Type</option>
+            <option value="id" class="enabledOption">Username</option>
+            <option value="fullName" class="enabledOption">Full Name</option>
+            <option value="email" class="enabledOption">Email</option>
+            <option value="status" class="enabledOption">Account Status</option>
+          </select>
+          </div>
+        </div>
+        <table class="table table-responsive accountTable" summary="Users list table">
+          <thead>
+          <tr>
+            <th id="userId_AccountAdmin">USER ID</th>
+            <th id="userType_AccountAdmin">USER TYPE</th>
+            <th id="username_AccountAdmin">USERNAME</th>
+            <th id="fullName_AccountAdmin">FULL NAME</th>
+            <th id="email_AccountAdmin">EMAIL</th>
+            <th id="accountStatus_AccountAdmin">ACCOUNT <br/> STATUS</th>
+            <th id="edit_AccountAdmin">EDIT</th>
+            <th id="view_AccountAdmin">VIEW <br/> CONTRIBUTIONS</th>
+            <th id="resetPassword_AccountAdmin">RESET <br/> PASSWORD</th>
+            <th id="note_AccountAdmin">NOTE</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat-start="user in users | orderBy:sortBy" ng-show="!edition"
+              ng-class="{notExpanded: !edition,strikeout: user.status == 'inactive' && !edition}">
+            <td class="applyStrikeout" headers="userId_AccountAdmin">
+              <!-- editable internalId (text with validation) -->
+              <span ng-bind="user.internalId"></span>
+            </td>
+            <td class="applyStrikeout" headers="userType_AccountAdmin">
+              <!-- editable status (select-local) -->
+              <span>{{GetUserType(user.type, user.rights)}}</span>
+            </td>
+            <td class="applyStrikeout" headers="username_AccountAdmin">
+              <!-- editable username (text with validation) -->
+              <span ng-bind="user.id"></span>
+            </td>
+
+            <td class="applyStrikeout" headers="fullName_AccountAdmin">
+              <!-- editable username (text with validation) -->
+              <span ng-bind="user.fullName"></span>
+            </td>
+            <td class="applyStrikeout" headers="email_AccountAdmin">
+              <!-- editable username (text with validation) -->
+              <span ng-bind="user.email"></span>
+            </td>
+            <td class="applyStrikeout" headers="accountStatus_AccountAdmin">
+              <!-- editable status (select-local) -->
+              <span ng-bind="user.status"></span>
+            </td>
+            <td headers="edit_AccountAdmin">
+              <!--form -->
+              <div class="buttons" ng-show="!showNote">
+                <a href="" rel="#" data-ng-click="edition = true;user.oldStatus = user.status;">
+                  <span class="glyphicons glyphicons-edit"></span>
+                </a>
+              </div>
+            </td>
+            <td headers="view_AccountAdmin">
+              <!-- form -->
+              <div class="buttons">
+                <a ng-href="/accounts/{{user.id}}/contributions?contributionType=tags"><span class="glyphicons glyphicons-paperclip"></span></a>
+              </div>
+            </td>
+            <td headers="resetPassword_AccountAdmin">
+              <!-- form -->
+              <div class="buttons">
+                <a href="" rel="#" data-toggle="modal" data-target="#resetPassword"
+                   ng-click="setCurrentUser(user.id, user.email)"><span class="glyphicons glyphicons-keys"></span></a>
+
+                <div style="text-align:left;" data-reset-password></div>
+              </div>
+            </td>
+            <td headers="note_AccountAdmin">
+              <!-- form -->
+              <div class="buttons" ng-show="user.hasNote">
+                <a href="" rel="#" data-ng-click="showNote=!showNote;"><span class="glyphicons glyphicons-notes-2"></span></a>
+              </div>
+            </td>
+          </tr>
+
+          <tr data-admin-item="" data-ng-show="edition"></tr>
+          <tr id="edition{{$index}}" ng-repeat-end data-ng-show="edition || showNote"
+              ng-class="{ExtraFields: edition} ">
+            <td colspan="10" class="editReason" headers="edit_AccountAdmin">
+              <form editable-form name="rowform"
+                    class="form-buttons form-inline"
+                    onbeforesave="checkingFormModifications($data,$index,user.id,additionalComments)"
+                    onaftersave="modifyAccount($data, user.id,additionalComments, user.userRights,$index);"
+                    shown="inserted == user">
+                <div data-ng-show="!showNote">
+                  <table class="full-width" summary="Edit user">
+                    <tr>
+                      <th id="reasonH{{$index}}" class="hidden">Reason</th>
+                      <th id="additionalCommentsH{{$index}}" class="hidden">Additional Comments</th>
+                      <th id="submitH{{$index}}" class="hidden">submit</th>
+                    </tr>
+                    <tr>
+                      <td class="width-300" headers="reasonH{{$index}}">
+                        <div class="no-padding-right pull-left">
+                          <label for="reason{{$index}}" class="margin-10-right topAlign">Reason:</label>
+
+                          <select id="reason{{$index}}" ng-model="reason[$index]"
+                                  ng-change="clickOnCreateNewReason($index)"
+                                  ng-options="reason.value as reason.text group by reason.group for reason in reasons"
+                                  options-disabled="reason.disabled for reason in reasons">
+                          </select>
+                        </div>
+                      </td>
+                      <td headers="additionalCommentsH{{$index}}">
+                        <div class="no-padding-left">
+                          <label class="hidden" for="additionalComments{{$index}}">Additional Comments</label>
+                      <textarea type="text"
+                                id="additionalComments{{$index}}"
+                                ng-model="additionalComments"
+                                class="full-width"
+                                placeholder="Enter additional comments...">
+                      </textarea>
+                        </div>
+                      </td>
+                    <tr>
+                      <td colspan="10" headers="submitH{{$index}}">
+                        <div>
+                          <div class="administratorActionButtons pull-right">
+                            <button id="saveEdition{{$index}}" type="button" ng-disabled="rowform.$waiting"
+                                    class="btn btn-primary"
+                                    ng-click="submitUserChanges(user,$index,additionalComments)">
+                              save
+                            </button>
+                            <button type="button"
+                                    ng-click="edition = false; additionalComments='';reason[$index]='';"
+                                    class="btn btn-link">
+                              cancel
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div data-ng-show="showNote" class="container-fluid">
+                  <div class="notesStyle">
+                    <div class="row" ng-repeat="note in user.reasons" ng-if="note['@action'] === 'MODIFY'">
+                      <div class="col-sm-3"><label>Account Administrator: </label> {{note["@adminFullName"]}}</div>
+                      <div class="col-sm-3"><label>Modified: </label> {{showFancyDate(note["@when"])}}</div>
+                      <div class="col-sm-3"><label>Reason: </label> {{note["@reason"]}}</div>
+                      <div class="col-sm-3"><label>Notes: </label> {{note["@note"]}}</div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-sm-12" data-ng-show="showNoResultsMessage">
+        There are no search results found using the search term : {{notFoundTerms}}
+      </div>
+    </div>
+  </div>
+</div>

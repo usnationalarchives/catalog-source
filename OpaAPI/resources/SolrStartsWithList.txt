@@ -1,0 +1,3 @@
+thesaurus.
+_not
+_is

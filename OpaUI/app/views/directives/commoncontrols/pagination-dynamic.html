@@ -1,0 +1,59 @@
+<div id="pagingDynamic" class="hidden-print">
+  <div class="noMargins">
+    <ul id="paginationControl" class="pagination pagination-sm" ng-model="currentPage">
+
+      <li ng-class="{disabledArrows: currentPage <= 1}"><a href="" ng-click="firstPageNumber()"
+                                                           title="First Page"><span><<</span></a></li>
+      <li ng-class="{disabledArrows: currentPage <= 1}"><a href="" ng-click="decreasePageNumber()"
+                                                           title="Previous Page"><</a>
+      </li>
+      <li ng-show="page1>0"><a href="" ng-click="pageNumber(page1)" class="hidden-xs hidden-sm"
+                               ng-class="{current: page1 === currentPage}">{{page1}}</a>
+      </li>
+      <li ng-show="page2>0"><a href="" ng-click="pageNumber(page2)" class="hidden-xs hidden-sm"
+                               ng-class="{current: page2 === currentPage}">{{page2}}</a>
+      </li>
+      <li ng-show="page3>0"><a href="" ng-click="pageNumber(page3)" class="hidden-xs hidden-sm"
+                               ng-class="{current: page3 === currentPage}">{{page3}}</a>
+      </li>
+      <li>
+        <div class="jumpPagination">
+
+          <form class="hidden-xs hidden-sm" name="jumToPageForm" ng-submit="pageNumber(nav.targetPage)">
+            <label class="sr-only" for="jumpToPageInput{{$id}}">Jump to page number</label>
+
+
+            <span>  Page: </span>
+
+            <input id="jumpToPageInput{{$id}}" type="text" title="Enter a number greater or equals to 1." pattern="\d*"
+                   class="targetPageInput" ng-model="nav.targetPage"
+                   onload="setCustomValidity('Please enter a valid number.')"
+                   oninput="try{setCustomValidity('')}catch(e){}"/>
+
+            <span>of          {{totalPages()}}</span>
+
+          </form>
+
+          <form class="visible-xs visible-sm" name="jumToPageForm" ng-submit="pageNumber(nav.targetPage)">
+            <label class="sr-only" for="jumpToPageInputsm">Jump to page number</label>
+
+            <span>  Page: </span>
+
+            <input id="jumpToPageInputsm" type="text" title="Enter a number greater or equals to 1."
+                   class="targetPageInput" ng-model="nav.targetPage"
+                   onload="setCustomValidity('Please enter a valid number.')"
+                   oninput="try{setCustomValidity('')}catch(e){}"/>
+            <span>of          {{totalPages()}}</span>
+
+          </form>
+
+        </div>
+      </li>
+
+      <li ng-class="{disabledArrows: last()}"><a href="" ng-click="increasePageNumber()" title="Next Page">></a></li>
+      <li ng-class="{disabledArrows: last()}"><a href="" ng-click="lastPageNumber()" title="Last Page">>></a></li>
+
+
+    </ul>
+  </div>
+</div>

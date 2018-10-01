@@ -1,0 +1,64 @@
+<div class="interactiveDocumentation">
+  <div id="interactiveDocumentationTitle">
+    National Archives Catalog API
+  </div>
+
+
+
+  <div id="apiDescription" class="descriptions">
+    <p>This page provides interactive documentation to NARA's Online Catalog API, which allows you to programmatically access records, digital objects, and
+      public contributions from the National Archives Catalog. <br /> In addition, APIs for updating public contributions are provided. Please refer to the NARA's Online Catalog API
+      <a href="Document/ReferenceGuide.pdf" target="_blank" class="noPaddingSides">Reference Guide</a> for further details of API usage.
+    </p>
+  </div>
+
+  <div class="panel-group" id="accordionID" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="philosophy" ng-click="toggle('#collapseOne')">
+        <div class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordionID" data-target="#collapseOne" href="" aria-expanded="false" aria-controls="collapseOne">
+            API Philosophy
+          </a>
+        </div>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="philosophy">
+        <div class="panel-body">
+          <div class="descriptions">
+            NARA's Online Catalog API is parameter-based and supports the GET, POST, PUT, and DELETE methods:
+            <ul>
+              <li>GET for performing searches and retrieving metadata.</li>
+              <li>POST is used when creating new things (e.g. creating new public contributions)</li>
+              <li>PUT is used when updating something (e.g. saving public contributions)</li>
+              <li>DELETE is used when removing things (e.g. deleting public contributions)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--REGISTRATION API-->
+    <div data-user-registration-api ng-controller="interactiveDocumentation"></div>
+
+    <!-- LOGIN API -->
+    <div data-login-api ng-controller="interactiveDocumentation"></div>
+
+    <!-- USERNAME SEARCH API -->
+    <div data-username-search-api ng-controller="interactiveDocumentation"></div>
+
+    <!-- SEARCH API -->
+    <div data-search-api ng-controller="interactiveDocumentation"></div>
+
+    <!-- BULK EXPORT API -->
+    <div data-bulk-export-api ng-controller="interactiveDocumentation"></div>
+
+    <!-- BULK IMPORT API -->
+    <div data-bulk-import-api ng-controller="interactiveDocumentation"></div>
+
+    <!-- CONTRIBUTIONS API -->
+    <div data-contributions-api ng-controller="interactiveDocumentation"></div>
+
+    <!-- CONTRIBUTIONS API -->
+    <div data-contributions-api-naid ng-controller="interactiveDocumentation"></div>
+
+  </div>
+</div>

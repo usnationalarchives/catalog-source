@@ -1,0 +1,7 @@
+<componentFactory name="analysis-components">
+
+  <subType name="extractText" implementation="gov.nara.opa.ingestion.analysis.ExtractTextStage">
+      <description>Extract text from objects.</description>
+  </subType>
+  
+</componentFactory>

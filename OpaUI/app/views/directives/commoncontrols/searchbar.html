@@ -1,0 +1,30 @@
+<div id="searchBar" class="container-fluid" ng-show="$root.showSearchBar">
+  <div class="row noMarginsSides">
+
+    <div id="searchInput">
+      <form id="searchForm" class="input-group col-xs-12" ng-submit="searchSvc.search()" role="form">
+        <div class="form-group searchInput">
+          <label for="inputSearch" class="sr-only">Search Term</label>
+          <input type="text" id="inputSearch" ng-model="searchSvc.query" class="form-control" focus-if>
+        </div>
+        <div class="searchSubmit">
+          <button type="submit" class="btn"><span class="glyphicons glyphicons-search"></span></button>
+        </div>
+      </form>
+    </div>
+
+    <div id="linksSearchBar">
+        <a class="hidden-inline-xs hidden-inline-sm" href="/advancedsearch" ng-click="searchSvc.passURLParams()">Advanced Search</a>
+        <a class="visible-inline-xs visible-inline-sm margin-10-right" href="/advancedsearch" ng-click="searchSvc.passURLParams()">
+          <span class="glyphicons glyphicons-search"></span><br/>Adv.
+        </a>
+      </div>
+
+      <div id="loginSearchBar" class="pull-right visible-md visible-lg" ng-controller="loginCtrl">
+        <a href="/login" class="loginButton" ng-hide="Auth.isLoggedIn()">Login</a>
+        <a href="/registration" class="loginButton" ng-hide="Auth.isLoggedIn()">Register</a>
+        <a ng-href="/accounts/{{Auth.userName()}}" target="_self" class="loginButton userName" ng-show="Auth.isLoggedIn()" ng-bind="Auth.getDisplayName()"></a>
+        <a href="/" class="loginButton" ng-show="Auth.isLoggedIn()" ng-click="logout()">Logout</a>
+      </div>
+  </div>
+</div>

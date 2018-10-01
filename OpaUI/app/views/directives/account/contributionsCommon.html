@@ -1,0 +1,125 @@
+<div class="col-xs-12">
+    <div class="row margin-top center-parent-element">
+        <div class="col-sm-4 col-md-2 centered-element">
+            <span ng-bind="1 + offset" ng-show="totalRecords"></span><span ng-bind="0" ng-hide="totalRecords"></span>
+            <span ng-bind-template=" - {{getOffset() || 0}} of {{totalRecords || 0}}"></span>
+        </div>
+        <div class="col-sm-5 col-md-4 hidden-xs centered-element">
+              <div paging-dynamic></div>
+        </div>
+        <div class="col-sm-3 col-md-3 hidden-xs centered-element">
+            <label for="rowsPerPageSelect">Rows Per Page:</label>
+            <div class="btn-group">
+                <select id="rowsPerPageSelect" class="btn btn-default btn-sm" ng-model="resultPerPage" ng-change="setRows(resultPerPage)">
+                    <option value=25>25</option>
+                    <option value=50>50</option>
+                    <option value=100>100</option>
+                    <option value=200>200</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3 hidden-xs hidden-sm noPaddingSides centered-element">
+            <label for="filter{{selectedTab}}" class="sr-only">Enter title text then click Enter key to submit</label>
+            <input title="Enter title text then click Enter key to submit" id="filter{{selectedTab}}"
+                   class="form-control ng-valid ng-dirty"
+                   placeholder="Enter title text then click Enter key to submit" ng-model="filtertext" ng-enter="filter(filtertext)">
+            <span id="filterClear" class="glyphicons glyphicons-circle-remove filterClear" ng-show="filtertext" ng-click="filtertext = '';filter(filtertext)"></span>
+        </div>
+
+    </div>
+
+    <div class="row margin-top">
+        <div class="col-xs-1 header hidden-xs">
+            <span class="abbreviation" title="NUMBER">NO.
+            </span>
+        </div>
+        <div class="header" ng-class="{'col-xs-6':selectedTab !== 2,'col-xs-5':selectedTab === 2}">
+            <!--<a ng-click="sortTable('title')" ng-class="{active: tableSortby=='title'}">TITLE-->
+            <span>TITLE
+                <span class="glyphicons glyphicons-chevron-down" ng-show="tableSortby=='title' && reverse"></span>
+                <span class="glyphicons glyphicons-chevron-up" ng-show="tableSortby=='title' && !reverse"></span>
+            </span>
+        </div>
+        <div class="col-xs-2 header">
+            <span>IMAGE</span>
+        </div>
+      <div ng-if="selectedTab === 2" class="col-xs-2 header">
+        <span>REPLIES</span>
+      </div>
+        <div class="header" ng-class="{'col-xs-3':selectedTab !== 2,'col-xs-2':selectedTab === 2}">
+            <a ng-click="sortTable('date')" ng-class="{active: tableSortby=='date'}">
+                <span ng-show="selectedTab === 1">DATE TAGGED</span>
+                <span ng-hide="selectedTab === 1">MODIFIED</span>
+                <span class="glyphicons glyphicons-chevron-down" ng-show="tableSortby=='date' && reverse"></span>
+                <span class="glyphicons glyphicons-chevron-up" ng-show="tableSortby=='date' && !reverse"></span>
+            </a>
+        </div>
+    </div>
+    <!--TAGS-->
+    <div ng-repeat="title in titles" ng-show="selectedTab === 1">
+        <div class="row titles">
+            <div class="col-xs-1 hidden-xs">
+                <span class="center" ng-bind="$index + 1 + offset"></span>
+            </div>
+            <div class="col-xs-6">
+                <a ng-href="{{hostname}}/#/id/{{title['naId']}}" ng-bind="title['opaTitle']" target="_blank"></a>
+            </div>
+            <div class="col-xs-2">
+                <a class="center" ng-href="{{hostname}}/{{getUrl(title, 'tag')}}" ng-bind="getImage(title)" target="_blank"></a>
+            </div>
+            <div class="col-xs-3">
+                <span class="center" ng-bind="OpaUtils.fancyDate(title['addedTs'])"></span>
+            </div>
+        </div>
+    </div>
+
+  <!--COMMENTS-->
+  <div ng-repeat="title in titles" ng-show="selectedTab === 2">
+    <div class="row titles">
+      <div class="col-xs-1 hidden-xs">
+        <span class="center" ng-bind="$index + 1 + offset"></span>
+      </div>
+      <div class="col-xs-5">
+        <a ng-href="{{hostname}}/#/id/{{title['naId']}}" target="_blank" ng-bind="title['@title']"></a>
+      </div>
+      <div class="col-xs-2">
+        <a class="center" ng-href="{{hostname}}/{{getUrl(title, 'comment')}}" ng-bind="getImage(title)" target="_blank"></a>
+      </div>
+      <div class="col-xs-2 center" >
+        <span ng-if="title['@replies'] === '0'">-</span>
+        <span ng-if="title['@replies'] !== '0'" ng-bind="title['@replies']"></span>
+      </div>
+      <div class="col-xs-2">
+        <span class="center" ng-bind="OpaUtils.fancyDate(title['@lastModified'])"></span>
+      </div>
+    </div>
+
+  </div>
+
+    <!--TRANSCRIPTIONS-->
+    <div ng-repeat="title in titles" ng-show="selectedTab === 3">
+        <div class="row titles">
+            <div class="col-xs-1 hidden-xs">
+                <span class="center" ng-bind="$index + 1 + offset"></span>
+            </div>
+            <div class="col-xs-6">
+                <a ng-href="{{hostname}}/#/id/{{title['naId']}}" target="_blank" ng-bind="title['opaTitle']"></a>
+            </div>
+            <div class="col-xs-2">
+                <a class="center" ng-href="{{hostname}}/{{getUrl(title, 'transcription')}}" ng-bind="getImage(title)" target="_blank"></a>
+            </div>
+            <div class="col-xs-3">
+                <span ng-show="title['LastModifiedByOtherTs']" class="center">
+                    <span class="noMargins" ng-bind-template="{{OpaUtils.fancyDate(title['LastModifiedByOtherTs'])}} by ("></span>
+                    <a ng-href="{{hostname}}/#/accounts/{{title['ModifiedBy']}}/contributions?contributionType=transcriptions" target="_blank" ng-bind="title['ModifiedByDisplayName'] || title['ModifiedBy']"></a><span>)</span>
+                </span>
+                <span class="center" ng-bind-template="{{OpaUtils.fancyDate(title['LastModifiedByUserTs'])}}  (by {{myModifications(title['UserDisplayName'])}})"
+                      ng-class="{disabled: title['LastModifiedByOtherTs']}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 visible-xs" ng-if="OpaUtils.isPhone()">
+        <div paging></div>
+    </div>
+</div>

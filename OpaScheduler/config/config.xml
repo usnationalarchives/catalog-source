@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tasks>
+	<task name="Clean up unverified accounts">
+		<endpoint>/administrator/accounts/remove-unverified</endpoint>
+		<time>14:00:00</time>
+	</task>
+	<task name="Disable idle accounts">
+		<endpoint>/administrator/accounts/auto-disable</endpoint>
+		<time>14:20:00</time>
+	</task>
+	<task name="Cancel unverified email changes">
+		<endpoint>/administrator/accounts/cancel-email-modifications</endpoint>
+		<time>14:40:00</time>
+	</task>
+	<task name="Remove expired exports">
+		<endpoint>/administrator/exports/remove-expired-exports</endpoint>
+		<time>20:00:00</time>
+	</task>
+</tasks>

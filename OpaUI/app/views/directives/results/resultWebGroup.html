@@ -1,0 +1,12 @@
+<div class="row result" ng-show="tabType == 'all' && offset==0 && webPages">
+    <div id="webResults" class="imageResult col-lg-1 col-sm-2 col-xs-4">
+        <img src="images/web.svg" class="img-web" alt="Web results">
+    </div>
+
+    <div class="marginResultWeb col-lg-11 col-sm-10 col-xs-8">
+        <div class="descriptionResultWeb">
+            <a href="" ng-click="setTabType('web')" tabindex="0"><span class="titleGroupWeb">National Archives website pages</span></a><br><br>
+            <div data-result-web ng-repeat="resultWeb in webPages"></div>
+        </div>
+    </div>
+</div>

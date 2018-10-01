@@ -1,0 +1,157 @@
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" ng-click="toggle('#collapseTwo')">
+    <div class="panel-title">
+      <a class="collapsed" data-toggle="collapse" data-parent="#accordionID" data-target="#collapseTwo" href="" aria-expanded="false" aria-controls="collapseTwo">
+        <span class="apiCallPost">POST</span>
+        Registration
+      </a>
+    </div>
+  </div>
+  <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="registration">
+    <div class="panel-body">
+
+      <div class="pull-right">
+        <div class="well well-sm margin-15-right" ng-class="{'modePanelLiveMode':lifeMode === 'true'}">
+          <label class="radio-inline">
+            <input type="radio" name="mockModeUserRegistration" id="inlineRadio1" value="false" ng-model="lifeMode" ng-click="setMockMode()"> Mock Mode
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="mockModeUserRegistration" id="inlineRadio2" value="true" ng-model="lifeMode" ng-click="setLiveMode()"> Live Mode
+          </label>
+
+          <div id="linkShowModeExplanation">
+            <a href="" rel="#" class="text-right" data-toggle="collapse" data-target="#collapseModeExplanationR" aria-expanded="false" aria-controls="collapseModeExplanation">
+              Mode detail
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div data-mode-api id="collapseModeExplanationR" class="collapseModeExplanation"></div>
+
+      <div class="apiDescriptions">
+        To register in Catalog using NARA's Online Catalog API, you would need to use the following URL:
+        <br />
+        <span class="code breakLongCode"><span ng-bind="configServices.API_END_POINT"></span>/users?userName={userName}&fullName={fullName}&displayFullName={true/false}&email={email}&password={password}&userType=standard&userRights=regular</span>
+        <form class="validate-form" name="userRegisterForm" ng-submit="tryUserRegistration(userRegisterForm.$valid)">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Value</th>
+              <th class="hidden-xs">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr>
+              <td>userName</td>
+              <td>
+                <div class="form-group">
+                  <label class="sr-only" for="userNameInput">Username (required)</label>
+                  <input type="text" class="form-control" id="userNameInput" placeholder="required" ng-model="userNameInput" required="">
+                </div>
+              </td>
+              <td class="hidden-xs"> Example: jsmith </td>
+            </tr>
+            <tr class="visible-xs">
+              <td class="bold"> Description </td>
+              <td> Example: jsmith </td>
+            </tr>
+
+            <tr>
+              <td>fullName</td>
+              <td>
+                <div class="form-group">
+                  <label class="sr-only" for="fullNameInput">Full name (required)</label>
+                  <input type="text" class="form-control" id="fullNameInput" placeholder="" ng-model="fullNameInput" ng-required="displayFullnameInput">
+                </div>
+              </td>
+              <td class="hidden-xs"> Example: John Smith </td>
+            </tr>
+            <tr class="visible-xs">
+              <td class="bold"> Description </td>
+              <td> Example: John Smith </td>
+            </tr>
+
+
+            <tr>
+              <td>displayFullName</td>
+              <td>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" id="displayFullnameInput" value="true" aria-label="Display full name" ng-model="displayFullnameInput" ng-disabled="isNaraStaff">
+                  </label>
+                </div>
+              </td>
+              <td class="hidden-xs"> If value is checked full name field will be required.</td>
+            </tr>
+            <tr class="visible-xs">
+              <td class="bold"> Description </td>
+              <td>If value is checked full name field will be required.</td>
+            </tr>
+
+            <tr>
+              <td>email</td>
+              <td>
+                <div class="form-group">
+                  <label class="sr-only" for="emailInput">email (required)</label>
+                  <input type="email" class="form-control" id="emailInput" placeholder="required" ng-model="emailInput" required="" ng-change="checkNaraStaff()">
+                </div>
+              </td>
+              <td class="hidden-xs"> Example: John Smith . If the email contains @nara.gov. This means is Nara Staff so fullname will be required </td>
+            </tr>
+            <tr class="visible-xs">
+              <td class="bold"> Description </td>
+              <td> Example: John Smith </td>
+            </tr>
+
+            <tr>
+              <td>password</td>
+              <td>
+                <div class="form-group">
+                  <label class="sr-only" for="passwordInput">Password (required)</label>
+                  <input type="text" class="form-control" id="passwordInput" placeholder="required" ng-model="passwordInput" required="">
+                </div>
+              </td>
+              <td class="hidden-xs"> Password must contain minimum of 8 characters and can contain special characters or numbers </td>
+            </tr>
+            <tr class="visible-xs">
+              <td class="bold"> Description </td>
+              <td> Password must contain minimum of 8 characters and can contain special characters or numbers </td>
+            </tr>
+
+            <tr>
+              <td>userType</td>
+              <td> standard </td>
+              <td class="hidden-xs">Constant value. It is not editable</td>
+            </tr>
+            <tr class="visible-xs">
+              <td class="bold"> Description </td>
+              <td>Constant value. It is not editable</td>
+            </tr>
+
+            <tr>
+              <td>userRights</td>
+              <td> regular </td>
+              <td class="hidden-xs">Constant value. It is not editable</td>
+            </tr>
+            <tr class="visible-xs">
+              <td class="bold"> Description </td>
+              <td>Constant value. It is not editable</td>
+            </tr>
+            </tbody>
+          </table>
+          <div class="alert alert-danger" role="alert" ng-show="lifeMode === 'true'">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Warning:</span>
+            <span ng-bind="alertLiveMode"></span>
+          </div>
+          <button class="btn btn-default" type="submit">Submit</button>
+          <button class="btn btn-default" type="reset" ng-click="resetRegistration()">Reset</button>
+        </form>
+        <div data-response-panel id="responseRegistration" class="panel collapse" data-action="action" data-call="apicall" data-response="responseTextArea"  data-life-mode="lifeMode" data-only-live-mode="onlyLiveMode" data-error-response="errorResponse"></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="row result">
+    <div class="col-xs-1">
+        <button type="button" class="btn btn-default lookupButton" ng-click="chooseResult(result.naId)">Choose</button>
+    </div>
+    <div class="imageResult col-xs-1">
+        <div>
+            <img ng-src="{{searchSvc.getThumbnail(result)}}" err-src="images/missingimage.svg" class="img-responsive" alt=""/>
+        </div>
+    </div>
+
+</div>

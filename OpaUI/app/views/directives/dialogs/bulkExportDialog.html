@@ -1,0 +1,47 @@
+<div class="modal fade" id="bulkExportModal" tabindex="-1" role="dialog" aria-labelledby="bulkExportModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close &times;</button>
+                <span class="modal-title" id="bulkExportModalLabel" ng-if="Auth.isLoggedIn()">Bulk Export of Selected Records</span>
+                <span class="modal-title" id="bulkExportModalLoginLabel" ng-if="!Auth.isLoggedIn()">Login</span>
+            </div>
+            <div class="modal-body no-padding-bottom">
+                <p ng-if="exportSvc.getError()" ng-bind="exportSvc.getError()"></p>
+                <span class="bulk center-div" ng-if="Auth.isLoggedIn()"><span class="glyphicons glyphicons-circle-question-mark"></span> You can view the progress of your export in the Bulk Downloads page accessible via your My Account page.</span>
+            </div>
+            <div class="row" ng-controller="loginCtrl"  ng-if="!Auth.isLoggedIn()">
+                <div class="col-md-4 col-md-offset-4 noPadding">
+                    <form class="form-inline login-export" role="form" ng-submit="login()">
+                        <div class="form-group">
+                            <span class="error" ng-show="error" ng-bind="error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="InputUsername">Username</label>
+                            <input class="center" type="text" id="InputUsername" ng-model="user.username" placeholder="Enter your username" auto-fill-sync>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="InputPassword">Password</label>
+                            <input class="center" type="password" id="InputPassword" ng-model="user.password" placeholder="Enter your password" auto-fill-sync>
+                        </div>
+                        <div class="form-group login-buttons">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                            <a href="" rel="#" data-dismiss="modal" ng-click="exportSvc.cancelBulk()">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4 blue-links">
+                        <button class="btn btn-link" ng-click="showRegistration()">Not Registered?</button>
+                        <button class="btn btn-link" ng-click="showforgotUsernameModal()">Forgot Username?</button>
+                        <button class="btn btn-link"  ng-click="showForgetPasswordModal()">Forgot Password?</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" ng-if="Auth.isLoggedIn()">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="searchSvc.cleanUpAccordion(); exportSvc.cleanUp()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,123 @@
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="headingSearch" ng-click="toggle('#collapseSearch')">
+    <div class="panel-title">
+      <a class="collapsed" data-toggle="collapse" data-parent="#accordionID" data-target="#collapseSearch" href="" aria-expanded="false" aria-controls="collapseSearch">
+        <span class="apiCallGet">GET</span>
+        Search
+      </a>
+    </div>
+  </div>
+  <div id="collapseSearch" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSearch">
+    <div class="panel-body">
+      <div class="apiDescriptions">
+        To perform a parameterized search in NARA's Online Catalog API, you would need to use the following endppoint:
+        <br />
+        <span class="code breakLongCode"><span ng-bind="configServices.API_END_POINT"></span>?action=search&q={Your-Search-Term}</span>
+        <br />
+        Enter a search term and click on submit to see the response from the API.
+        You can choose one of the supported formats:
+
+        <ul>
+          <li>json (default response)</li>
+          <li>xml</li>
+        </ul>
+        <br />
+
+        <div class="alert alert-warning" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          This method require credentials. You will need to add them as part of the REST request.
+        </div>
+
+
+
+        <form name="searchForm" ng-submit="searchApi(searchForm.$valid)">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th class="hidden-xs hidden-sm">Parameter</th>
+              <th class="visible-xs visible-sm">Param</th>
+              <th class="valueApi">Value</th>
+              <th class="hidden-xs hidden-sm">Description</th>
+            </tr>
+            </thead>
+            <tbody data-search-form=""></tbody>
+
+            <tr>
+              <td>format</td>
+              <td>
+                <div class="form-group">
+                  <label for="formatSearch">Format</label>
+                  <select id="formatSearch" class="form-control" data-ng-model="formatSearch" ng-disabled="tagSelectionSearch == '1'">
+                    <option value="json">json</option>
+                    <option value="xml">xml</option>
+                  </select>
+                </div>
+              </td>
+              <td class="hidden-xs hidden-sm">
+                Format of the output response. Default value json.
+              </td>
+            </tr>
+            <tr class="visible-xs visible-sm">
+              <td colspan="2">
+                <div class="bold">Description</div>
+                Format of the output response. Default value json.
+              </td>
+            </tr>
+
+            <tr>
+              <td>rows</td>
+              <td>
+                <div class="form-group">
+                  <label for="rowsInputSearch">Rows</label>
+                  <input id="rowsInputSearch" type="number" class="form-control" ng-model="rowsInputSearch" ng-disabled="tagSelectionSearch == '1'">
+                </div>
+              </td>
+              <td class="hidden-xs hidden-sm">
+                Number of results. Example = 20 , 50 , 100
+              </td>
+            </tr>
+            <tr class="visible-xs visible-sm">
+              <td colspan="2">
+                <div class="bold">Description</div>
+                Number of results. Example = 20 , 50 , 100
+              </td>
+            </tr>
+
+            <tr>
+              <td>offset</td>
+              <td>
+                <div class="form-group">
+                  <label for="offsetInputSearch">Offset</label>
+                  <input id="offsetInputSearch" type="number" class="form-control" ng-model="offsetInputSearch" ng-disabled="tagSelectionSearch == '1'">
+                </div>
+              </td>
+              <td class="hidden-xs hidden-sm">
+                By default the results are returned from the first one until the end grouped by the number of rows requested.
+                The beginning of the result index can be changed with this parameter. Default value is 0.
+                Example = 20 , 50 , 100
+              </td>
+            </tr>
+            <tr class="visible-xs visible-sm">
+              <td colspan="2">
+                <div class="bold">Description</div>
+                By default the results are returned from the first one until the end grouped by the number of rows requested.
+                The beginning of the result index can be changed with this parameter. Default value is 0.
+                Example = 20 , 50 , 100
+              </td>
+            </tr>
+
+            <tr class="visible-xs visible-sm">
+              <td colspan="2">
+                <!--<div class="bold">Description</div>              -->
+              </td>
+            </tr>
+          </table>
+
+          <button class="btn btn-default" type="submit">Submit</button>
+          <button class="btn btn-default" type="reset" ng-click="resetSearch()">Reset</button>
+        </form>
+        <div data-response-panel id="responsepanelSearch" class="panel-collapse collapse" data-action="action" data-call="apicall" data-response="responseTextArea" data-only-live-mode="onlyLiveMode" data-error-response="errorResponse"></div>
+      </div>
+    </div>
+  </div>
+</div>

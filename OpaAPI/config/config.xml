@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE project>
+<configuration>
+
+	<!-- UI SETTINGS -->
+	<searchRunTime>55000</searchRunTime>      <!-- # OF MILLISECONDS BEFORE A SEARCH TIMES OUT (10 seconds) -->
+
+	<!-- SESSION SETTINGS -->
+	<sessionTimeout>1800</sessionTimeout>     <!-- # OF SECONDS BEFORE A SESSION TIMES OUT (30 minutes) -->
+	
+	<!-- FAILED LOGIN ATTEMPT SETTINGS -->	
+	<loginAttempts>5</loginAttempts>      <!-- MAXIMUM # OF FAILED LOGIN ATTEMPTS -->	
+	<timeLocked>15</timeLocked>           <!-- # OF MINUTES AN ACCOUNT IS LOCKED FOR AFTER MAXIMUM FAILED LOGIN ATTEMPTS IS HIT -->	
+	<attemptsTime>15</attemptsTime>       <!-- # OF MINUTES AN ACCOUNT IS LOCKED FOR BEFORE RESETTING THE FAILED LOGIN COUNT BACK TO 0 -->
+	
+	<!-- SEARCH SETTINGS -->
+	<maxSearchResultsPublic>10000</maxSearchResultsPublic>           <!-- MAXIMUM # OF SEARCH RESULTS FOR A PUBLIC USER -->
+	<maxSearchResultsStandard>25000</maxSearchResultsStandard>      <!-- MAXIMUM # OF SEARCH RESULTS FOR A STANDARD USER -->
+	<maxSearchResultsPower>50000</maxSearchResultsPower>           <!-- MAXIMUM # OF SEARCH RESULTS FOR A POWER USER -->
+	<invalidSearchStringPattern>.*[\(-_ ]*,\(.*</invalidSearchStringPattern>	<!-- QUERY STRING MUST MATCH THIS PATTERN -->
+	
+	<!-- PUBLIC API SEARCH SETTINGS -->
+	<maxApiSearchResults>10000</maxApiSearchResults>         		   <!-- MAXIMUM # OF SEARCH RESULTS FOR THE PUBLIC API -->
+
+	<!-- USER LIST SETTINGS -->
+	<maxResultsPerListPublic>500</maxResultsPerListPublic>         <!-- MAXIMUM # OF ITEMS THAT CAN BE ADDED TO A LIST FOR A PUBLIC USER -->
+	<maxResultsPerListStandard>2000</maxResultsPerListStandard>    <!-- MAXIMUM # OF ITEMS THAT CAN BE ADDED TO A LIST FOR A STANDARD USER -->
+	<maxResultsPerListPower>20000</maxResultsPerListPower>         <!-- MAXIMUM # OF ITEMS THAT CAN BE ADDED TO A LIST FOR A POWER USER -->
+	<maxListsPerUser>100</maxListsPerUser>                         <!-- MAXIMUM # LISTS PERMITTED PER USER -->
+
+	<!-- PRINT SETTINGS -->
+	<maxPrintResults>500</maxPrintResults>         				   <!-- MAXIMUM # OF RESULTS A USER IS ALLOWED TO PRINT -->
+
+	<!-- BULK EXPORT SETTINGS -->
+	<maxNonBulkTimer>30000</maxNonBulkTimer>					   <!-- MAXIMUM # OF MILLISECONDS A NON-BULK EXPORT CAN TAKE TO COMPLETE -->
+	<maxNonBulkFileSizeLimit>100000</maxNonBulkFileSizeLimit>	   <!-- MAXIMUM # OF MEGABYTES A NON-BULK EXPORT FILE SIZE CAN BE  -->
+	<maxBulkExportFileSize>10000000</maxBulkExportFileSize>		   <!-- MAXIMUM # OF MEGABYTES A BULK EXPORT FILE SIZE CAN BE -->
+	<bulkExpDays>60</bulkExpDays>								   <!-- TOTAL # OF DAYS BEFORE A BULK EXPORT REQUEST EXPIRES -->
+	
+	<!-- ROW RETRIEVAL SETTINGS -->
+	<maxNotificationRows>20000</maxNotificationRows>         		   <!-- MAXIMUM # OF ROWS RETRIEVED IN A NOTIFICATIONS QUERY -->
+	<maxOpaTitlesRows>20000</maxOpaTitlesRows>    				   <!-- MAXIMUM # OF ROWS RETRIEVED IN AN OPA TITLES QUERY -->
+	<maxSummaryRows>20000</maxSummaryRows>         				   <!-- MAXIMUM # OF ROWS RETRIEVED IN A CONTRIBUTION SUMMARY QUERY -->
+	<maxContributionRows>20000</maxContributionRows>                 <!-- MAXIMUM # OF ROWS RETRIEVED IN A CONTRIBUTIONS QUERY -->
+
+	<!-- ANNOTATION SETTINGS -->
+	<tagsLength>100</tagsLength>                  <!-- MAXIMUM # OF CHARACTERS ALLOWED FOR A TAG -->
+	<transcriptionsLength>1000000000</transcriptionsLength> <!-- MAXIMUM # OF CHARACTERS ALLOWED FOR A TRANSCRIPTION -->
+	<commentsLength>1024</commentsLength>          <!-- MAXIMUM # OF CHARACTERS ALLOWED FOR A COMMENT -->
+	<commentsFormat>collapsed</commentsFormat>    <!-- DISPLAY FORMAT FOR COMMENTS -->
+	
+	<!-- TRANSCRIPTION INACTIVITY TIME SETTINGS -->
+	<transcriptionInactivityTime>30</transcriptionInactivityTime>    <!-- # OF MINUTES BEFORE A TRASNCRIPTION LOCK IS RELEASED -->
+	
+	<!-- CONTRIBUTION DISPLAY TIME SETTINGS -->
+	<transcriptionsDisplayTime>180</transcriptionsDisplayTime>    <!-- # OF DAYS A TRANSCRIPTION WILL APPEAR IN THE MODERATOR STREAM  -->
+	<tagsDisplayTime>180</tagsDisplayTime>                        <!-- # OF DAYS A TAG WILL APPEAR IN THE MODERATOR STREAM -->
+	<commentsDisplayTime>180</commentsDisplayTime>                <!-- # OF DAYS A COMMENT WILL APPEAR IN THE MODERATOR STREAM -->
+		
+	<!-- GENERAL SETTINGS -->
+	<naraEmail>@nara.gov</naraEmail>
+	<referringUrlPattern>https??://.+\.archives\.gov/??.*</referringUrlPattern>
+	
+	<!-- BANNER LINK SETTINGS -->
+	<bannerLinkHomeDisplay>Home</bannerLinkHomeDisplay>
+	<bannerLinkHome>http://www.archives.gov/</bannerLinkHome>
+	<bannerLinkResearchRoomDisplay>Research Room</bannerLinkResearchRoomDisplay>
+	<bannerLinkResearchRoom>http://www.archives.gov/research/</bannerLinkResearchRoom>
+	<bannerLinkContactUsDisplay>Contact Us</bannerLinkContactUsDisplay>
+	<bannerLinkContactUs>http://www.archives.gov/contact/</bannerLinkContactUs>
+	<bannerLinkStatisticsDisplay>Statistics</bannerLinkStatisticsDisplay>
+	<bannerLinkStatistics>http://research.archives.gov/#/statistics/</bannerLinkStatistics>
+	<bannerLinkHelpDisplay>Help</bannerLinkHelpDisplay>
+	<bannerLinkHelp>http://www.archives.gov/research/search/help/using-opa.html</bannerLinkHelp>
+
+	<maxTitlesPerRobotListing>1000</maxTitlesPerRobotListing>
+
+</configuration>

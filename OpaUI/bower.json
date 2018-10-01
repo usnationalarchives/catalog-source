@@ -1,0 +1,34 @@
+{
+  "name": "opa",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "1.2.x",
+    "json3": "~3.2.6",
+    "es5-shim": "~2.1.0",
+    "jquery": "~1.10.2",
+    "sass-bootstrap": "~3.0.2",
+    "angular-resource": "1.2.x",
+    "angular-cookies": "1.2.x",
+    "angular-sanitize": "1.2.x",
+    "angular-route": "1.2.x",
+    "html5shiv": "~3.7.0",
+    "components-font-awesome": "~4.1.0",
+    "angular-bootstrap": "~0.11.0",
+    "jquery-ui": "~1.10.4",
+    "kendo-ui-core": "~2014.3.1425",
+    "momentjs": "~2.6.0",
+    "notifyjs": "~0.4.2",
+    "angular-nouislider": "~0.3.1",
+    "ng-focus-if": "hiebj/ng-focus-if#~1.0.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "1.2.x",
+    "angular-scenario": "1.2.x",
+    "karma-jasmine": "~0.2.2",
+    "quill": ">=0.17.6"
+  },
+  "resolutions": {
+    "angular": "1.2.x",
+    "jquery": "~1.10.2"
+  }
+}

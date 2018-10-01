@@ -1,0 +1,93 @@
+<div class="row tagItem noMarginsSides item">
+  <div>
+    <div class="col-xs-1" ng-bind="$index + offset + 1"></div>
+
+    <div ng-if="moderatorAction['@type'] === 'tag'" class="col-xs-2"><a class="color-torea-bay" target="_blank"
+                                                                        ng-href="#/accounts/{{moderatorAction['@userId']}}/contributions?contributionType=tags"
+                                                                        ng-bind="moderatorAction['@fullName']"></a>
+    </div>
+    <div ng-if="moderatorAction['@type'] === 'transcription'" class="col-xs-2"><a class="color-torea-bay"
+                                                                                  target="_blank"
+                                                                                  ng-href="#/accounts/{{moderatorAction['@userId']}}/contributions?contributionType=transcriptions"
+                                                                                  ng-bind="moderatorAction['@fullName']"></a>
+    </div>
+    <div ng-if="moderatorAction['@type'] === 'comment'" class="col-xs-2"><a class="color-torea-bay" target="_blank"
+                                                                            ng-href="#/accounts/{{moderatorAction['@userId']}}/contributions?contributionType=comments"
+                                                                            ng-bind="moderatorAction['@fullName']"></a>
+    </div>
+    <div ng-if="moderatorAction['@type'] === 'announcement'" class="col-xs-2"><a class="color-torea-bay" target="_blank"
+                                                                                 ng-href="#/accounts/{{moderatorAction['@userId']}}/contributions?contributionType=tags"
+                                                                                 ng-bind="moderatorAction['@fullName']"></a></div>
+
+    <div class="col-xs-1">{{moderatorAction['@action'].toLowerCase() | capitalize}}</div>
+
+    <div class="col-xs-3 text-left" ng-bind="moderatorAction['@reason']"></div>
+
+    <div ng-if="moderatorAction['@type'] == 'transcription'" class="col-xs-3 color-torea-bay text-left noPaddingSides"
+         ng-class="{removed: moderatorAction['@action'] === 'DELETE' || moderatorAction['@action'] === 'REMOVE'}">
+      {{moderatorAction['@type']}}: {{moderatorAction.title}}
+    </div>
+
+    <div ng-if="moderatorAction['@type'] == 'comment'" class="col-xs-3 color-torea-bay text-left noPaddingSides"
+         ng-class="{removed: moderatorAction['@action'] === 'DELETE' || moderatorAction['@action'] === 'REMOVE'}">
+      {{moderatorAction['@type']}}: {{moderatorAction.title}}
+    </div>
+
+    <div ng-if="moderatorAction['@type'] == 'announcement'" class="col-xs-3 color-torea-bay text-left noPaddingSides"
+         ng-class="{removed: moderatorAction['@action'] === 'REMOVE'}"> {{moderatorAction['@type']}}:
+      {{moderatorAction.title}}
+    </div>
+
+    <div ng-if="moderatorAction['@type'] == 'tag'" class="col-xs-3 tagList noPadding text-left tagModerator"
+         ng-class="{tagList: moderatorAction['@action'] === 'RESTORE',tagListRemoved: moderatorAction['@action'] === 'DELETE' || moderatorAction['@action'] === 'REMOVE'}">
+      <ul class="list-unstyled noMargins list-inline">
+        <span class="color-torea-bay"
+              ng-class="{removed: moderatorAction['@action'] === 'DELETE' || moderatorAction['@action'] === 'REMOVE'}">{{moderatorAction['@type']}}:</span>
+        <li><span><a>{{moderatorAction.tag['@text']}}</a></span></li>
+      </ul>
+    </div>
+
+    <div ng-show="moderatorAction['@action'] === 'RESTORE' || moderatorAction['@action'] === 'UPDATE' "
+         class="col-xs-1">
+      <button class="btn removeButton" data-toggle="collapse" data-target="#moderationActionEdition{{$index}}">Remove
+      </button>
+    </div>
+    <div ng-show="moderatorAction['@action'] === 'DELETE' || moderatorAction['@action'] === 'REMOVE'" class="col-xs-1">
+      <button class="btn restoreButton" data-toggle="collapse" data-target="#moderationActionEdition{{$index}}">
+        Restore
+      </button>
+    </div>
+
+    <div ng-if="moderatorAction.history.length > 0" class="col-xs-1"><a href="" rel="#" data-toggle="collapse"
+                                                                        data-target="#noteM{{$index}}"
+                                                                        class="color-black"><span
+      class="glyphicons glyphicons-notes-2"></span></a></div>
+  </div>
+
+  <!--REMOVE / RESTORE PANEL-->
+  <div id="moderationActionEdition{{$index}}" data-edition-tag data-type="'ModeratorAction'"
+       data-contribution="moderatorAction" data-index="$index"
+       class="col-xs-12 editionPanel panel-collapse collapse"></div>
+
+  <div id="noteM{{$index}}" class="col-xs-12 noteGroup noPaddingSides panel-collapse collapse">
+    <div class="note row noMarginsSides" ng-repeat="note in moderatorAction.history"
+         ng-class="{noteBorder: $index != 0}">
+      <div class="col-xs-3">
+        <span class="bold">Moderator:</span>
+        <span>{{note['@fullName']}}</span>
+      </div>
+      <div class="col-xs-2">
+        <span class="bold">{{note['@action'].toLowerCase() | capitalize }}:</span>
+        <span ng-bind="OpaUtils.fancyDate(note['@logTS'])"></span>
+      </div>
+      <div class="col-xs-2">
+        <span class="bold">Reason:</span>
+        <span>{{note['@reason']}}</span>
+      </div>
+      <div class="col-xs-5">
+        <span class="bold">Notes:</span>
+        <span>{{note['@notes']}}</span>
+      </div>
+    </div>
+  </div>
+</div>

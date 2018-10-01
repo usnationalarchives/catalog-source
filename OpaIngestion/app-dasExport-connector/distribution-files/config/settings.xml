@@ -1,0 +1,98 @@
+<settings>
+
+  <!--OSGI properties -->
+  <configAdmin>
+    <properties pid="org.apache.felix.webconsole.internal.servlet.OsgiManager">
+      <property name="username">admin</property>
+      <property name="password">admin</property>
+      <property name="manager.root">/osgi</property>
+        <property name="debug">false</property>
+    </properties>
+  </configAdmin>
+
+<autoStart>
+    <application config="config/application.xml">
+      <properties>
+        <property name="debug">false</property>
+      </properties>
+    </application>
+  </autoStart>
+
+  <!-- Configured Repositories -->
+  <repositories>
+    <repository type="distribution">
+      <directory>bundles/aspire</directory>
+    </repository>
+
+    <repository type="maven">
+      <defaultVersion>2.0.2</defaultVersion>
+      <remoteRepositories>
+        <remoteRepository>
+          <id>stPublic</id>
+          <url>http://repository.searchtechnologies.com/artifactory/simple/community-public/</url>
+          <user>xxx</user>
+          <password>xxx</password>
+        </remoteRepository>
+      </remoteRepositories>
+    </repository>
+  
+  </repositories>
+  
+  <!-- Example of authentication options -->
+  <!--  Options are 'None' (default), 'ConfigFile' -->
+  <!--
+  <authentication>
+    <type>none</type> 
+  </authentication>
+  -->
+
+  <!-- Example of Distributed communications configuration-->
+  <!--
+		<distributedCommunications enabled="true">
+		<installIgnoredPaths>appbundle-cache, cache, data, felix-cache, log
+		</installIgnoredPaths>
+		<checkpointJobRequests>false</checkpointJobRequests>
+		<connectionIdleTimeout>120000</connectionIdleTimeout>
+		<pollTimeout>100</pollTimeout>
+	
+		<tcp>
+			<keepAlive>false</keepAlive>
+			<trafficClass>2</trafficClass>
+			<reuseAddress>false</reuseAddress>
+			<readTimeout>10000</readTimeout>
+			<tcpNoDelay>false</tcpNoDelay>
+		</tcp>
+		
+		<discoveryManager type="default">
+			<discovery type="static">
+				<checkTimeout>45000</checkTimeout>
+				<remoteNodes />
+	    </discovery>
+		  <discovery type="broadcast" default="true">
+				<broadcastPort>50000</broadcastPort>
+				<multicastAddressGroup>230.0.0.1</multicastAddressGroup>
+		  </discovery>
+		</discoveryManager>
+	
+		<discoveryManager type="zookeeper">
+			<implementation>com.searchtechnologies:aspire-zk-dm</implementation>
+			<zookeeperConnection>127.0.0.1:2182,127.0.0.1:2183,127.0.0.1:2181</zookeeperConnection>
+			<zookeeperPath>/aspire/nodes</zookeeperPath>
+			<zookeeperTimeout>2000</zookeeperTimeout>
+			<resourceUpdateTime>2000</resourceUpdateTime>
+		</discoveryManager>
+	
+		<discoveryManager type="amazonec2">
+			<implementation>com.searchtechnologies:aspire-amazonec2-dm</implementation>
+			<discovery type="amazonec2">
+				<secretKey>encrypted:EncryptedSecretKey</secretKey>
+				<accessKey>encrypted:EncryptedAccessKey</accessKey>
+				<usePublicIP>false</usePublicIP>
+				<securityGroup>default</securityGroup>
+				<pollFrequency>1000</pollFrequency>
+			</discovery>
+		</discoveryManager>
+	
+	</distributedCommunications>
+  -->
+</settings>

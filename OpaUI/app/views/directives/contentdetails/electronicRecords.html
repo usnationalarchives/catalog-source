@@ -1,0 +1,29 @@
+<div class="uer col-xs-12" ng-show="technicalDocs.length + electronicRecords.length > 0">
+	<p class="files-avail">{{technicalDocs.length + electronicRecords.length}} files available </p>
+	<p class="title" ng-if="technicalDocs">Technical Documentation</p>
+
+	<ol class="uer-list documents">
+		<li ng-repeat="technicalDoc in technicalDocs" ng-show="$index < 10 || allDocs">
+			<div class="uer-row1">
+				<a class="view" target="_blank" ng-if="technicalDoc.display === 'Y' || !technicalDoc.display" ng-href="{{technicalDoc.file['@path'] + '?download=false'}}">
+                    <span ng-bind-template="View/Download {{technicalDoc.description}}"></span>
+                </a>
+                <a class="view" target="_self" ng-if="technicalDoc.display === 'N'" ng-href="{{technicalDoc.file['@path'] + '?download=true'}}">
+                    <span ng-bind-template="Download {{technicalDoc.description}}"></span>
+                </a>
+			</div>
+			<div class="uer-row2" ng-bind="'(' + technicalDoc.file['@name'] + ', ' + technicalDoc.file['@mime'].split('/')[1] + ', ' + technicalDoc.technicalMetadata.fileSizeDisplay + ')'"></div>
+		</li>
+	</ol>
+	<p class="title" ng-if="electronicRecords">Electronic Records</p>
+
+	<ol class="uer-list electronic-records">
+		<li ng-repeat="electronicRecord in electronicRecords">
+			<div class="uer-row1">
+				<a class="view" target="_self" ng-href="{{electronicRecord.file['@path'] + '?download=true'}}"><span if="technicalDoc.display==='N">Download </span><span ng-bind="electronicRecord.description"></span></a>
+			</div>
+			<div class="uer-row2" ng-bind="'(' + electronicRecord.file['@name'] + ', ' + electronicRecord.file['@mime'] + ', ' + electronicRecord.technicalMetadata.fileSizeDisplay + ')'"></div>
+		</li>
+	</ol>
+	<a ng-click="allDocs = true" ng-hide="allDocs || technicalDocs.length <= 10" class="show-more-link">show all files</a>
+</div>

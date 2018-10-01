@@ -1,0 +1,65 @@
+<div class="row" ng-show="!thankyou">
+    <div id="registration" class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10">
+        <h1 class="title">&nbsp;&nbsp;Join our community of citizen archivists. Register now!</h1>
+        <form class="form margin-40-bottom" name="registrationForm" ng-submit="register(registrationForm.$valid)" novalidate>
+            <div class="form-group">
+                <span class="error" ng-show="invalid" ng-bind="error"></span>
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label><br>
+                <input type="text" id="username" name="username" ng-model="account.username" alphanumeric maxlength="100" required>
+            </div>
+            <div class="form-group">
+                <label for="fullName">Full name</label><br>
+                <input type="text" id="fullName" name="fullName" ng-model="account.fullname" maxlength="100" specialchars>
+                <label class="check-label">
+                    <input type="checkbox" id="fullnamePublic" name="fullnamePublic" ng-model="account.fullnamePublic" maxlength="100" ng-disabled="enableNARA" ng-checked="enableNARA">
+                    <span ng-bind="userNARA" class="info-nara"></span>
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <div class="form-inline">
+                    <input type="email" id="email" name="email" email ng-model="account.email" maxlength="100" required>
+                    <p class="help-block-triangle" ng-show="enableNARA">Please note. This is a public system. Do not use your NARA network password for registration.</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="form-inline">
+                    <input type="password" id="password" name="password" ng-model="account.password" maxlength="32" required>
+                    <p class="help-block-circle">Password must contain minimum of 8 characters and can contain special characters or numbers</p>
+                </div>
+            </div>
+            <div class="form-group">
+            <label for="rePassword">Re-type Password</label><br>
+            <input type="password" id="rePassword" name="rePassword" ng-model="account.repassword" maxlength="32" required>
+        </div>
+            <div class="buttons">
+                <button type="submit" class="btn btn-primary">Register</button>
+                <a href="" rel="#" class="blue-link" ng-click="goBack()">Cancel</a>
+                <a href="/login" type="button" class="blue-link">Already Registered?</a>
+            </div>
+        </form>
+          <div>
+            <p>
+              <br>
+              When you voluntarily register for a user account in the National Archives Catalog, we ask you to supply some personal information about yourself. An email address and username are required; other information is optional but may be needed to complete specific tasks. Identification of users allows us to support content contributed by the public and to provide a more personalized experience of our websites. When you provide your email address to us, we only use it for the purposes of communicating with you.
+              <br><br>
+              By creating a user account in the National Archives Catalog, you are granting the National Archives permission to email you, and your email address is automatically subscribed to the National Archives Catalog email newsletter. If there are any issues related to your user account, we may use your email address and username to contact you about the issues involved.
+              <br><br>
+              You can revoke your permission at any time using the Unsubscribe link found at the bottom of every email newsletter, or by emailing us at <a style="margin:0px" href="mailto:catalog@nara.gov">catalog@nara.gov</a>. Please review our <a style="margin:0px" href="https://www.archives.gov/global-pages/privacy.html">Privacy Policy on archives.gov</a> for additional information. Email newsletters are serviced by a third party.
+            </p>
+          </div>
+        <!--<div>-->
+            <!--<p class="title">&nbsp;&nbsp;Or Register with your social account</p>-->
+            <!--<div class="center">-->
+                <!--<a href="#"> <img src="images/btn_twitter_c.png"> </a>-->
+                <!--<a href="#"> <img src="images/btn_google_c.png"> </a>-->
+                <!--<a href="#"> <img src="images/btn_facebook_c.png"> </a>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+    &nbsp;
+</div>
+<div thankyou  ng-show="thankyou"></div>

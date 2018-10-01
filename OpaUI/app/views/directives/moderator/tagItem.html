@@ -1,0 +1,50 @@
+<div class="row tagItem noMarginsSides item">
+    <div>
+        <div class="col-xs-1" ng-class="{removed: tag['@action'] === 'DELETE' || tag['@action'] === 'REMOVE' }">{{$index + offset + 1}}</div>
+
+        <div class="col-xs-2 noPadding tagList tagModerator" ng-class="{tagList: tag['@action'] === 'ADD',tagListRemoved: tag['@action'] === 'DELETE' || tag['@action'] === 'REMOVE'}">
+            <ul class="list-unstyled noMargins">
+                <li><span><a target="_blank" ng-href='#/search?q=*:*&filter=(tagsExact:"{{tag.tag["@text"] | encodeString}}" or objectTagsExact:"{{tag.tag["@text"] | encodeString}}")'>{{tag.tag['@text']}}</a></span></li>
+            </ul>
+        </div>
+
+        <div class="col-xs-4" ng-class="{removed: tag['@action'] === 'DELETE' || tag['@action'] === 'REMOVE'}"><a target="_blank" ng-href="#/id/{{tag.description['@naid']}}" ng-bind="tag.title" class="color-torea-bay"></a></div>
+
+        <div ng-if="!tag.description['@id']" class="col-xs-1" ng-class="{removed: tag['@action'] === 'DELETE' || tag['@action'] === 'REMOVE'}"><a class="color-torea-bay" ng-href="#/id/{{tag.description['@naid']}}" target="_blank">Description</a></div>
+        <div ng-if="tag.description['@id']" class="col-xs-1" ng-class="{removed: tag['@action'] === 'DELETE' || tag['@action'] === 'REMOVE'}"><a class="color-torea-bay" ng-href="#/id/{{tag.description['@naid']}}/{{tag.description['@pageNum']}}/public?contributionType=tag" target="_blank" ng-bind-template="{{tag.description['@pageNum']}} / {{tag.description['@totalPages']}}"></a></div>
+
+        <div ng-if="tag['@authorIsNaraStaff'] === 'false'" class="col-xs-1" ng-class="{removed: tag['@action'] === 'DELETE' || tag['@action'] === 'REMOVE'}"><a class="color-torea-bay" target="_blank" ng-href="#/accounts/{{tag['@authorUserId']}}/contributions?contributionType=tags" ng-bind="tag['@authorUserId']"></a></div>
+        <div ng-if="tag['@authorIsNaraStaff'] === 'true' " class="col-xs-1" ng-class="{removed: tag['@action'] === 'DELETE' || tag['@action'] === 'REMOVE'}"><a class="color-torea-bay" target="_blank" ng-href="#/accounts/{{tag['@authorUserId']}}/contributions?contributionType=tags" ng-bind="tag['@authorFullName']"></a></div>
+
+        <div id="tg{{$index}}" class="col-xs-1" ng-class="{removed: tag['@action'] === 'DELETE' || tag['@action'] === 'REMOVE'}">{{OpaUtils.fancyDate(tag['@when'])}}</div>
+
+        <div ng-show="tag['@action'] === 'ADD' || tag['@action'] === 'RESTORE' " class="col-xs-1"><button class="btn removeButton" data-toggle="collapse" data-target="#moderationTag{{$index}}">Remove</button></div>
+        <div ng-show="tag['@action'] === 'DELETE' || tag['@action'] === 'REMOVE'" class="col-xs-1"><button class="btn restoreButton" data-toggle="collapse" data-target="#moderationTag{{$index}}">Restore</button></div>
+
+        <div ng-if="tag.history.length > 0" class="col-xs-1 hoverPointer"><a href="" rel="#" data-toggle="collapse" data-target="#note{{$index}}" class="color-black"><span class="glyphicons glyphicons-notes-2"></span></a></div>
+    </div>
+
+    <!--REMOVE / RESTORE PANEL-->
+    <div id="moderationTag{{$index}}" data-edition-tag data-type="'Tag'" data-contribution="tag" data-index="$index" class="col-xs-12 editionPanel panel-collapse collapse"></div>
+
+    <div id="note{{$index}}" class="col-xs-12 noteGroup noPaddingSides panel-collapse collapse">
+        <div class="note row noMarginsSides" ng-repeat="note in tag.history" ng-class="{noteBorder: $index != 0}">
+            <div class="col-xs-3">
+                <span class="bold">Moderator:</span>
+                <span>{{note['@fullName']}}</span>
+            </div>
+            <div class="col-xs-2">
+                <span class="bold">{{note['@action'].toLowerCase() | capitalize }}:</span>
+                <span ng-bind="OpaUtils.fancyDate(note['@logTS'])"></span>
+            </div>
+            <div class="col-xs-3">
+                <span class="bold">Reason:</span>
+                <span>{{note['@reason']}}</span>
+            </div>
+            <div class="col-xs-4">
+                <span class="bold">Notes:</span>
+                <span>{{note['@notes']}}</span>
+            </div>
+        </div>
+    </div>
+</div>

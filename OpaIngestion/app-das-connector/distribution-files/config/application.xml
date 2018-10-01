@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application name="DasConnector" typeFlags="scheduled,group-expansion">
+  <components>
+    <component name="Main" subType="pipeline" factoryName="aspire-application">
+      <debug>${debug}</debug>
+      <gatherStatistics>${debug}</gatherStatistics>
+
+      <pipelines>
+        <pipeline name="scannerPipeline" default="true">
+          <stages>
+            <stage component="IncomingJobLogger" />
+            <stage component="ExtractConfiguration" />
+            <stage component="Scanner" />
+          </stages>
+        </pipeline>
+      </pipelines>
+
+      <components>
+        <component name="IncomingJobLogger" subType="jobLogger"
+          factoryName="aspire-tools">
+          <debug>${debug}</debug>
+          <logFile>log/${app.name}/incoming.jobs</logFile>
+        </component>
+
+        <component name="ExtractConfiguration" subType="default"
+          factoryName="aspire-groovy">
+          <debug>${debug}</debug>
+          <variable name="appname">"${app.name}"</variable>
+          <script>
+            <![CDATA[
+              import com.searchtechnologies.aspire.services.AspireObject;
+
+              // Move the file system connector properties up to the top level
+              AspireObject properties = doc.get("routingTable");
+
+              if (properties != null)
+                properties = properties.get(appname);
+              if (properties != null)
+                properties = properties.get("properties");
+
+              if (properties != null){
+                AspireObject connector = properties.get("connectorSource");
+                if (connector != null)
+                  doc.add(connector);
+              }
+              component.debug("DOC: %s", doc.toXmlString());
+            ]]>
+          </script>
+        </component>
+
+        <!-- Das Scanner -->
+        <component name="Scanner" subType="das-scanner"
+          factoryName="gov.nara.opa:ingestion-components">
+          <debug>${debug}</debug>
+          <metadataMap>
+            <map from="action" to="action" />
+            <map from="doc-type" to="docType" />
+            <map from="last-modified-date" to="lastModified" />
+            <map from="content-length-bytes" to="dataSize" />
+            <map from="owner" to="owner" />
+          </metadataMap>
+          <snapshotDir>${snapshotDir}</snapshotDir>
+          <fileNamePatterns>
+            <include pattern=".*" />
+            <exclude pattern=".*tmp$" />
+          </fileNamePatterns>
+          <branches>
+            <branch event="onAdd" pipelineManager="../ProcessPipelineManager"
+              pipeline="addUpdatePipeline" allowRemote="true" batching="true"
+              batchSize="50" batchTimeout="60000" simultaneousBatches="2" />
+            <branch event="onUpdate" pipelineManager="../ProcessPipelineManager"
+              pipeline="addUpdatePipeline" allowRemote="true" batching="true"
+              batchSize="50" batchTimeout="60000" simultaneousBatches="2" />
+            <branch event="onDelete" pipelineManager="../ProcessPipelineManager"
+              pipeline="deletePipeline" allowRemote="true" batching="true"
+              batchSize="50" batchTimeout="60000" simultaneousBatches="2" />
+          </branches>
+        </component>
+      </components>
+    </component>
+
+    <component name="ProcessPipelineManager" subType="pipeline"
+      factoryName="aspire-application">
+      <debug>${debug}</debug>
+      <gatherStatistics>${debug}</gatherStatistics>
+      <maxThreads>${ingestionMaxThreads}</maxThreads>
+      <queueSize>${ingestionQueueSize}</queueSize>
+      <queueTimeout>${ingestionQueueTimeout}</queueTimeout>
+
+      <pipelines>
+        <pipeline name="addUpdatePipeline" default="true">
+          <stages>
+            <stage component="AfterScanWorkflow" />
+            <stage component="BranchOnDocType" />
+            <!-- shouldn't get to here, but just incase -->
+            <stage component="PublishWorkflow" />
+          </stages>
+          <branches>
+            <branch event="onFile" pipelineManager="./"
+              pipeline="addUpdateFilePipeline" />
+            <branch event="onFolder" pipelineManager="./"
+              pipeline="addUpdateFolderPipeline" />
+            <branch event="onError" pipelineManager="./" pipeline="errorPipeline" />
+          </branches>
+        </pipeline>
+        <pipeline name="addUpdateFilePipeline">
+          <stages>
+          </stages>
+          <branches>
+            <branch event="onComplete" pipelineManager="./"
+              pipeline="addUpdateWorkflowPipeline" />
+            <branch event="onError" pipelineManager="./" pipeline="errorPipeline" />
+          </branches>
+        </pipeline>
+        <pipeline name="addUpdateFolderPipeline">
+          <stages>
+            <stage component="AssignItemTypeAsContent" />
+          </stages>
+          <branches>
+            <branch event="onComplete" pipelineManager="./"
+              pipeline="addUpdateWorkflowPipeline" />
+            <branch event="onError" pipelineManager="./" pipeline="errorPipeline" />
+          </branches>
+        </pipeline>
+        <pipeline name="addUpdateWorkflowPipeline">
+          <stages>
+            <stage component="AddUpdateWorkflow" />
+            <stage component="AddUpdateJobLogger" />
+            <stage component="PublishWorkflow" />
+          </stages>
+          <branches>
+            <branch event="onError" pipelineManager="./" pipeline="errorPipeline" />
+          </branches>
+        </pipeline>
+        <pipeline name="deletePipeline">
+          <stages>
+            <stage component="AfterScanWorkflow" />
+            <stage component="DeleteWorkflow" />
+            <stage component="DeleteJobLogger" />
+            <stage component="PublishWorkflow" />
+          </stages>
+          <branches>
+            <branch event="onError" pipelineManager="./" pipeline="errorPipeline" />
+          </branches>
+        </pipeline>
+        <pipeline name="errorPipeline">
+          <stages>
+            <stage component="ErrorJobLogger" />
+            <stage component="ErrorWorkflow" />
+          </stages>
+        </pipeline>
+      </pipelines>
+
+      <components>
+        <component name="AfterScanWorkflow" subType="default"
+          factoryName="aspire-business-rules">
+          <debug>${debug}</debug>
+          <libraries>${aspire.config.dir}/workflow-libraries</libraries>
+          <plan reload="${workflowReloadPeriod}" file="${app.config.dir}/workflow.xml"
+            id="afterScan" errorTolerant="${workflowErrorTolerant}" />
+        </component>
+
+        <component name="BranchOnDocType" subType="conditionalBranch"
+          factoryName="aspire-tools">
+          <debug>${debug}</debug>
+          <targetElement>/doc/docType</targetElement>
+          <condition type="equals" value="item" event="onFile" />
+          <condition type="equals" value="container" event="onFolder" />
+        </component>
+
+        <component name="PublishWorkflow" subType="default"
+          factoryName="aspire-business-rules">
+          <debug>${debug}</debug>
+          <libraries>${aspire.config.dir}/workflow-libraries</libraries>
+          <plan reload="${workflowReloadPeriod}" file="${app.config.dir}/workflow.xml"
+            id="onPublish" errorTolerant="${workflowErrorTolerant}" />
+        </component>
+
+        <component name="AssignItemTypeAsContent" subType="default"
+          factoryName="aspire-groovy">
+          <debug>${debug}</debug>
+          <script>
+            <![CDATA[
+              import com.searchtechnologies.aspire.framework.utilities.StringUtilities;
+
+              String content=doc.getText("content");
+              if (StringUtilities.isEmpty(content)) {
+                String itemName="";
+                if (doc.get("hierarchy") && doc.get("item")){
+                   itemName = doc.get("hierarchy").get("item").getAttribute("name");
+                 }
+                doc.add("content", itemName);
+              }
+            ]]>
+          </script>
+        </component>
+
+        <component name="AddUpdateWorkflow" subType="default"
+          factoryName="aspire-business-rules">
+          <debug>${debug}</debug>
+          <libraries>${aspire.config.dir}/workflow-libraries</libraries>
+          <plan reload="${workflowReloadPeriod}" file="${app.config.dir}/workflow.xml"
+            id="onAddUpdate" errorTolerant="${workflowErrorTolerant}" />
+        </component>
+
+        <component name="AddUpdateJobLogger" subType="jobLogger"
+          factoryName="aspire-tools">
+          <debug>${debug}</debug>
+          <logFile>log/${app.name}/addUpdate.jobs</logFile>
+          <enable>false</enable>
+        </component>
+
+        <component name="DeleteWorkflow" subType="default"
+          factoryName="aspire-business-rules">
+          <debug>${debug}</debug>
+          <libraries>${aspire.config.dir}/workflow-libraries</libraries>
+          <plan reload="${workflowReloadPeriod}" file="${app.config.dir}/workflow.xml"
+            id="onDelete" errorTolerant="${workflowErrorTolerant}" />
+        </component>
+
+        <component name="DeleteJobLogger" subType="jobLogger"
+          factoryName="aspire-tools">
+          <debug>${debug}</debug>
+          <logFile>log/${app.name}/delete.jobs</logFile>
+        </component>
+
+        <component name="ErrorWorkflow" subType="default"
+          factoryName="aspire-business-rules">
+          <debug>${debug}</debug>
+          <libraries>${aspire.config.dir}/workflow-libraries</libraries>
+          <plan reload="${workflowReloadPeriod}" file="${app.config.dir}/workflow.xml"
+            id="onError" errorTolerant="${workflowErrorTolerant}" errorWorkflow="true"/>
+        </component>
+
+        <component name="ErrorJobLogger" subType="jobLogger"
+          factoryName="aspire-tools">
+          <debug>${debug}</debug>
+          <logFile>log/${app.name}/error.jobs</logFile>
+          <enable>false</enable>
+        </component>
+
+      </components>
+    </component>
+
+    <!--Group Expansion -->
+    <component name="GroupExpansionScheduler" subType="default"
+      factoryName="aspire-scheduler">
+      <debug>${debug}</debug>
+      <schedules>
+        <schedule name="GECache" enabled="true">
+          <cron>${geSchedule}</cron>
+          <event>onGECache</event>
+          <job>
+            <![CDATA[
+              <doc actionProperties="cacheGroups">
+                <routingTable>
+                  <${app.name}>
+                    <properties>
+                      <connectorSource>
+                        <url>${url}/</url>
+                        <username>${username}</username>
+                        <password>${password}</password>
+                      </connectorSource>
+                    </properties>
+                  </${app.name}>
+                </routingTable>
+                <displayName>Das</displayName>
+              </doc>
+            ]]>
+          </job>
+        </schedule>
+      </schedules>
+      <branches>
+        <branch event="onGECache" pipelineManager="Main" />
+      </branches>
+    </component>
+
+    <component name="GroupExpansionPipelineManager" subType="pipeline"
+      factoryName="aspire-application">
+      <debug>${debug}</debug>
+      <gatherStatistics>${debug}</gatherStatistics>
+      <pipelines>
+        <pipeline name="group-expansion-pipeline" default="true">
+          <stages>
+            <stage component="IncomingJobLogger" />
+            <stage component="DasGroupExpansion" />
+          </stages>
+        </pipeline>
+      </pipelines>
+      <components>
+        <component name="IncomingJobLogger" subType="jobLogger"
+          factoryName="aspire-tools">
+          <debug>${debug}</debug>
+          <logFile>log/${app.name}/GroupExpansionPipelineManager/incoming.jobs
+          </logFile>
+        </component>
+        <component name="DasGroupExpansion"
+          subType="expansionClient" factoryName="aspire-simple-group-expander">
+          <debug>${debug}</debug>
+          <server>../Main/Scanner</server>
+        </component>
+      </components>
+    </component>
+
+  </components>
+</application>

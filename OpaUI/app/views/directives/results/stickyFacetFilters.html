@@ -1,0 +1,18 @@
+<div id="stickyFacetFilters" class="container-fluid"  ng-show="searchSvc.additionalFilters">
+    <span class="hidden-inline-xs hidden-inline-sm filterLabel">&nbsp;Refinements:&nbsp;</span>
+    <span ng-show="showAllFacets">
+        <span ng-repeat="facet in searchSvc.additionalFilters">
+            <span ng-repeat="value in facet.v | orderBy:'displayName'">
+                <button class="btn stickyFilter" ng-click="removeFilter(facet.searchEngineName, value)">
+                    {{facet.displayName}}: {{value.displayName}}
+                    <span class="glyphicons glyphicons-circle-remove color-torea-bay"></span>
+                </button>
+            </span>
+        </span>
+    </span>
+    <span class="hidden-md hidden-lg filterLabel">&nbsp;Refinements:&nbsp;
+        <button class="btn btn-link noPaddingSides color-torea-bay" ng-click="toggleShowAll()">{{showAllFacets ? 'Hide All' : 'Show All'}}</button>&nbsp;
+        <span class="divider-vertical-multibar visible-inline-xs visible-inline-sm"></span>&nbsp;
+        <button class="btn btn-link noPaddingSides color-torea-bay" ng-click="clearAllFacets()">Clear All</button>
+    </span>
+</div>

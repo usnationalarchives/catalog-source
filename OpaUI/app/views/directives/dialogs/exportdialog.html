@@ -1,0 +1,107 @@
+<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close &times;</button>
+        <span class="modal-title" id="exportModalLabel">Export Selected Records</span>
+      </div>
+      <div class="modal-body">
+
+        <p class="lessBottomSpacing">Export <span ng-bind="searchSvc.topResults || searchSvc.selectedResults.length || 0"
+                                                ng-hide="exportSvc.naid"></span>
+          <span ng-show="exportSvc.naid">1</span> records as:</p>
+
+        <form class="form-horizontal" role="form">
+          <div class="form-group" ng-show="exportSvc.getError()">
+            <span class="error" ng-bind="exportSvc.getError()"></span><br>
+          </div>
+          <div class="form-group">
+            <label for="radioDescriptionExport" class="desc-label col-sm-3 control-label">Descriptions:</label>
+            <input class="hidden" id="radioDescriptionExport">
+
+            <div class="col-sm-6">
+              <div class="radio-inline">
+                <label for="BriefDescriptionExport">
+                  <input id="BriefDescriptionExport" type="radio" value="brief" ng-model="exportSvc.descriptions">
+                  Brief
+                </label>
+              </div>
+              <div class="radio-inline">
+                <label for="FullDescriptionExport">
+                  <input id="FullDescriptionExport" type="radio" value="full" ng-model="exportSvc.descriptions">
+                  Full
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="radioThumbnailExport" class="desc-label col-sm-4 control-label">Include Thumbnails? </label>
+            <input class="hidden" id="radioThumbnailExport">
+
+            <div class="col-sm-6">
+              <div class="radio-inline">
+                <label for="YesThumbailsExport">
+                  <input id="YesThumbailsExport" type="radio" ng-value=true ng-model="exportSvc.thumbnails">
+                  Yes
+                </label>
+              </div>
+              <div class="radio-inline">
+                <label for="NoThumbailsExport">
+                  <input id="NoThumbailsExport" type="radio" ng-value=false ng-model="exportSvc.thumbnails">
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="checkboxUserContributionInput" class="desc-label col-sm-5  control-label">
+              Include User Contributions:
+            </label>
+            <input class="hidden" id="checkboxUserContributionInput">
+
+            <div class="col-sm-6 ">
+              <div class="checkbox" id="checkboxUserContribution" ng-hide="offlineContent">
+                <label>
+                  <input type="checkbox" id="checkContrib1" value=true
+                         ng-model="exportSvc.contributions['transcriptions']">
+                  Transcriptions
+                </label>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="checkContrib3" value=true ng-model="exportSvc.contributions['tags']">
+                  Tags
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="checkContrib4" value=true ng-model="exportSvc.contributions['comments']">
+                  Comments
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group margin-20-top">
+            <label for="exportFormatSelect" class="desc-label col-sm-3 control-label select-label">Export
+              Format:</label>
+
+            <div class="col-sm-4">
+              <select id="exportFormatSelect" class="form-control" ng-options="f for f in exportSvc.formats"
+                      ng-model="exportSvc.exportFormat">
+                <option class="hidden" value="">Select format</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="exportSvc.createExport(exportSvc.exportFormat)">Export
+        </button>
+        <a id="hiddenExportButton" class="hidden" ng-href="{{getDownloadURL()}}" target="_blank">Export</a>
+        <button type="button" class="btn btn-link link" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

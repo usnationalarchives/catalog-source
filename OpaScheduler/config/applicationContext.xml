@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	                    http://www.springframework.org/schema/context 
+	                    http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- Load in application properties reference -->
+	<context:property-placeholder location="classpath:application.properties,file:${gov.nara.opa.api.config}/application.properties"
+		system-properties-mode="FALLBACK" ignore-unresolvable="true" ignore-resource-not-found="true" />
+
+	<bean id="schedulerProxyBean" class="gov.nara.opa.scheduler.services.impl.SchedulerProxy">
+		<property name="configFilePath" value="${configFilePath}" />
+		<property name="binRuntimeDir" value="${binRuntimeDir}" />
+		<property name="apiURL" value="${apiURL}" />
+		<property name="fingerprintPath" value="${fingerprintPath}" />
+	</bean>
+</beans>

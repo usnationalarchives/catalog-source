@@ -1,0 +1,10 @@
+<div id="modalMessageTitle" class="modal-header">
+    <div class="modal-title">{{title}}</div>
+</div>
+<div id="modalMessageBody" class="modal-body">
+    <p><span ng-bind-html="message"></span></p>
+</div>
+<div id="modalMessageButtons" class="modal-footer">
+    <button class="btn btn-primary" ng-click="login()">Keep me logged me in</button>
+    <button class="btn btn-primary" ng-click="logout()">Log me out</button>
+</div>

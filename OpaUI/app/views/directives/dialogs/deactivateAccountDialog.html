@@ -1,0 +1,30 @@
+<div class="modal fade" id="deactivateAccount" tabindex="-1" role="dialog" aria-labelledby="deactivateAccountLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">Close <span class="glyphicons glyphicons-remove-2"></span></button>
+        <span class="modal-title" id="deactivateAccountLabel">Deactivate Account</span>
+      </div>
+      <div class="modal-body">
+        <div class="col-sm-offset-2 col-sm-10 dialog-error" ng-show="error">
+          <span class="glyphicons glyphicons-warning-sign">
+            <em ng-bind="error"></em>
+          </span>
+        </div>
+        <form class="form-horizontal" role="form">
+          <p>Are you sure you want to deactivate your account? While your account will be deactivated, your contributions will remain visible in our catalog. You can reactivate your account at any time by contacting catalog@nara.gov.</p>
+          <div class="form-group">
+            <label for="passwordDeactivate" class="col-sm-4 control-label">Password:</label>
+            <div class="col-sm-6">
+              <input type="password" class="form-control no-margin-top" id="passwordDeactivate" placeholder="" ng-model="deactivatePassword">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="deactivateAccount()">Deactivate</button>
+        <a href="" rel="#" data-dismiss="modal">Cancel</a>
+      </div>
+    </div>
+  </div>
+</div>

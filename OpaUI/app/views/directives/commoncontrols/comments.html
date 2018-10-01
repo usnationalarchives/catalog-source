@@ -1,0 +1,32 @@
+<div class="col-xs-12 comments-box noPaddingSides">
+  <a ng-if="comments.length == 0 && !Auth.isLoggedIn() && !isWorkspace" class="visible-xs visible-sm" href="/login">Login to Contribute</a>
+  <div class="float-right loginToContribute loginToContribute-comments hidden-xs hidden-sm" ng-if="!isWorkspace && !Auth.isLoggedIn()">
+    <a href="/login" type="button" class="btn btn-link loginToContribute-comments">
+      <span>Login<span class="hidden-inline-xs hidden-inline-sm">&nbsp;to Contribute</span></span>
+    </a>
+  </div>
+  <div class="float-right loginToContribute-comments hidden-xs hidden-sm" ng-if="!isWorkspace && Auth.isLoggedIn()">
+    <a class="btn-link font-size-11pt" ng-href="#/accounts/{{Auth.userName()}}/contributions?contributionType=comments" target="_blank" class="loginButton" ng-bind="Auth.getDisplayName()"></a>
+    <span class="gray-pipe">|</span>
+    <button type="button" class="btn btn-link no-padding-top no-padding-bottom font-size-11pt" ng-click="LoginService.logout()">Log out</button>
+  </div>
+
+  <div class="col-xs-12 post-comment-form" ng-class="{'post-comment-form-no-comments': comments.length == 0 && !isWorkspace}" ng-show="Auth.isLoggedIn() && !editMode">
+    <form class="form-inline">
+      <label for="commentInput" class="sr-only">Post a new Comment</label>
+      <textarea class="form-control" id="commentInput" placeholder="Enter your comment..." data-ng-model="commentText" required="true"></textarea>
+      <button type="button" ng-click="addComment()" class="btn btn-primary btn-comments">Post</button>
+    </form>
+    <div ng-if="postCommentBlank" class="commentBlankErrorMsj">
+      Please enter a valid comment
+    </div>
+  </div>
+
+  <div id="c{{comment['@id']}}" class="col-xs-12 comment" ng-class="{'comment-highlighted': currentCommentId == comment['@id']}" ng-repeat="comment in comments.comment" on-finish-render="ngRepeatFinished">
+    <div comment="comment" data-refresh-comments="refreshComments()" data-naid="naId" data-is-reply="false" data-parent-index="$index"></div>
+
+    <div id="c{{reply['@id']}}" class="col-xs-11 col-xs-offset-1 reply noPaddingSides" ng-class="{'comment-highlighted': currentCommentId == reply['@id']}" ng-repeat="reply in comment.replies" ng-hide="((comment.replies.length - 2) > $index) && comment.hide && isWorkspace && checkSharing(reply) || comment.hide && !isWorkspace && checkSharing(reply)">
+      <div comment="reply" data-refresh-comments="refreshComments()" data-naid="naId" data-is-reply="true" data-parent-id="comment['@id']"></div>
+    </div>
+  </div>
+</div>

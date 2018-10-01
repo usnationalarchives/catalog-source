@@ -1,0 +1,68 @@
+<div class="modal fade" id="printModal" tabindex="-1" role="dialog" aria-labelledby="printModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close <span
+          class="glyphicons glyphicons-remove-2"></span></button>
+        <span class="modal-title" id="printModalLabel">Print Selected Records</span>
+      </div>
+      <div class="modal-body">
+        <p class="lessBottomSpacing">Print <span
+          ng-bind="searchSvc.topResults || ListsService.selectedRecords.length || searchSvc.selectedResults.length || 0"
+          ng-hide="exportSvc.naid || exportSvc.selectedList"></span>
+          <span ng-show="exportSvc.naid">1</span> <span ng-show="exportSvc.selectedList"
+                                                        ng-bind="exportSvc.recordsInList"></span> records as:</p>
+
+        <form class="form-horizontal" role="form">
+          <div class="form-group" ng-show="exportSvc.getError()">
+            <span class="error"  ng-bind="exportSvc.getError()"></span><br>
+          </div>
+          <div class="form-group">
+            <label for="radioDescriptionPrint" class="desc-label col-sm-3 control-label">Descriptions:</label>
+            <input class="hidden" id="radioDescriptionPrint">
+
+            <div class="col-sm-6">
+              <div class="radio-inline">
+                <label for="BriefDescriptionPrint">
+                  <input id="BriefDescriptionPrint" type="radio" value="brief" ng-model="exportSvc.descriptions">
+                  Brief
+                </label>
+              </div>
+              <div class="radio-inline">
+                <label for="FullDescriptionPrint">
+                  <input id="FullDescriptionPrint" type="radio" value="full" ng-model="exportSvc.descriptions">
+                  Full
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="radioThumbnailPrint" class="desc-label col-sm-4 control-label">Include Thumbnails? </label>
+            <input class="hidden" id="radioThumbnailPrint">
+
+            <div class="col-sm-6">
+              <div class="radio-inline">
+                <label for="YesThumbailsPrint">
+                  <input id="YesThumbailsPrint" type="radio" ng-value=true ng-model="exportSvc.thumbnails">
+                  Yes
+                </label>
+              </div>
+              <div class="radio-inline">
+                <label for="NoThumbailsPrint">
+                  <input id="NoThumbailsPrint" type="radio" ng-value=false ng-model="exportSvc.thumbnails">
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="exportSvc.createPrint()">Print</button>
+        <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

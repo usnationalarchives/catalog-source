@@ -1,0 +1,23 @@
+<div class="tagList">
+    <ul class="list-unstyled" ng-class="listType">
+        <span ng-if="Tags.length == 0"><p>Add a tag...</p></span>
+        <li class="noPaddingLeft" ng-repeat="tag in Tags" ng-show="$index < 15 || showAllTags">
+            <span id={{"tag"+$index}} ng-class="{userTag:checkUserTag(tag)}">
+                <a ng-href='#/search?q=*:*&filter=(tagsExact:"{{tag["@text"]}}" or objectTagsExact:"{{tag["@text"]}}")' target="_blank">{{tag['@text'] | decodeString}}</a>
+                <a href="" rel="#" class="deleteButtonTag glyphicons glyphicons-circle-remove" ng-show="checkUserTag(tag)" ng-click="deleteTag(tag['@text'],'tag'+$index)"></a>
+            </span>
+        </li>
+    </ul>
+    <a href="" rel="#" class="tag-link" ng-show="Tags.length>15 && showAllTags==false" ng-click="showAllTags=true">More ...</a>
+    <a href="" rel="#" class="tag-link" ng-show="Tags.length>15 && showAllTags==true" ng-click="showAllTags=false">Less ...</a>
+
+    <form role="form" ng-submit="addTag()">
+      <div class="col-xs-10 noPaddingSides">
+        <label for="newTagInputContentDetail{{listType}}" class="sr-only">Enter new tags</label>
+        <input type="text" class="form-control" id="newTagInputContentDetail{{listType}}" ng-model="tagText" placeholder="Enter new tags...">
+      </div>
+      <div class="padding-10-left col-xs-2 pull-right">
+        <button type="submit" class="btn btn-primary">Add</button>
+      </div>
+    </form>
+</div>

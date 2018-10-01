@@ -1,0 +1,132 @@
+.post-comment-form {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid $silver;
+  button.btn.btn-primary {
+    position: absolute;
+    bottom: 10px;
+    right: 5px;
+  }
+  form {
+    padding-right: 50px;
+    textarea{
+      border-color: $havelock-blue;
+    }
+  }
+}
+
+.post-comment-form-no-comments{
+  border-bottom: none;
+}
+
+.comment {
+  border-bottom: 1px solid $silver;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  display: inline-block;
+  form.edit-comment {
+    padding: 10px 125px 5px 10px;
+    button.btn-primary {
+      position: absolute;
+      right: 75px;
+      top: 40px;
+    }
+    button.btn-link {
+      position: absolute;
+      right: 20px;
+      top: 40px;
+    }
+  }
+  form.reply-comment {
+    padding-top: 10px;
+    padding-right: 130px;
+    color: $torea-bay;
+    button.btn-primary {
+      position: absolute;
+      right: 75px;
+      top: 30px;
+    }
+    button.btn-link {
+      position: absolute;
+      right: 20px;
+      top: 30px;
+    }
+  }
+  small {
+    padding-right: 15px;
+    font-size: x-small;
+  }
+  .comment-text {
+    //padding: 10px 10px 0px;
+    margin-bottom: -3px;
+
+    .confirmPanel{
+      color: $oregon;
+      padding-left: 25px;
+    }
+  }
+  .comment-user-link{
+    color: $torea-bay;
+  }
+  .reply {
+
+    padding-top: 10px;
+
+    form.edit-comment button.btn-primary, form.edit-comment button.btn-link {
+      top: 30px;
+    }
+    small {
+      padding-right:15px;
+    }
+    .reply-text {
+      padding: 5px 5px 0 5px;
+      margin-bottom: -5px;
+    }
+  }
+  a.reply {
+    font-size: smaller;
+    color: $torea-bay;
+  }
+  a.show-hide-replies {
+    color: $torea-bay;
+    font-weight: bold;
+  }
+  a{
+    vertical-align: inherit;
+  }
+
+}
+
+.comment-highlighted{
+  background-color: $commentHighlight;
+  -webkit-transition: background-color 1000ms ease-out;
+  -moz-transition: background-color 1000ms ease-out;
+  -o-transition: background-color 1000ms ease-out;
+  -ms-transition: background-color 1000ms ease-out;
+  transition: background-color 1000ms ease-out;
+}
+
+a.loginToContribute-comments {
+  font-size: 0.75em;
+  color: #0f37bb;
+  font-weight: bold;
+  border: solid #c6d9f1 thin;
+}
+
+div.loginToContribute-comments {
+  margin: 0;
+}
+
+.commentBlankErrorMsj{
+  color: $guardsman-red;
+  padding: 0 5px;
+}
+
+#workspaceArea {
+  .comments-box {
+    //padding-top: 10px;
+    }
+  button.btn-comments {
+    padding: 1px 5px;
+  }
+}

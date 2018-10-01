@@ -1,0 +1,130 @@
+<dxf:template version="1.0"
+  xmlns:dxf="http://www.searchtechnologies.com/DXF/2011">
+  <!-- SAMPLE DXF Form Template -->
+  <!-- DXF stands for "Dynamic XML Forms". It provides a component-friendly
+    method for editing XML configurations. -->
+  <!-- This particular sample is for editing properties for the application
+    specified by "application.xml". These properties are used when you load the
+    application bundle in to aspire. -->
+  <contentSourceConfig>
+    <connectorSource>
+      <!-- In here goes the specific properties for the content source -->
+      <url display="URL" type="string">
+        <dxf:help>Top-level directory to be scanned for DAS exports.
+        </dxf:help>
+      </url>
+      <notifyEmails display="Notification Email Addresses" type="string">
+        <dxf:help>Email addresses that will receive an email notification when Ingestion on a DAS export starts and finishes, separated by colon(;).
+        </dxf:help>
+      </notifyEmails>
+    </connectorSource>
+    <dxf:hr />
+    <properties>
+      <dxf:h1>Advanced Properties</dxf:h1>
+      <dxf:alternatives subType="checkbox" display="Advanced Configuration"
+        key="generalConfiguration" default="false">
+        <dxf:alternative display="Advanced Configuration"
+          value="false">
+
+          <snapshotDir type="constant">${dist.data.dir}/${app.name}/snapshots
+          </snapshotDir>
+          <!-- <disableTextExtract type="constant">false
+          </disableTextExtract> -->
+          <workflowReloadPeriod type="constant">15s
+          </workflowReloadPeriod>
+          <workflowErrorTolerant type="constant">false
+          </workflowErrorTolerant>
+          <useGE type="constant">false</useGE>
+          <geSchedule type="constant">0 0 0 * * ?</geSchedule>
+          <url type="constant" />
+		  <notifyEmails type="constant" />
+          <debug type="constant">false</debug>
+
+        </dxf:alternative>
+        <dxf:alternative display="Advanced Configuration"
+          value="true">
+
+          <dxf:h2>Group Expansion</dxf:h2>
+          <dxf:alternatives subType="checkbox" display="Use Group Expansion"
+            key="useGE" default="false">
+            <dxf:help>Check this box if you want to use Group Expansion
+            </dxf:help>
+            <dxf:alternative display="Don't User Group Expansion"
+              value="false">
+              <geSchedule type="constant" allowEmptyString="true"></geSchedule>
+              <url type="constant" allowEmptyString="true"></url>
+              <notifyEmails type="constant" allowEmptyString="true"></notifyEmails>
+            </dxf:alternative>
+
+            <dxf:alternative display="Use Group Expansion"
+              value="true">
+              <geSchedule type="pulldown" display="Group cache refresh">
+                <dxf:help>Group Expansion Schedule</dxf:help>
+                <dxf:option display="Every hour">0 0 * * * ?</dxf:option>
+                <dxf:option display="Every three hours">0 0 0/3 * * ?</dxf:option>
+                <dxf:option display="Every six hours">0 0 0/6 * * ?</dxf:option>
+                <dxf:option display="Twice a day">0 0 0,12 * * ?</dxf:option>
+                <dxf:option display="Daily">0 0 0 * * ?</dxf:option>
+              </geSchedule>
+              <url display="URL" type="string">
+                <dxf:help>URL. Example
+                  searchtechnologies.jiveon.com
+                </dxf:help>
+              </url>
+              <notifyEmails display="Notify to Emails" type="string">
+                <dxf:help>user1@nara.gov;nara@searchtechnologies.com
+                </dxf:help>
+              </notifyEmails>
+            </dxf:alternative>
+          </dxf:alternatives>
+
+          <dxf:hr style="height: 1px;" />
+          <snapshotDir display="Snapshot Directory" type="string" validations="required,path"
+            default="${dist.data.dir}/${app.name}/snapshots">
+            <dxf:help>Directory where content snapshots will be placed.
+            </dxf:help>
+          </snapshotDir>
+
+          <!-- <disableTextExtract display="Disable text extraction"
+            type="boolean">
+            <dxf:help>[EXPERT] By default, connectors use Apache Tika to
+              extract text from downloaded documents.
+              If you wish to apply
+              special text processing to the downloaded
+              document in the
+              workflow,
+              you should disable text extraction. The downloaded
+              document is then
+              available as a content stream
+            </dxf:help>
+          </disableTextExtract> -->
+
+          <workflowReloadPeriod display="Workflow reload period"
+            type="String" default="15s" allowEmptyString="false" validations="required,reloadPeriod">
+            <dxf:help>The period after which to reload the business rules.
+              Defaults to ms, but can be suffixed with ms, s,
+              m, h or d to
+              indicate the required units
+            </dxf:help>
+          </workflowReloadPeriod>
+
+          <workflowErrorTolerant display="Error tolerant"
+            type="boolean">
+            <dxf:help>When set, exceptions in workflow rules will only effect
+              the execution of the rule in which the exception occurs.
+              Subsequent rules will be executed and the job will complete the
+              workflow sucessfully. If not set, exceptions
+              in workflow rules
+              will be re-thrown and the job will be moved to
+              the error workflow
+            </dxf:help>
+          </workflowErrorTolerant>
+
+          <debug display="Debug" type="boolean">
+            <dxf:help>Check if you want debug messages enabled.</dxf:help>
+          </debug>
+        </dxf:alternative>
+      </dxf:alternatives>
+    </properties>
+  </contentSourceConfig>
+</dxf:template>

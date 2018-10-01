@@ -1,0 +1,32 @@
+<assembly>
+  <id>appBundle</id>
+  <formats>
+    <format>jar</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+    <fileSet>
+      <directory>distribution-files/config</directory>
+      <outputDirectory>config</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>distribution-files/web</directory>
+      <outputDirectory>web</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>distribution-files/resources/icons</directory>
+      <outputDirectory>icons</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>distribution-files/META-INF</directory>
+      <outputDirectory>META-INF/maven/${artifact.groupId}/${artifact.artifactId}</outputDirectory>
+      <filtered>true</filtered>
+    </fileSet>
+  </fileSets>
+  <files>
+    <file>
+      <source>pom.xml</source>
+      <outputDirectory>META-INF/maven/${artifact.groupId}/${artifact.artifactId}</outputDirectory>
+    </file>
+  </files>
+</assembly>

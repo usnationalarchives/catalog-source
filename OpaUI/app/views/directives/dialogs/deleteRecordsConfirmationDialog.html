@@ -1,0 +1,24 @@
+<div class="modal fade" id="deleteRecordsConfirmation" tabindex="-1" role="dialog" aria-labelledby="deleteRecordsLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close &times;</button>
+                <span class="modal-title" id="deleteListLabel">Delete Records</span>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <span class="error" ng-show="ListsService.selectedRecords.length <= 0">You must select records to remove</span><br>
+                </div>
+                <div class="row">
+                    <p class="dialog-text col-sm-12 no-margin-bottom">Are you sure you want to remove <span ng-bind="ListsService.selectedRecords.length"></span> records from this list - <strong ng-bind="selectedList"></strong>?<br><br>
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer no-margin-top">
+                <button type="button" class="btn btn-primary" ng-click="RemoveSelectedRecords()">Remove</button>
+                <a href="" rel="#" data-dismiss="modal">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>

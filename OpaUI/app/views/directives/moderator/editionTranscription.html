@@ -1,0 +1,21 @@
+<div>
+    <div class="row noMarginsSides">
+        <span class="labelT col-xs-1">
+            Reason:
+        </span>
+        <span class="col-xs-3">
+            <select class="form-control" ng-model="ui.reasonSelected" ng-options="reason.value as reason.text group by reason.group for reason in reasons">
+            </select>
+        </span>
+        <span class="col-xs-8">
+            <textarea class="form-control" id="additionalComments" placeholder="Enter additional comments…" type="text" cols="2" ng-model="ui.additionalComments"></textarea>
+        </span>
+    </div>
+
+    <div class="row actionButtons noMarginsSides">
+        <div class="col-xs-2 pull-right">
+            <button class="btn removeButton" ng-click="restoreTranscription()" data-toggle="collapse" data-target="#reasonPanel">Confirm</button>
+            <button class="btn btn-link" ng-click="cleanForm()" data-toggle="collapse" data-target="#reasonPanel">Cancel</button>
+        </div>
+    </div>
+</div>

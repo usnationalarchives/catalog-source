@@ -1,0 +1,43 @@
+<div>
+  <hr />
+  <div class="form-group">
+    <span class="bold">Call</span>
+    <!--<div class="input-group">-->
+    <!--<span ng-if="action =='POST'" class="input-group-addon postLabel" id="apicallR">POST</span>-->
+    <!--<span ng-if="action =='GET'" class="input-group-addon getLabel" id="apicallUS">GET</span>-->
+    <!--<input type="text" class="form-control" aria-describedby="apicallR" ng-model="call" ng-click="window.open(call)">-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <div class="callContainer">
+      <span ng-class="{'postLabel':action==='POST','getLabel':action==='GET','deleteLabel':action==='DELETE','putLabel':action==='PUT'}" ng-bind="action"></span>
+      <span class="callLink"><a ng-href="{{call | encodeString}}" target="_blank">{{call}}</a></span>
+    </div>
+
+    <div class="alert alert-danger" role="alert" ng-if="lifeMode ==='false' && !onlyLiveMode">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Note:</span>
+      The following is a mocked sample response, assuming that there are no errors in your parameter values. Your API call has not been sent to the live system.
+    </div>
+
+    <div class="alert alert-success" role="alert" ng-if="lifeMode ==='true' || onlyLiveMode">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      Response from Catalog live servers.
+    </div>
+
+    <div class="alert alert-danger" role="alert" ng-if="errorResponse">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      Please refer to NARA's Online Catalog API <a href="Document/ReferenceGuide.pdf" target="_blank" class="noPaddingSides"> Reference Guide </a> Appendix 9.4 for more information about this error
+    </div>
+
+    <div class="alert alert-success" role="alert" ng-show="exporId">
+      <strong>Bulk Export Link!</strong> Click on the following link to download the file containing the export data.
+      <a ng-href="{{exportLinkDownload}}" target="_blank" ng-bind="exportLinkDownload"></a>
+    </div>
+
+    <div class="form-group">
+      <label for="registrationResponse">Response body</label>
+      <textarea id="registrationResponse" class="form-control apiResponse" ng-class="{'errorResponse':errorResponse}" rows="20" data-ng-model="response"></textarea>
+    </div>
+  </div>
+</div>

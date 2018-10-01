@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	                    http://www.springframework.org/schema/context 
+	                    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	                    http://www.springframework.org/schema/batch 
+	                    http://www.springframework.org/schema/batch/spring-batch-3.0.xsd
+	                    http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<import resource="file:${gov.nara.opa.api.config}/exportJob.xml" />
+
+	<context:property-placeholder location="classpath:application.properties,file:${gov.nara.opa.api.config}/application.properties"
+		system-properties-mode="FALLBACK" ignore-unresolvable="true" ignore-resource-not-found="true" />
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<context:component-scan base-package="gov.nara.opa" />
+
+	<batch:job-repository id="jobRepository"
+		data-source="opaDbDataSource" transaction-manager="transactionManager"
+		table-prefix="SPRING_" />
+
+	<bean id="jobLauncher"
+		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+		<property name="taskExecutor">
+			<bean class="org.springframework.core.task.SimpleAsyncTaskExecutor" />
+		</property>
+	</bean>
+
+	<bean id="jobRegistry"
+		class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
+
+	<bean
+		class="org.springframework.batch.core.configuration.support.AutomaticJobRegistrar">
+		<property name="applicationContextFactories">
+			<bean
+				class="org.springframework.batch.core.configuration.support.ClasspathXmlApplicationContextsFactoryBean">
+				<property name="resources" value="file:${gov.nara.opa.api.config}/applicationContext.xml" />
+			</bean>
+		</property>
+		<property name="jobLoader">
+			<bean
+				class="org.springframework.batch.core.configuration.support.DefaultJobLoader">
+				<property name="jobRegistry" ref="jobRegistry" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="jobExplorer"
+		class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean">
+		<property name="dataSource" ref="opaDbDataSource" />
+		<property name="tablePrefix" value="SPRING_" />
+	</bean>
+
+	<bean id="jobOperator"
+		class="org.springframework.batch.core.launch.support.SimpleJobOperator">
+		<property name="jobExplorer" ref="jobExplorer" />
+		<property name="jobRepository" ref="jobRepository" />
+		<property name="jobRegistry" ref="jobRegistry" />
+		<property name="jobLauncher" ref="jobLauncher" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="opaDbDataSource" />
+	</bean>
+
+	<bean id="opaDbDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="${mysql.opaconnection.url}" />
+		<property name="username" value="${mysql.opaconnection.username}" />
+		<property name="password" value="${mysql.opaconnection.password}" />
+		<property name="defaultAutoCommit" value="false" />
+	</bean>
+
+	<bean id="exportJobExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="${minNoOfJobControllerProcessingThreads}" />
+		<property name="maxPoolSize" value="${maxNoOfConcurrentJobs}" />
+		<property name="queueCapacity" value="${maxNoOfNewRequestsSelection}" />
+		<property name="daemon" value="true" />
+	</bean>
+
+	<bean id="mainControllerExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor">
+		<property name="daemon" value="false" />
+	</bean>
+          
+</beans>

@@ -1,0 +1,166 @@
+<div id="rangeDateControl" class="col-xs-12 col-sm-9">
+
+  <div class="padding-10-bottom" id="tabsDateAdvSearch">
+    <div class="radio-inline noMarginsSides col-xs-12  col-sm-4">
+      <label class="table-cell" title="{{calendarToolTips.SEARCH_DATE_RANGE}}">
+        <input type="radio" name="optradio" ng-click="setTab('range')" ng-checked="dateRange.currentTab === 'range'" ng-disabled="disabled">
+        <span>Search by</span> Date Range<span class="sr-only" ng-bind="calendarToolTips.SEARCH_DATE_RANGE"></span>
+      </label>
+    </div>
+    <div class="radio-inline noMarginsSides col-xs-12 col-sm-4">
+      <label class="table-cell" title="{{calendarToolTips.SEARCH_DATE_EXACT}}" ng-class="{disabledOption:authorityRecordSelected}">
+        <input type="radio" name="optradio" ng-click="setTab('exact')" ng-checked="dateRange.currentTab === 'exact'" ng-disabled="disabled || authorityRecordSelected">
+        <span>Search by</span> Exact Date<span class="sr-only" ng-bind="calendarToolTips.SEARCH_DATE_EXACT"></span>
+      </label>
+    </div>
+    <div class="radio-inline noMarginsSides col-xs-12 col-sm-4">
+      <label class="table-cell" title="{{calendarToolTips.SEARCH_DATE_RECURRING}}" ng-class="{disabledOption:authorityRecordSelected}">
+        <input type="radio" name="optradio" ng-click="setTab('open')" ng-checked="dateRange.currentTab === 'open'" ng-disabled="disabled || authorityRecordSelected">
+        <span>Search by</span> Recurring Date<span class="sr-only" ng-bind="calendarToolTips.SEARCH_DATE_RECURRING"></span>
+      </label>
+    </div>
+  </div>
+
+  <div id="" class="">
+    <!--RANGE -->
+    <div ng-show="dateRange.currentTab === 'range'" class="col-xs-12 noPaddingSides" id="range" title="{{calendarToolTips.SEARCH_DATE_RANGE}}">
+      <div class="col-xs-12 col-sm-6 noPaddingSides">
+        <div class="form-inline">
+          <div class="col-xs-2 noPaddingSides"><span class="labelCalendarAdvanceSearch">From:</span></div>
+          <div class="col-xs-10 noPaddingSides">
+            <div class="form-group mobileInline">
+              <label class="sr-only" for="monthFrom">Month</label>
+              <select id="monthFrom" class="form-control" data-ng-model="dateRange.monthFromValue"
+                      ng-options="month for month in monthList"
+                      ng-change="updateDays(true,dateRange.monthFromValue,dateRange.yearFromValue)"
+                      ng-disabled="disabled"
+                      ng-class="{defaultDateText: dateRange.monthFromValue === 'MM'}"
+                      title="Select a month"></select>
+            </div>
+            <div class="form-group mobileInline">
+              <label class="sr-only" for="dayFrom">Day</label>
+              <select id="dayFrom" class="form-control" data-ng-model="dateRange.dayFromValue"
+                      ng-options="date for date in daysListFrom"
+                      ng-change="validateDates()" ng-disabled="disabled"
+                      ng-class="{defaultDateText: dateRange.dayFromValue === 'DD'}"
+                      title="Select a day"></select>
+            </div>
+
+            <div class="form-group mobileInline" title="Enter a year">
+              <label class="sr-only" for="yearfrom">Year</label>
+              <input id="yearFrom" kendo-date-picker k-options="yearSelectorOptions" ng-model="dateRange.yearFromValue"
+                     class="customizeKendoStyle calendarKendo"
+                     placeholder="YYYY" ng-change="updateDays(true,dateRange.monthFromValue,dateRange.yearFromValue)"
+                     ng-disabled="disabled" pattern="[0-9]{4}"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 noPaddingSides">
+        <div class="form-inline">
+          <div class="col-xs-2 noPaddingSides"><span class="labelCalendarAdvanceSearch">To:</span></div>
+          <div class="col-xs-10 noPaddingSides">
+            <div class="form-group mobileInline">
+              <label class="sr-only" for="monthTo">Month</label>
+              <select class="form-control" id="monthTo" data-ng-model="dateRange.monthToValue"
+                      ng-options="month for month in monthList"
+                      ng-change="updateDays(false,dateRange.monthToValue,dateRange.yearToValue)"
+                      ng-disabled="disabled"
+                      ng-class="{defaultDateText: dateRange.monthToValue === 'MM'}"
+                      title="Select a month"></select>
+            </div>
+            <div class="form-group mobileInline">
+              <label class="sr-only" for="dayTo">Day</label>
+              <select class="form-control" id="dayTo" data-ng-model="dateRange.dayToValue"
+                      ng-options="date for date in daysListTo"
+                      ng-change="validateDates()" ng-disabled="disabled"
+                      ng-class="{defaultDateText: dateRange.dayToValue === 'DD'}"
+                      title="Select a day"></select>
+            </div>
+
+            <div class="form-group mobileInline" title="Enter a year">
+              <label class="sr-only" for="yearTo">Year</label>
+              <input id="yearTo" kendo-date-picker k-options="yearSelectorOptions" ng-model="dateRange.yearToValue"
+                     class="customizeKendoStyle calendarKendo"
+                     placeholder="YYYY" ng-change="updateDays(false,dateRange.monthToValue,dateRange.yearToValue)"
+                     ng-disabled="disabled" pattern="[0-9]{4}"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--RECURRING DATE-->
+    <div ng-show="dateRange.currentTab === 'open'" class="col-xs-12 noPaddingSides" id="recurringDate" title="{{calendarToolTips.SEARCH_DATE_RECURRING}}">
+      <div class="col-xs-12 col-sm-6 noPaddingSides">
+        <div class="form-inline">
+          <span class="labelCalendarAdvanceSearch">Recurring<span
+            class="visible-inline-sm visible-inline-md visible-inline-lg"> Date</span>:</span>
+
+          <div class="form-group mobileInline">
+            <label class="sr-only" for="monthOpen">Month</label>
+            <select id="monthOpen" class="form-control" data-ng-model="dateRange.monthOpenValue"
+                    ng-options="month for month in monthList"
+                    ng-change="updateDays(-1,dateRange.monthOpenValue,null)"
+                    ng-disabled="disabled || authorityRecordSelected"
+                    ng-class="{defaultDateText: dateRange.monthOpenValue === 'MM'}"
+                    title="Select a month"></select>
+
+          </div>
+          <div class="form-group mobileInline">
+            <label class="sr-only" for="dayOpen">Day</label>
+            <select id="dayOpen" class="form-control" data-ng-model="dateRange.dayOpenValue"
+                    ng-options="date for date in openDaysList"
+                    ng-change="validateDates()"
+                    ng-disabled="disabled || authorityRecordSelected"
+                    ng-class="{defaultDateText: dateRange.dayOpenValue === 'DD'}"
+                    title="Select a day"></select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--EXACT DATE-->
+    <div ng-show="dateRange.currentTab === 'exact'" class="col-xs-12 noPaddingSides" id="exactDate" title="{{calendarToolTips.SEARCH_DATE_EXACT}}">
+      <div class="col-xs-12 noPaddingSides">
+        <div class="form-inline">
+          <span class="labelCalendarAdvanceSearch">Exact<span
+            class="visible-inline-sm visible-inline-md visible-inline-lg"> Date</span>:</span>
+
+          <div class="form-group mobileInline">
+            <label class="sr-only" for="exactMonth">Month</label>
+            <select class="form-control" id="exactMonth"
+                    ng-model="dateRange.exactMonthValue"
+                    ng-options="month for month in monthList"
+                    ng-change="updateDays(false,dateRange.exactMonthValue,dateRange.exactYearValue)"
+                    ng-disabled="disabled || authorityRecordSelected"
+                    ng-class="{defaultDateText: dateRange.exactMonthValue === 'MM'}"
+                    title="Select a month">
+            </select>
+          </div>
+          <div class="form-group mobileInline">
+            <label class="sr-only" for="exactDay">Day</label>
+            <select class="form-control" id="exactDay"
+                    ng-model="dateRange.exactDayValue"
+                    ng-options="date for date in daysListTo"
+                    ng-change="validateDates()"
+                    ng-disabled="disabled || authorityRecordSelected"
+                    ng-class="{defaultDateText: dateRange.exactDayValue === 'DD'}"
+                    title="Select a day"></select>
+          </div>
+
+          <div class="form-group mobileInline" title="Enter a year">
+            <label class="sr-only" for="exactYear">Year</label>
+            <input id="exactYear" kendo-date-picker k-options="yearSelectorOptions"
+                   ng-model="dateRange.exactYearValue"
+                   class="customizeKendoStyle calendarKendo"
+                   placeholder="YYYY"
+                   ng-change="updateDays(false,dateRange.exactMonthValue,dateRange.exactYearValue)"
+                   ng-disabled="disabled || authorityRecordSelected" pattern="[0-9]{4}"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

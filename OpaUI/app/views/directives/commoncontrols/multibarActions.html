@@ -1,0 +1,93 @@
+<div id="multibarActions" class="hidden-print">
+	<ul class="list-inline pull-right">
+
+        <!--<li class="divider-vertical-multibar divider-xs" ng-if="!noResults"></li>-->
+		<li ng-if="!noResults" class="visible-inline-xs visible-inline-sm">
+			<button type="button" class="btn btn-link" ng-click="showFacetsMobile()">
+				Refine <span class="glyphicons glyphicons-chevron-right"></span>
+			</button>
+		</li>
+		<li ng-if="!noResults" class="divider-vertical-multibar visible-inline-xs visible-inline-sm"></li>
+
+        <li ng-if="!noResults">
+            <div class="btn-group">
+                <button type="button" class="btn btn-link dropdown-toggle visible-inline-lg visible-inline-md visible-inline-sm" data-toggle="dropdown">
+                    Highlight<span class="visible-inline-lg"> Results</span>
+                  <span class="glyphicons glyphicons-chevron-down visible-inline-lg visible-inline-md visible-inline-sm"></span> <span
+                        class="glyphicons glyphicons-chevron-right visible-inline-xs"></span>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu">
+                    <li><button type="button" class="btn btn-link dropdown-option" tabindex="0" ng-click="setHighlight(true)">
+                        On <span class="glyphicons glyphicons-ok-2" ng-show="searchSvc.searchParams['highlight']"></span></button>
+                    </li>
+                    <li><button type="button" class="btn btn-link dropdown-option" tabindex="0" ng-click="setHighlight(false)">
+                        Off <span class="glyphicons glyphicons-ok-2" ng-hide="searchSvc.searchParams['highlight']"></span></button>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="divider-vertical-multibar divider-xs" ng-if="!noResults"></li>
+
+		<li ng-if="!noResults">
+			<div class="btn-group">
+				<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+					Sort <span
+						class="glyphicons glyphicons-chevron-down visible-inline-lg visible-inline-md visible-inline-sm"></span> <span
+						class="glyphicons glyphicons-chevron-right visible-inline-xs"></span>
+				</button>
+				<ul class="dropdown-menu pull-right" role="menu">
+					<li><button type="button" class="btn btn-link dropdown-option" tabindex="0" ng-click="setSort('relevance', true)">
+						{{searchSvc.sortOptions.relevance.text}} <span class="glyphicons glyphicons-ok-2"
+						                                               ng-show="searchSvc.sortOptions.relevance.selected"></span></button>
+					</li>
+					<li><button type="button" class="btn btn-link dropdown-option" tabindex="0" ng-click="setSort('titleSort', true)">
+                        {{searchSvc.sortOptions.titleSort.text}} <span class="glyphicons glyphicons-ok-2"
+							                                           ng-show="searchSvc.sortOptions.titleSort.selected"></span></button>
+                    </li>
+					<li><button type="button" class="btn btn-link dropdown-option" tabindex="0" ng-click="setSort('naIdSort', true)">
+                        {{searchSvc.sortOptions.naIdSort.text}} <span class="glyphicons glyphicons-ok-2" ng-show="searchSvc.sortOptions.naIdSort.selected"></span></button>
+                    </li>
+					<li><button type="button" class="btn btn-link dropdown-option" tabindex="0" ng-click="setSort('localId', true)">
+                        {{searchSvc.sortOptions.localId.text}} <span class="glyphicons glyphicons-ok-2"
+                                                                     ng-show="searchSvc.sortOptions.localId.selected"></span></button>
+                    </li>
+					<li><button type="button" class="btn btn-link dropdown-option" tabindex="0" ng-click="setSort('hmsEntryNumberSort', true)">
+                        {{searchSvc.sortOptions.hmsEntryNumberSort.text}} <span class="glyphicons glyphicons-ok-2"
+                                                                                ng-show="searchSvc.sortOptions.hmsEntryNumberSort.selected"></span></button>
+          </li>
+				</ul>
+			</div>
+		</li>
+
+		<li class="divider-vertical-multibar" ng-if="!noResults"></li>
+		<li>
+            <button type="button" addthis-toolbox></button>
+		</li>
+
+    <li class="divider-vertical-multibar" ng-if="!noResults && Auth.isLoggedIn()"></li>
+
+		<li ng-if="!noResults && Auth.isLoggedIn()">
+			<button type="button" class="btn btn-link" data-toggle="collapse" data-parent="#accordion"
+			        data-target="#listscollapse">
+				<span class="hidden-inline-portrait addToMyLists">Add to My</span> Lists
+			</button>
+		</li>
+
+		<li class="divider-vertical-multibar divider-xs" ng-if="!noResults"></li>
+		<li class="hidden-inline-xs" ng-if="!noResults">
+			<button type="button" class="btn btn-link" data-toggle="collapse" data-parent="#accordion"
+			        data-target="#exportcollapse" ng-hide="noResults">Export
+			</button>
+		</li>
+
+		<li class="divider-vertical-multibar divider-xs" ng-if="!noResults"></li>
+		<li class="hidden-inline-xs" ng-if="!noResults">
+			<button type="button" class="btn btn-link printButton no-padding-top no-padding-bottom" data-toggle="collapse" data-parent="#accordion"
+			        data-target="#printcollapse" title="Print results">
+                <span class="glyphicons glyphicons-print"></span>
+            </button>
+		</li>
+	</ul>
+
+</div>

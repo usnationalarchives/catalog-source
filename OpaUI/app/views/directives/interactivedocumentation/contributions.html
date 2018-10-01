@@ -1,0 +1,155 @@
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="headingContributionSearch" ng-click="toggle('#collapseContributionsSearch')">
+    <div class="panel-title">
+      <a class="collapsed" data-toggle="collapse" data-parent="#accordionID" data-target="#collapseContributionsSearch" href="" aria-expanded="false" aria-controls="collapseSearch">
+        <span class="apiCallPost">POST</span>
+        <span class="apiCallDelete">DELETE</span>
+        <span class="titlePanelSectionApi">Contributions (Tags) - Using Search Method</span>
+      </a>
+    </div>
+  </div>
+  <div id="collapseContributionsSearch" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingContributionSearch">
+    <div class="panel-body">
+
+      <div class="pull-right">
+        <div class="well well-sm margin-15-right" ng-class="{'modePanelLiveMode':lifeMode === 'true'}">
+          <label class="radio-inline">
+            <input type="radio" name="mockModeContributions" id="inlineRadio1" value="false" ng-model="lifeMode" ng-click="setMockMode()"> Mock Mode
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="mockModeContributions" id="inlineRadio2" value="true" ng-model="lifeMode" ng-click="setLiveMode()"> Live Mode
+          </label>
+
+          <div id="linkShowModeExplanation">
+            <a href="" rel="#" class="text-right" data-toggle="collapse" data-target="#collapseModeExplanationC" aria-expanded="false" aria-controls="collapseModeExplanation">
+              Mode detail
+            </a>
+          </div>
+        </div>
+      </div>
+      <div data-mode-api id="collapseModeExplanationC" class="collapseModeExplanation"></div>
+
+      <div class="apiDescriptions">
+        To add contributions via the search method in Catalog using NARA's Online Catalog API, you would need to use the following endpoint:
+        <br />
+        <span class="code breakLongCode"><span ng-bind="configServices.API_END_POINT"></span>?action=search&q={Your-Search-Term}&tags={Your-Text} </span>
+        <br />
+        Enter a search term and click on submit to see the response from the API.
+        You can choose one of the supported formats:
+        <ul>
+          <li>json (default response)</li>
+          <li>xml</li>
+        </ul>
+
+        <div class="alert alert-warning" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          This method require credentials. You will need to add them as part of the REST request.
+        </div>
+
+
+        <form class="validate-form" name="contributionsSearchForm" ng-submit="contributionsBySearch(contributionsSearchForm.$valid)">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th class="hidden-xs hidden-sm">Parameter</th>
+              <th class="visible-xs visible-sm">Param</th>
+              <th class="valueApi">Value</th>
+              <th class="hidden-xs hidden-sm">Description</th>
+            </tr>
+            </thead>
+            <tbody data-search-form=""></tbody>
+          </table>
+
+          <div class="bold">Contribution Parameters</div>
+          <br />
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th class="hidden-xs hidden-sm">Parameter</th>
+              <th class="visible-xs visible-sm">Param</th>
+              <th class="valueApi">Value</th>
+              <th class="hidden-xs hidden-sm">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr>
+              <td>contribution</td>
+              <td>
+                <div class="form-group">
+                  <label for="metadataContribution">Contribution</label>
+                  <select id="metadataContribution" class="form-control" data-ng-model="metadataContribution" required="" data-ng-change="changeActionContribution()">
+                    <option value="">Select One</option>
+                    <option value="tag">Tags</option>
+                    <!--<option value="transcription">Transcriptions</option>-->
+                  </select>
+                </div>
+              </td>
+              <td class="hidden-xs hidden-sm">
+
+              </td>
+            </tr>
+            <tr class="visible-xs visible-sm">
+              <td colspan="2">
+                <div class="bold">Description</div>
+
+              </td>
+            </tr>
+
+            <tr>
+              <td>action</td>
+              <td>
+                <div class="form-group">
+                  <label for="actionContribution">Contribution action</label>
+                  <select id="actionContribution" class="form-control" data-ng-model="actionContribution"  ng-disabled="metadataContribution === ''" required="">
+                    <option value="0" ng-disabled="metadataContribution !== 'tag'">Create</option>
+                    <!--<option value=1 ng-disabled="metadataContribution === 'tag'">Save</option>-->
+                    <option value="2" ng-disabled="metadataContribution !== 'tag'">Delete</option>
+                  </select>
+                </div>
+              </td>
+              <td class="hidden-xs hidden-sm">
+                Select a contribution type to enable this control.
+                <br/>
+                Tags can be created or deleted in which case the REST Call is going to be DELETE instead of a POST. Transcriptions can be only saved.
+              </td>
+            </tr>
+            <tr class="visible-xs visible-sm">
+              <td colspan="2">
+                <div class="bold">Description</div>
+                Select a contribution type to enable this control.
+                <br/>
+                Tags can be created or deleted in which case the REST Call is going to be DELETE instead of a POST. Transcriptions can be only saved.
+              </td>
+            </tr>
+
+            <tr>
+              <td>content</td>
+              <td colspan="2">
+                <div class="form-group">
+                  <label for="contentContributions">Contribution text</label>
+                  <textarea id="contentContributions" class="form-control" rows="10" data-ng-model="contentContributions" required=""></textarea>
+                </div>
+              </td>
+            </tr>
+            <tr class="visible-xs">
+              <td class="bold"> Description </td>
+              <td> </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <div class="alert alert-danger" role="alert" ng-show="lifeMode === 'true'">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Warning:</span>
+            <span ng-bind="alertLiveMode"></span>
+          </div>
+
+          <button class="btn btn-default" type="submit">Submit</button>
+          <button class="btn btn-default" type="reset" ng-click="resetContributionsSearch()">Reset</button>
+        </form>
+        <div data-response-panel id="responsePanelContributionSearch" class="panel collapse" data-action="action" data-call="apicall" data-response="responseTextArea" data-only-live-mode="onlyLiveMode" data-error-response="errorResponse" data-life-mode="lifeMode"></div>
+      </div>
+    </div>
+  </div>
+</div>

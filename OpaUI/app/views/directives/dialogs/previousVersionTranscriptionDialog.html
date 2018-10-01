@@ -1,0 +1,38 @@
+<div id="modalMessageTitle" class="modal-header modalVersionTranscriptionHeader">
+    <button type="button" class="close" ng-click="cancel()"><span class="glyphicons glyphicons-remove-2"></span>&nbsp;<span>Close</span></button>
+    <div class="modal-title">Previous Versions</div>
+    <div ng-bind-template="{{title}} (image {{pageNum}} of {{totalPages}})" class="subTitleVersionTranscription"></div>
+</div>
+<div id="modalMessageBody" class="modal-body modalVersionTranscriptionBody height100">
+
+    <div class="headerTranscriptionVersion">
+        <div>Current Version (Version <span ng-bind="transcription['@version']"></span>) by  <a ng-if="transcription['@isAuthoritative'] == 'false'" ng-href="#/accounts/{{transcription['@userName']}}/contributions?contributionType=transcriptions"  ng-bind="transcription['@userName']" target="_blank"></a><a ng-if="transcription['@isAuthoritative'] == 'true'" ng-bind="transcription['@fullName']" target="_blank"></a>&nbsp;<span ng-bind="OpaUtils.fancyDate(transcription['@lastModified'])"></span></div>
+    </div>
+    <div class="transcriptionTextVersion">
+        <pre ng-bind="transcription.text">
+        </pre>
+    </div>
+
+     <div class="controlsVersioningTranscription">
+        <label for="selectPreviousVersion" class="labelT">
+            Select Previous Version:
+        </label>
+        <span>
+            <select id="selectPreviousVersion" ng-model="ui.versionSelected" ng-options="version.value as version.text for version in versions">
+            </select>
+        </span>
+        <span class="reasonContainer">
+            <button class="btn btn-link" ng-class="{disabled: ui.versionSelected == ''}" data-toggle="collapse" data-target="#reasonPanel" role="button" >Make This Current Version </button>
+        </span>
+    </div>
+
+    <div id="reasonPanel" data-edition-transcription class="editionTranscription panel-collapse collapse"></div>
+
+    <div class="headerTranscriptionVersion">
+        <div ng-show="previuosTranscription">Version <span></span>{{previuosTranscription['@version']}} by  <a ng-href="#/accounts/{{previuosTranscription['@userName']}}/contributions?contributionType=transcriptions" ng-if="previuosTranscription['@isAuthoritative'] == 'false'" ng-bind="previuosTranscription['@userName']" href="" target="_blank"></a><a ng-if="previuosTranscription['@isAuthoritative'] == 'true'" ng-bind="previuosTranscription['@fullName']" href="" target="_blank"></a>&nbsp;<span ng-bind="OpaUtils.fancyDate(previuosTranscription['@lastModified'])"></span></div>
+
+    </div>
+    <div class="transcriptionTextVersion">
+        <pre ng-bind="previuosTranscription.text"></pre>
+    </div>
+</div>

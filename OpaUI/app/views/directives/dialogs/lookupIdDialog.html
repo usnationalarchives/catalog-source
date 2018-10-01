@@ -1,0 +1,47 @@
+<div id="modalMessageTitle" class="modal-header modalVersionTranscriptionHeader modalHeaderLookup">
+    <button type="button" class="close" ng-click="cancel()"><span class="glyphicons glyphicons-remove-2"></span>&nbsp;<span>Close</span></button>
+    <div class="modal-title">Lookup ID</div>
+</div>
+<div id="modalMessageBody" class="modal-body modalVersionTranscriptionBody modalMessageBodyLookup">
+
+    <div id="lookupSearch" class="row noMarginsSides">
+        <div class="col-xs-4"><span class="pull-right">Search National Archives Catalog</span></div>
+        <div class="col-xs-6">
+            <form role="form" ng-submit="doSearch()">
+                <div class="form-inline">
+                    <label class="sr-only" for="lookupSearchText">Enter text for search at lookupID </label>
+                    <input id="lookupSearchText" type="text" class="form-control" ng-model="ui.searchText"/>
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-2"><button type="button" class="btn btn-default lookupButton pull-left" ng-click="doSearch()">Search</button></div>
+    </div>
+
+    <div id="controlsBarLookup" class="row noMarginsSides">
+
+        <div class="col-xs-6">
+            <span ng-bind="totalRecords"></span> results in <span>{{queryTime | number:2}}</span> seconds.
+        </div>
+
+        <div paging class="col-xs-3"></div>
+
+        <div id="resultPerPageLookupId" class="col-xs-3">
+            <div class="pull-right">
+                <label for="resultsPerPageControlLookupId">Results per page:</label>
+                <div id="resultsPerPageControlLookupId" class="btn-group">
+                    <select id="resultsPerPageSelectLookupId" class="btn btn-default btn-sm" ng-model="ui.resultPerPage">
+                        <option value=25>25</option>
+                        <option value=50>50</option>
+                        <option value=100>100</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="resultsLookupId" class="row noMarginsSides">
+        <div data-result-lookup ng-repeat="result in results" ng-hide="noResults"></div>
+        <div ng-include src="'views/directives/results/noResults.html'" ng-show="noResults"></div>
+        <div ng-show="errorDescription" ng-bind="errorDescription" class="colorGuardsmanRed"></div>
+    </div>
+</div>

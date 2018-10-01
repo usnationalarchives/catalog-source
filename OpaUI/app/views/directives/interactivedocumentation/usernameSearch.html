@@ -1,0 +1,50 @@
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="headingUsernameSearch" ng-click="toggle('#collapseUsernameSearch')">
+    <div class="panel-title">
+      <a class="collapsed" data-toggle="collapse" data-parent="#accordionID" data-target="#collapseUsernameSearch" href="" aria-expanded="false" aria-controls="collapseUsernameSearch">
+        <span class="apiCallGet">GET</span>
+        Username Search
+      </a>
+    </div>
+  </div>
+  <div id="collapseUsernameSearch" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingUsernameSearch">
+    <div class="panel-body">
+      <div class="apiDescriptions">
+        To search for a Username in NARA's Online Catalog API, you would need to use the following endpoint:
+        <br />
+        <span class="code breakLongCode"><span ng-bind="configServices.API_END_POINT"></span>/users?action=search&id={USERNAME}</span>
+
+        <form class="validate-form" name="usernameSearchForm" ng-submit="usernameSearch(usernameSearchForm.$valid)">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Value</th>
+              <th class="hidden-xs">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>id</td>
+              <td>
+                <div class="form-group">
+                  <label class="sr-only" for="userNameInputSearch">Username (required)</label>
+                  <input type="text" class="form-control" id="userNameInputSearch" placeholder="username" ng-model="username" required="">
+                </div>
+              </td>
+              <td class="hidden-xs"> To search for a registered users username. User needs to be logged in as an Administrator to perform this action. Example: jsmith </td>
+            </tr>
+            <tr class="visible-xs">
+              <td class="bold"> Description </td>
+              <td> To search for a registered users username. User needs to be logged in as an Administrator to perform this action. Example: jsmith  </td>
+            </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-default" type="submit">Submit</button>
+          <button class="btn btn-default" type="reset" ng-click="resetUsernameSearch()">Reset</button>
+        </form>
+        <div data-response-panel id="responsepanelUsernameSearch" class="panel collapse" data-action="action" data-call="apicall" data-response="responseTextArea" data-life-mode="lifeMode" data-only-live-mode="onlyLiveMode" data-error-response="errorResponse"></div>
+      </div>
+    </div>
+  </div>
+</div>

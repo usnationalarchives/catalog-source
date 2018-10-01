@@ -1,0 +1,86 @@
+<div ng-controller="visorCtrl" class="height100 visor-container">
+
+  <div ng-hide="isVideo || isPdf || isAudio">
+    <div id="openSeadragonViewer" ng-mouseenter="mouseIn = true" ng-mouseleave="mouseIn = false"
+         class="osVisor col-xs-12 viewer" ng-class="{'visorWithoutDesignatorRow':!showDesignatorDescription}">
+      <button type="button" ng-click="previousMedia()" class="nav-arrow left"
+              ng-show="(mobile || mouseIn) && index > 1">
+        <span class="glyphicons glyphicons-chevron-left"></span>
+      </button>
+      <button type="button" ng-click="nextMedia()" class="nav-arrow right"
+              ng-show="(mobile || mouseIn) && index < total">
+        <span class="glyphicons glyphicons-chevron-right"></span>
+      </button>
+    </div>
+    <div data-designator-description-row></div>
+  </div>
+
+  <div ng-show="isVideo || isAudio" class="text-center viewer">
+    <div class="mediaplayer height100">
+    </div>
+    <div data-designator-description-row class="designatorDescriptionRowVideoAudio text-left"></div>
+  </div>
+  <div ng-show="isPdf">
+    <div class="col-xs-12 osVisor viewer" ng-mouseenter="mouseIn = true" ng-mouseleave="mouseIn = false">
+      <button type="button" ng-click="previousMedia()" class="nav-arrow left"
+              ng-show="(mobile || mouseIn) && index > 1">
+        <span class="glyphicons glyphicons-chevron-left"></span>
+      </button>
+      <button type="button" ng-click="nextMedia()" class="nav-arrow right"
+              ng-show="(mobile || mouseIn) && index < total">
+        <span class="glyphicons glyphicons-chevron-right"></span>
+      </button>
+      <iframe id="" class="col-xs-12 pdf-viewer pdfIFrame"></iframe>
+      <a href="" rel="#" class="ie-fall" ng-href="{{videoSrc}}">Download the file</a>
+    </div>
+    <div data-designator-description-row></div>
+  </div>
+  <div class="col-xs-12 openSeadragonControls">
+    <div ng-hide="isVideo || isPdf || isAudio" class="view-controls center-visor-controls"
+         ng-class="{'hidden-inline-xs': !isVideo && !isPdf && !isAudio}">
+      <a id="zoom-out" href="" rel="#" ng-click="zoomOut()" title="zoom out">
+        <span class="glyphicons glyphicons-zoom-out"></span></a>
+
+      <div id="slider" class="slider-control"></div>
+
+      <a id="zoom-in" href="" rel="#" ng-click="zoomIn()" title="zoom in"><span class="glyphicons glyphicons-zoom-in"></span></a>
+      <a href="" rel="#" ng-click="pan(0.1,0)" title="Pan left"><span class="glyphicons glyphicons-circle-arrow-left"></span></a>
+      <a href="" rel="#" ng-click="pan(0,0.1)" title="Pan up"><span class="glyphicons glyphicons-circle-arrow-top"></span></a>
+      <a href="" rel="#" ng-click="pan(0,-0.1)" title="Pan down"><span class="glyphicons glyphicons-circle-arrow-down"></span></a>
+      <a href="" rel="#" ng-click="pan(-0.1,0)" title="Pan right"><span class="glyphicons glyphicons-circle-arrow-right"></span></a>
+      <a href="" rel="#" ng-click="home()" title="Reset image" class="home"><span class="glyphicons glyphicons-fit-image-to-frame"></span></a>
+      <a id="downloadFullImage" class="btn btn-primary" title="Download Full Size Image"
+         ng-href="{{getthumbnailURL()}}?download=true" ng-if="getthumbnailURL()" target="_blank">
+        <span class="glyphicons glyphicons-download-alt"></span>
+      </a>
+    </div>
+    <a id="downloadVideoAudio" class="btn btn-primary" title="Download File" ng-show="isVideo || isPdf || isAudio"
+       ng-href="{{getthumbnailURL()}}?download=true" ng-if="getthumbnailURL()" target="_blank">
+      <span class="glyphicons glyphicons-download-alt"></span>
+    </a>
+
+    <div class="hidden-inline-xs hidden-inline-sm btn-contribute">
+      <button ng-click="visorSvc.loadWorkspace(true, false)" class="btn btn-primary"
+              ng-hide="hideContributionsButton" title="View/Add Contributions">
+        View/Add&nbsp;<br class="contributions-lines">Contributions
+      </button>
+    </div>
+
+    <div class="pagination-controls hidden-inline-xs center-visor-controls">
+      <a href="" rel="#" ng-class="{'disabled': index == 1}" ng-click="firstMedia()" title="First Image"><span
+        ng-class="{'disabled': index == 1}" class="pagination-control nav-link"><<</span></a>
+      <a href="" rel="#" ng-class="{'disabled': index == 1}" ng-click="previousMedia()" title="Previous Image"><span
+        ng-class="{'disabled': index == 1}" class="pagination-control nav-link"><</span></a>
+      <label for="imageContentDetails{{hideContributionsButton}}" class="text">Image</label>
+      <input id="imageContentDetails{{hideContributionsButton}}" ng-change="goTo()" type="text" class="text visor-input"
+             ng-model="index">
+      <span class="text">of</span>
+      <span class="text" ng-bind="total"></span>
+      <a href="" rel="#" ng-class="{'disabled': index == total}" ng-click="nextMedia()" title="Next Image"><span
+        ng-class="{'disabled': index == total}" class="pagination-control nav-link">></span></a>
+      <a href="" rel="#" ng-class="{'disabled': index == total}" ng-click="lastMedia()" title="Last Image"><span
+        ng-class="{'disabled': index == total}" class="pagination-control nav-link">>></span></a>
+    </div>
+
+  </div>
+</div>

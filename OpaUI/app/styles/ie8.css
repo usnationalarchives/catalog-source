@@ -1,0 +1,17 @@
+.link-row li a {
+  line-height: 0; }
+
+.pdf-viewer {
+  display: none; }
+
+.ie-fall {
+  display: block; }
+
+.img-web {
+  max-width: 96px !important;
+  max-height: 70px !important; }
+
+.imageResult img {
+  width: auto; }
+
+/*# sourceMappingURL=ie8.css.map */

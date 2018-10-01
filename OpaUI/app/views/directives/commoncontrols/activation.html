@@ -1,0 +1,43 @@
+<div name="activation" class="row" ng-show="visible">
+    <div ng-hide="showPwdSet" class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10 activationRegistration">
+        <p class="title">&nbsp;&nbsp;Thank you! Registration complete.</p>
+        <div ng-hide="returnUrl && returnText">
+            <p>
+                <br>Your email has been verified.<br><br>
+                You can now login to the National Archives Catalog.<br><br>
+            </p>
+            <form class="form" name="validationForm" ng-controller="loginCtrl">
+                <div class="form-group">
+                    <label class="error" ng-show="error" ng-bind="error"></label>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label><br>
+                    <input type="text" id="username" name="username" ng-model="user.username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label><br>
+                    <input type="password" id="password" name="password" ng-model="user.password">
+                </div>
+                <div class="buttons">
+                    <button type="submit" class="btn btn-primary" ng-click="login()">Login</button>
+                    <a class="blue-link" ng-href="{{cancelLink}}">Cancel</a>
+                </div>
+                <button class="btn btn-link blue-link link-modal padding" ng-click="showforgotUsernameModal()">Forgot Username?</button><br>
+                <button class="btn btn-link blue-link link-modal padding-extra"  ng-click="showForgetPasswordModal()">Forgot Password?</button>
+            </form>
+        </div>
+        <div ng-show="returnUrl && returnText">
+            <a ng-href="{{returnUrl}}">{{returnText}}</a>
+        </div>
+    </div>
+
+    <div ng-show="showPwdSet" class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-offset-1 col-xs-10 activationRegistration">
+        <p class="title">&nbsp;&nbsp;Thank you!</p>
+        <p>
+            <br>Your email has been verified.<br><br>
+        </p>
+        <div ng-show="returnUrl && returnText">
+            <a ng-href="{{returnUrl}}">{{returnText}}</a>
+        </div>
+    </div>
+</div>

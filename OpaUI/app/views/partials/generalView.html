@@ -1,0 +1,26 @@
+<div class="">
+  <div data-multibar></div>
+<!--  <div style="position: absolute; bottom: 0; top: 75px; left: 0; right: 0;" ng-class="{menuExpanded : $root.menuVisible }" class="container-fluid">-->
+  <div class="container-fluid">
+    <!--<div style="position: absolute; min-height: 100%; top: 0; left: 0;right: 0; padding-bottom: 110px;"-->
+    <div class="row col-wrap noMarginsSides" ng-show="isSearch">
+      <div id="facetsView" class="col-md-2 hidden-xs hidden-sm hidden-print eq-Height">
+        <div data-facets></div>
+      </div>
+
+      <div id="commonView" class="noPaddingSides col-xs-12 col-md-10">
+        <div data-sticky-facet-filters></div>
+        <div ng-controller="searchWithinCtrl" class="hidden-print">
+          <div data-search-within data-content="resultReady" ng-if="resultReady"></div>
+        </div>
+        <div data-navigation-tabs></div>
+
+        <div ng-if="!hidePagingBotom()">
+          <hr class="hidden-xs hidden-sm"/>
+          <div paging class="col-md-offset-7"></div>
+        </div>
+      </div>
+      <!--<div  style="position: absolute; bottom: 0;" data-footer  ng-if="!$root.isHome" ng-class="{'int-doc-page-footer': opaUtils.isIntDocsPage()}"></div>-->
+    </div>
+  </div>
+</div>

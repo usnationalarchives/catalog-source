@@ -1,0 +1,16 @@
+* {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+a[href]:after {
+  content: none;
+}
+
+[class*="col-sm-"] {
+ // float: left;
+}
+
+.hidden-print{
+  display: none !important;
+}

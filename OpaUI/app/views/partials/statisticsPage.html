@@ -1,0 +1,57 @@
+<div id="multibarActions">
+	<ul class="list-inline pull-right noMargins">
+		<li>
+			<a addthis-toolbox></a>
+		</li>
+	</ul>
+</div>
+<div class="statistics">
+	<div class="statistics-title">
+		<span class="statistics-title">Archival Descriptions Statistics</span>
+	</div>
+	<div class="panel-group" id="accordion">
+		<div ng-repeat="statistic in statistics | orderBy:'order'" class="panel panel-default">
+			<div class="panel-heading" ng-click="toggle('#' + statistic.key, '#' + statistic.key + 'Link', '#accordion', 'statistics-toggle')">
+				<span class="panel-title">
+					<a href="" rel="#" ng-if="statistic.name != 'Items'" id="{{statistic.key + 'Link'}}"
+					      data-parent="#accordion"
+					      class="collapsed float-left"
+					      ng-bind="statistic.name"
+						  ng-class="{'statistics-toggle':statistic.subGroup}">
+					Collection
+					</a>
+          <span ng-if="statistic.name == 'Items'" id="{{statistic.key + 'Link'}}"
+             class="float-left" ng-bind="statistic.name">
+          </span>
+					<span class="float-right" ng-bind="statistic.count | number:0"></span>
+				</span>
+			</div>
+			<div ng-if="statistic.subGroup" id="{{statistic.key}}" class="panel-collapse collapse">
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table" summary="Statistics">
+							<thead>
+							<tr>
+								<th class="col1">Total</th>
+								<th class="">Title</th>
+								<th ng-if="statistic.fileUnits" class="col1">File Units</th>
+								<th ng-if="statistic.items" class="col1">Items</th>
+								<th ng-if="statistic.series" class="col1">Series</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="record in statistic.subGroup">
+								<td ng-bind="record.total | number:0"></td>
+								<td><a ng-href="/id/{{record.naId}}" ng-bind="record.title"></a></td>
+								<td ng-if="statistic.fileUnits" ng-bind="record.subCounts.fileUnitCount | number:0"></td>
+								<td ng-if="statistic.items" ng-bind="record.subCounts.itemCount | number:0"></td>
+								<td ng-if="statistic.series" ng-bind="record.subCounts.seriesCount | number:0"></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

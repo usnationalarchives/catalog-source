@@ -1,0 +1,320 @@
+.osVisor {
+  height: 450px;
+}
+
+.workspaceModal, .preview-modal {
+  .dataVisor {
+    height: 450px;
+  }
+  .osVisor {
+    height: auto;
+  }
+  .visor-container {
+    .viewer {
+      position: absolute;
+      bottom: 50px;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .visorWithoutDesignatorRow{
+      bottom: 40px;
+    }
+    .designatorDescriptionRowClass {
+      position: absolute;
+      bottom: 25px;
+    }
+    .designatorDescriptionRowVideoAudio
+    {
+      bottom: 0px !important;
+      position: relative !important;
+      text-align: left !important;
+    }
+    .openSeadragonControls {
+      position: absolute;
+      bottom: 0;
+    }
+
+  }
+}
+
+.visor-input {
+  width: 40px;
+  margin: 0 5px;
+  line-height: 1em;
+}
+
+.visor-container {
+  position: relative;
+  .mediaplayer.heigh100 {
+    height: auto;
+  }
+  .btn-contribute {
+    position: absolute;
+    right: 260px;
+    top: 5px;
+  }
+  .viewer {
+    object embed {
+      width: 100%;
+      height: 100%;
+      z-index: -1
+    }
+  }
+  .osVisor {
+    background-color: white;
+    .nav-arrow {
+      position: absolute;
+      top: 35%;
+      color: $gray;
+      font-size: 5em;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      z-index: 100;
+    }
+    .nav-arrow.left {
+      left: 10px;
+      @media screen and (max-width: 480px) {
+        position: absolute;
+        span {
+          position: absolute;
+          left: 0px;
+        }
+      }
+    }
+    .nav-arrow.right {
+      right: 10px;
+      @media screen and (max-width: 480px) {
+        position: absolute;
+        span {
+          position: absolute;
+          right: 0px;
+        }
+      }
+    }
+  }
+  .openSeadragonControls {
+    display: inline-block;
+    padding: 0 0 0 5px;
+    height: 35px;
+    /*position: absolute;
+    bottom: 0;*/
+    .slider-control {
+      width: 130px;
+      display: inline-block;
+      border-radius: 0;
+      height: 2px;
+      line-height: 16px;
+      margin: 6px 10px;
+      background: $gray;
+      a {
+        left: 50%;
+        width: 0.5em;
+        height: 0.8em;
+        margin-top: -3px;
+        margin-left: -.2em;
+        background: $gray;
+        color: $black;
+      }
+      a:focus, a:hover {
+        background: $lochmara;
+      }
+    }
+    .view-controls {
+      font-size: 1.2em;
+      a {
+        margin-right: 10px;
+        color: $mine-shaft;
+      }
+      a .fa.fa-arrows {
+        border: 1px solid $gray;
+        padding: 2px;
+      }
+      a:first-of-type {
+        margin-right: 0;
+      }
+
+      a:focus, a:hover {
+        color: $lochmara;
+      }
+    }
+    .pagination-controls {
+      display: inline-table;
+      padding-left: 1px;
+      left: auto;
+      width: 250px;
+      text-align: right;
+      .text {
+        font-family: $source-sans-pro;
+        font-size: 0.813em;
+        font-weight: bold;
+        text-align: center;
+      }
+      .pagination-control {
+        color: $torea-bay;
+        font-size: 0.813em;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-bottom: 1%;
+        padding-top: 1%;
+        font-weight: bold;
+      }
+      .pagination-control.disabled {
+        color: $silver-chalice;
+      }
+      .pagination-control.nav-link {
+        cursor: pointer;
+      }
+
+      a {
+        border: 1px solid $gray;
+      }
+
+      a:focus {
+        border: 1px solid $lochmara;
+      }
+
+    }
+  }
+}
+
+.contributions-lines {
+  display: none;
+}
+
+.center-visor-controls {
+  height: 35px;
+  padding-top: 5px;
+  overflow: hidden;
+  margin: auto 0;
+  position: absolute;
+  width: 430px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  min-height: 24px;
+}
+
+.navigator-container {
+  padding: 5px;
+  .navigator-buttons {
+    padding: 0;
+  }
+}
+
+@media (max-width: 1160px) {
+  .visor-container {
+    .openSeadragonControls {
+      .slider-control {
+        width: 50px;
+      }
+    }
+    .btn-contribute {
+      top: 1px;
+      font-size: 0.8em;
+      right: 260px;
+    }
+  }
+  .center-visor-controls {
+    width: 340px;
+  }
+  .contributions-lines {
+    display: inline-block;
+  }
+}
+
+@media screen and (max-height: 480px) {
+  .osVisor {
+    height: 250px;
+  }
+  .workspaceModal {
+    .dataVisor {
+      height: 250px;
+    }
+  }
+  .preview-modal .visor-container .designatorDescriptionRowClass {
+    position: absolute;
+    top: 86%;
+  }
+}
+
+@media (min-height: 481px) and (max-height: 533px) {
+  .osVisor {
+    height: 305px;
+  }
+  .workspaceModal {
+    .dataVisor {
+      height: 305px;
+    }
+  }
+  .preview-modal .visor-container .designatorDescriptionRowClass {
+    position: absolute;
+    top: 88%;
+  }
+}
+
+@media (min-height: 534px) and (max-height: 568px) {
+  .osVisor {
+    height: 345px;
+  }
+  .workspaceModal {
+    .dataVisor {
+      height: 345px;
+    }
+  }
+  .preview-modal .visor-container .designatorDescriptionRowClass {
+    position: absolute;
+    top: 90%;
+  }
+}
+
+@media (min-height: 569px) and (max-height: 670px) {
+  .preview-modal .visor-container .designatorDescriptionRowClass {
+    position: absolute;
+    top: 92%;
+  }
+}
+
+@media screen and (max-width: 568px) and (max-height: 568px) {
+  .visor-container .openSeadragonControls {
+    display: none;
+  }
+  .visor-container .viewer {
+    bottom: 10px;
+  }
+}
+
+#downloadFullImage {
+  padding: 2px 4px 3px 4px;
+  margin-top: -3px;
+  margin-right: 0;
+  color: $white;
+  font-size: 100%;
+  line-height: 1;
+
+  .glyphicons{
+    margin: 0;
+  }
+}
+
+#downloadVideoAudio {
+  padding: 2px 4px 3px 4px;
+  margin: 5px 0 0;
+  color: $white;
+  font-size: 100%;
+  line-height: 1;
+
+  .glyphicons{
+    margin: 0;
+  }
+}
+
+.objectDesignatorAndDescriptionLabel {
+  font-size: 1em !important;
+  font-family: $merriweather-font;
+  font-weight: bold !important;
+}
+

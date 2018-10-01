@@ -1,0 +1,12 @@
+<%page args="element, eaiAttributes, widgetstyle" />
+<%namespace file="../_helpers.html" import="wireElementEvents"/>
+<div id="item-${element['elementName'] | h}" class="checkboxWidget ${element['class'] if 'class' in element else '' | h}" ${widgetstyle}>
+    <div>
+        <button name="${element["elementName"] | h}">
+           ${_(element['label']) | h}
+        </button>
+        % if 'exampleText' in element:
+            <p class="exampleText"><em>${_(element['exampleText']) | extract_help_links }</em></p>
+        % endif
+    </div>
+</div>

@@ -1,0 +1,218 @@
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="headingBulkExport" ng-click="toggle('#collapseBulkExport')">
+    <div class="panel-title">
+      <a class="collapsed" data-toggle="collapse" data-parent="#accordionID" data-target="#collapseBulkExport" href="" aria-expanded="false" aria-controls="collapseSearch">
+        <span class="apiCallPost">POST</span>
+        Bulk Export
+      </a>
+    </div>
+  </div>
+  <div id="collapseBulkExport" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingBulkExport">
+    <div class="panel-body">
+      <div class="apiDescriptions">
+        To perform a bulk export in Catalog using NARA's Online Catalog API, you would need to use the following endpoint:
+        <br />
+        <span class="code breakLongCode"><span ng-bind="configServices.API_END_POINT"></span>?q={Your-Search-Term}&action=export</span>
+        <br />
+        <br />
+        <div class="alert alert-warning" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          This method require credentials. You will need to add them as part of the REST request.
+        </div>
+
+        <form name="bulkForm" ng-submit="bulkExportApi(bulkForm.$valid)">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th class="hidden-xs hidden-sm">Parameter</th>
+              <th class="visible-xs visible-sm">Param</th>
+              <th class="valueApi">Value</th>
+              <th class="hidden-xs hidden-sm">Description</th>
+            </tr>
+            </thead>
+            <tbody data-search-form=""></tbody>
+
+            <tr>
+              <td>rows</td>
+              <td>
+                <div class="form-group">
+                  <label for="rowsInputSearch">Rows</label>
+                  <input id="rowsInputSearch" type="number" class="form-control" ng-model="rowsInputSearch" ng-disabled="">
+                </div>
+              </td>
+              <td class="hidden-xs hidden-sm">
+                Number of results. Example = 20 , 50 , 100
+              </td>
+            </tr>
+            <tr class="visible-xs visible-sm">
+              <td colspan="2">
+                <div class="bold">Description</div>
+                Number of results. Example = 20 , 50 , 100
+              </td>
+            </tr>
+
+            <tr>
+              <td>offset</td>
+              <td>
+                <div class="form-group">
+                  <label for="offsetInputSearch">Offset</label>
+                  <input id="offsetInputSearch" type="number" class="form-control" ng-model="offsetInputSearch" ng-disabled="">
+                </div>
+              </td>
+              <td class="hidden-xs hidden-sm">
+                By default the results are returned from the first one until the end grouped by the number of rows requested.
+                The beginning of the result index can be changed with this parameter. Default value is 0.
+                Example = 20 , 50 , 100
+              </td>
+            </tr>
+            <tr class="visible-xs visible-sm">
+              <td colspan="2">
+                <div class="bold">Description</div>
+                By default the results are returned from the first one until the end grouped by the number of rows requested.
+                The beginning of the result index can be changed with this parameter. Default value is 0.
+                Example = 20 , 50 , 100
+              </td>
+            </tr>
+          </table>
+
+          <div class="bold">Export Parameters</div>
+          <br />
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th class="hidden-xs hidden-sm">Parameter</th>
+              <th class="visible-xs visible-sm">Param</th>
+              <th class="valueApi">Value</th>
+              <th class="hidden-xs hidden-sm">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr>
+              <td>export.what</td>
+              <td>
+                <div class="form-group">
+                  <label for="whatExport">Export: What</label>
+                  <select multiple id="whatExport" class="form-control" data-ng-model="whatExport" ng-disabled="imageTilesExport">
+                    <option value="metadata">metadata</option>
+                    <option value="thumbnails">thumbnails</option>
+                    <option value="tags">tags</option>
+                    <option value="comments">comments</option>
+                    <option value="transcriptions">transcriptions</option>
+                    <option value="translations">translations</option>
+                  </select>
+                </div>
+              </td>
+              <td class="hidden-xs hidden-sm">
+                If <span class="code">metadata </span> is selected then resultsField must be specified
+              </td>
+            </tr>
+            <tr class="visible-xs visible-sm">
+              <td colspan="2">
+                <div class="bold">Description</div>
+                  If <span class="code">metadata </span> is selected then resultsField must be specified
+              </td>
+            </tr>
+
+            <tr>
+              <td>export.type</td>
+              <td>
+                <div class="form-group">
+                  <label for="typeExport">Export: Type</label>
+                  <select id="typeExport" class="form-control" data-ng-model="typeExport" ng-disabled="imageTilesExport">
+                    <option value="brief">brief</option>
+                    <option value="full">full</option>
+                    <option value="fields">fields</option>
+                  </select>
+                </div>
+              </td>
+              <td class="hidden-xs hidden-sm">
+
+              </td>
+            </tr>
+            <tr class="visible-xs visible-sm">
+              <td colspan="2">
+                <div class="bold">Description</div>
+
+              </td>
+            </tr>
+
+            <tr>
+              <td>export.bulk.content</td>
+              <td>
+                <div class="form-group">
+                  <label for="contentBulkExport">Export: Bulk Content</label>
+                  <select multiple id="contentBulkExport" class="form-control" data-ng-model="contentBulkExport" ng-disabled="imageTilesExport">
+                    <option value="objects">objects</option>
+                    <option value="thumbnails">thumbnails</option>
+                    <option value="tags">tags</option>
+                    <option value="comments">comments</option>
+                    <option value="transcriptions">transcriptions</option>
+                    <option value="translations">translations</option>
+                  </select>
+                </div>
+              </td>
+              <td class="hidden-xs hidden-sm">
+
+              </td>
+            </tr>
+            <tr class="visible-xs visible-sm">
+              <td colspan="2">
+                <div class="bold">Description</div>
+
+              </td>
+            </tr>
+
+            <tr>
+              <td>export.format</td>
+              <td>
+                <div class="form-group">
+                  <label for="formatExport">Export Format</label>
+                  <select id="formatExport" class="form-control" data-ng-model="formatExport" ng-disabled="imageTilesExport">
+                    <option value="json">json</option>
+                    <option value="xml">xml</option>
+                    <option value="csv">csv</option>
+                    <option value="txt">txt</option>
+                    <option value="pdf">pdf</option>
+                  </select>
+                </div>
+              </td>
+              <td class="hidden-xs hidden-sm">
+                Format of the output response. Default value json.
+              </td>
+            </tr>
+            <tr class="visible-xs visible-sm">
+              <td colspan="2">
+                <div class="bold">Description</div>
+                Format of the output response. Default value json.
+              </td>
+            </tr>
+
+            <!--<tr>-->
+              <!--<td>Export image tiles</td>-->
+              <!--<td>-->
+                <!--<div class="checkbox">-->
+                  <!--<label>-->
+                    <!--<input type="checkbox" id="imageTilesExport" aria-label="Export image tiles" ng-model="imageTilesExport">-->
+                  <!--</label>-->
+                <!--</div>-->
+              <!--</td>-->
+              <!--<td class="hidden-xs"> </td>-->
+            <!--</tr>-->
+            <!--<tr class="visible-xs">-->
+              <!--<td class="bold"> Description </td>-->
+              <!--<td></td>-->
+            <!--</tr>-->
+            </tbody>
+          </table>
+
+          <button class="btn btn-default" type="submit">Submit</button>
+          <button class="btn btn-default" type="reset" ng-click="resetBulkExport()">Reset</button>
+        </form>
+
+        <div data-response-panel id="responsePanelBulkExport" class="panel collapse" data-action="action" data-call="apicall" data-response="responseTextArea" data-only-live-mode="onlyLiveMode" data-error-response="errorResponse" data-expor-id="exporId" data-export-link-download="exportLinkDownload"></div>
+
+      </div>
+    </div>
+  </div>
+</div>

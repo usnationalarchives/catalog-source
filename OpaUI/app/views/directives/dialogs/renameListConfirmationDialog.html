@@ -1,0 +1,25 @@
+<div class="modal fade" id="renameListConfirmation" tabindex="-1" role="dialog" aria-labelledby="renameListLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close &times;</button>
+                <span class="modal-title" id="renameListLabel">Rename List</span>
+            </div>
+            <div class="modal-body container">
+                <div class = "row renameFields">
+                    <div class="col-md-2"><label class="pull-right" for="currentList">Current List Name:</label></div>
+                    <input id="currentList" type="text" class="col-md-2" ng-readonly="1==1" name="currentList" ng-model="selectedList">
+                </div>
+                <div class = "row renameFields">
+                    <div class="col-md-2"><label class="pull-right" for="newname">New List Name:</label></div>
+                    <input id="newname" class="col-md-2" type="text" name="searchterm" ng-model="newname">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"  data-ng-click="RenameCurrentList(newname); newname='';">Rename</button>
+                <a href="" rel="#" data-dismiss="modal">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>

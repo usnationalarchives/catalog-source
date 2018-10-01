@@ -1,0 +1,94 @@
+<div class="row noMarginsSides">
+  <ul class="list-inline pull-right margin-share">
+    <li>
+      <a class="btn btn-link noPaddingSides" addthis-toolbox></a>
+    </li>
+  </ul>
+</div>
+<hr class="noMargins"/>
+
+<div id="contributions" class="container">
+  <div class="row title-div">
+    <h2 class="title"><span ng-bind="usersContributions()"></span>Contributions</h2>
+    <a ng-if="Auth.userName()" class="float-right" ng-href="/accounts/{{Auth.userName()}}"><span
+      class="glyphicons glyphicons-restart"></span></span> Go back to My Account</a>
+  </div>
+  <div class="col-xs-12 margin-10-top">
+    <div class="row noMarginsSides">
+      <div class="tabs col-xs-12">
+        <div class="col-xs-12 col-sm-7 tabsMyContributions">
+          <ul class="nav nav-tabs nav-justified font-size-10pt">
+            <li id="tags" ng-class="{active: selectedTab == 1}">
+              <button type="button" class="btn btn-link" ng-click="setTab(1, 'tags');">Tags <span
+                ng-bind-template="({{count['tags']}})"></span></button>
+            </li>
+            <li id="comments" ng-class="{active: selectedTab == 2}">
+              <button type="button" class="btn btn-link" ng-click="setTab(2, 'comments')">Comments <span
+                ng-bind-template="({{count['comments']}})"></span></button>
+            </li>
+            <li id="transcriptions" ng-class="{active: selectedTab == 3}">
+              <button type="button" class="btn btn-link" ng-click="setTab(3, 'transcriptions')">Transcriptions <span
+                ng-bind-template="({{count['transcriptions']}})"></span></button>
+            </li>
+            <!--<li id="translations" ng-class="{active: selectedTab == 4}">
+              <button type="button" class="btn btn-link" ng-click="setTab(4, 'translations')">Translations <span
+                ng-bind-template="({{count['translations']}})"></span></button>
+            </li>-->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--TAGS PANE-->
+  <div class="row col-xs-12 margin-top font-medium" ng-show="selectedTab == 1" ng-if="selectedTab == 1">
+    <span class="note hidden-xs"><span class="glyphicons glyphicons-circle-question-mark"></span> Click on a tag to display associated records/pages.</span>
+
+    <div class="pull-right">
+      <label for="tagsSortby">Sort by: </label>
+      <select id="tagsSortby" class="btn btn-default btn-sm" ng-change="sortTags(sortby)" ng-model="sortby">
+        <option selected value="Alphabetically">Alphabetically</option>
+        <option value="Count">By Count</option>
+      </select>
+    </div>
+    <div class="col-xs-12 tab-pane tagList" id="tag">
+      <ul class="list-inline">
+        <li ng-repeat="tag in tags | orderBy:predicateTop:reverseTop">
+                    <span ng-class="{selectedTag: selectedTag == tag['tag']}">
+                        <a href="" rel="#" ng-bind-template="{{tag['tag']}} ({{tag['count']}})"
+                           ng-click="selectTag(tag['tag'], tag['count'])"></a>
+                    </span>
+        </li>
+        <li class="load-more" ng-show="totalDistinctTags > tags.length">
+          <span><a ng-click="increaseOffset()">Load more tags</a></span>
+        </li>
+      </ul>
+    </div>
+    <!--SELECTED TAG PANE-->
+    <div class="row col-xs-12 noMargins" ng-show="selectedTag && ready">
+
+      <span class="bold">Selected Tag: </span><a rel="#" class="selectedTag"
+                                                 ng-href='#/search?q=*:*&filter=(tagsExact:"{{selectedTag | encodeString}}" or objectTagsExact:"{{selectedTag | encodeString}}")'
+                                                 ng-bind-template="{{selectedTag}} ({{totalTitlesTag}})"
+                                                 target="_blank"></a>
+      <span class="note tag-note"><span class="glyphicons glyphicons-circle-question-mark"></span> Click on this tag to run a new search for all items that have this tag.</span>
+
+      <div contributions-common></div>
+    </div>
+  </div>
+
+  <!--COMMENTS PANE-->
+  <div class="row col-xs-12 margin-top font-medium" ng-show="selectedTab == 2" ng-if="selectedTab == 2">
+    <div contributions-common></div>
+  </div>
+
+  <!--TRANSCRIPTIONS PANE-->
+  <div class="row col-xs-12 margin-top font-medium" ng-show="selectedTab == 3" ng-if="selectedTab == 3">
+    <div contributions-common></div>
+  </div>
+
+  <!--TRANSLATIONS PANE-->
+<!--  <div class="row col-xs-12 margin-top font-medium" ng-show="selectedTab == 4" ng-if="selectedTab == 4">
+    <div contributions-common></div>
+  </div>-->
+</div>

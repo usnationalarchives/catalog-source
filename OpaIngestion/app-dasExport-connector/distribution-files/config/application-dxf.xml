@@ -1,0 +1,161 @@
+<dxf:template version="1.0"
+  xmlns:dxf="http://www.searchtechnologies.com/DXF/2011">
+  <!-- SAMPLE DXF Form Template -->
+  <!-- DXF stands for "Dynamic XML Forms". It provides a component-friendly
+    method for editing XML configurations. -->
+  <!-- This particular sample is for editing properties for the application
+    specified by "application.xml". These properties are used when you load the
+    application bundle in to aspire. -->
+  <contentSourceConfig>
+    <connectorSource>
+      <!-- In here goes the specific properties for the content source -->
+      <sourceUrl display="Source URL" type="string">
+        <dxf:help>URL to the site where DAS exports are posted.
+        </dxf:help>
+      </sourceUrl>
+      <folderPath display="Destination Directory" type="string">
+        <dxf:help>Directory where DAS exports will be saved.
+        </dxf:help>
+      </folderPath>
+      <notifyEmails display="Notification Email Addresses" type="string">
+        <dxf:help>Email addresses that will receive an email notification when a DAS export is downloaded, separated by colon(;).
+        </dxf:help>
+      </notifyEmails>
+      <daysToExpire display="DAS Export Expiration (Days)" type="integer">
+        <dxf:help>Number of days, from the download date, after which a DAS export is deleted. Default is 14 days (2 weeks).
+        </dxf:help>
+      </daysToExpire>
+    </connectorSource>
+    <dxf:hr />
+    <properties>
+      <dxf:h1>Advanced Properties</dxf:h1>
+      <dxf:alternatives subType="checkbox" display="Advanced Configuration"
+        key="generalConfiguration" default="false">
+        <dxf:alternative display="Advanced Configuration"
+          value="false">
+
+          <snapshotDir type="constant">${dist.data.dir}/${app.name}/snapshots
+          </snapshotDir>
+          <!-- <disableTextExtract type="constant">false
+          </disableTextExtract> -->
+          <workflowReloadPeriod type="constant">15s
+          </workflowReloadPeriod>
+          <workflowErrorTolerant type="constant">false
+          </workflowErrorTolerant>
+          <waitForSubJobsTimeout type="constant">3600000
+          </waitForSubJobsTimeout>
+          <useGE type="constant">false</useGE>
+          <geSchedule type="constant">0 0 0 * * ?</geSchedule>
+          <sourceUrl type="constant" />
+          <folderPath type="constant" />
+		  <notifyEmails type="constant" />
+          <daysToExpire type="constant" />
+          <debug type="constant">false</debug>
+
+        </dxf:alternative>
+        <dxf:alternative display="Advanced Configuration"
+          value="true">
+
+          <dxf:h2>Group Expansion</dxf:h2>
+          <dxf:alternatives subType="checkbox" display="Use Group Expansion"
+            key="useGE" default="false">
+            <dxf:help>Check this box if you want to use Group Expansion
+            </dxf:help>
+            <dxf:alternative display="Don't User Group Expansion"
+              value="false">
+              <geSchedule type="constant" allowEmptyString="true"></geSchedule>
+              <sourceUrl type="constant" allowEmptyString="true"></sourceUrl>
+              <folderPath type="constant" allowEmptyString="true"></folderPath>
+              <notifyEmails type="constant" allowEmptyString="true"></notifyEmails>
+              <daysToExpire type="constant" allowEmptyString="true"></daysToExpire>
+
+            </dxf:alternative>
+
+            <dxf:alternative display="Use Group Expansion"
+              value="true">
+              <geSchedule type="pulldown" display="Group cache refresh">
+                <dxf:help>Group Expansion Schedule</dxf:help>
+                <dxf:option display="Every hour">0 0 * * * ?</dxf:option>
+                <dxf:option display="Every three hours">0 0 0/3 * * ?</dxf:option>
+                <dxf:option display="Every six hours">0 0 0/6 * * ?</dxf:option>
+                <dxf:option display="Twice a day">0 0 0,12 * * ?</dxf:option>
+                <dxf:option display="Daily">0 0 0 * * ?</dxf:option>
+              </geSchedule>
+              <sourceUrl display="Source Url" type="string">
+                <dxf:help>URL. Example
+                  searchtechnologies.jiveon.com
+                </dxf:help>
+              </sourceUrl>
+              <folderPath display="Folder Path" type="string">
+                <dxf:help>Filepath. Example
+                  /opt/vol/xmlstore/incremental/
+                </dxf:help>
+              </folderPath>
+              <notifyEmails display="Notify to Emails" type="string">
+                <dxf:help>user1@nara.gov;nara@searchtechnologies.com
+                </dxf:help>
+              </notifyEmails>
+              <daysToExpire display="Days to Expire" type="integer">
+                <dxf:help>Number of days. Example
+                  1, 2, 30, 60
+                </dxf:help>
+              </daysToExpire>
+            </dxf:alternative>
+          </dxf:alternatives>
+
+          <dxf:hr style="height: 1px;" />
+          <snapshotDir display="Snapshot Directory" type="string" validations="required,path"
+            default="${dist.data.dir}/${app.name}/snapshots">
+            <dxf:help>Directory where content snapshots will be placed.
+            </dxf:help>
+          </snapshotDir>
+
+          <!-- <disableTextExtract display="Disable text extraction"
+            type="boolean">
+            <dxf:help>[EXPERT] By default, connectors use Apache Tika to
+              extract text from downloaded documents.
+              If you wish to apply
+              special text processing to the downloaded
+              document in the
+              workflow,
+              you should disable text extraction. The downloaded
+              document is then
+              available as a content stream
+            </dxf:help>
+          </disableTextExtract> -->
+
+          <workflowReloadPeriod display="Workflow reload period"
+            type="String" default="15s" allowEmptyString="false" validations="required,reloadPeriod">
+            <dxf:help>The period after which to reload the business rules.
+              Defaults to ms, but can be suffixed with ms, s,
+              m, h or d to
+              indicate the required units
+            </dxf:help>
+          </workflowReloadPeriod>
+
+          <workflowErrorTolerant display="Error tolerant"
+            type="boolean">
+            <dxf:help>When set, exceptions in workflow rules will only effect
+              the execution of the rule in which the exception occurs.
+              Subsequent rules will be executed and the job will complete the
+              workflow sucessfully. If not set, exceptions
+              in workflow rules
+              will be re-thrown and the job will be moved to
+              the error workflow
+            </dxf:help>
+          </workflowErrorTolerant>
+
+          <waitForSubJobsTimeout display="Timeout"
+            type="String" default="3600000" validations="required,reloadPeriod">
+            <dxf:help>The period of time (on milliseconds) that the connector  will stay loading waitting for the process to be completed.
+            </dxf:help>
+          </waitForSubJobsTimeout>
+		  
+          <debug display="Debug" type="boolean">
+            <dxf:help>Check if you want debug messages enabled.</dxf:help>
+          </debug>
+        </dxf:alternative>
+      </dxf:alternatives>
+    </properties>
+  </contentSourceConfig>
+</dxf:template>

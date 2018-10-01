@@ -1,0 +1,29 @@
+<div id="modalMessageTitle" class="modal-header modalVersionTranscriptionHeader">
+    <button type="button" class="close" ng-click="cancel()"><span class="glyphicons glyphicons-remove-2"></span>&nbsp;<span>Close</span></button>
+    <div ng-if="transcription['@action'] === 'REMOVE'" class="modal-title">Restore Transcription</div>
+    <div ng-if="transcription['@action'] != 'REMOVE'" class="modal-title">Remove Transcription</div>
+    <div ng-bind-template="{{transcription.title}} (image {{transcription.object['@pageNum']}} of {{transcription.object['@totalPages']}})" class="subTitleVersionTranscription"></div>
+</div>
+<div id="modalMessageBody" class="modal-body modalVersionTranscriptionBody height100">
+    <div class="row noMarginsSides">
+        <label for="reason" class="labelT">
+            Reason:
+        </label>
+        <span>
+            <select class="form-control" id="reason" ng-model="ui.reasonSelected" ng-options="reason.value as reason.text group by reason.group for reason in ModeratorService.reasonsRemove">
+            </select>
+        </span>
+    </div>
+    <div id="removeTranscriptionAdditionalComments" class="row noMarginsSides">
+      <label for="additionalComments" class="hidden">Additional Comments</label>
+        <textarea class="form-control" id="additionalComments" placeholder="Enter additional comments…" type="text" cols="2" ng-model="ui.additionalComments"></textarea>
+    </div>
+
+    <div id="actionButtonRemoveTranscription" class="row actionButtons noMarginsSides">
+        <div class="pull-right">
+            <button class="btn removeButton" ng-click="removeTranscription()">Confirm</button>
+            <button class="btn btn-link" ng-click="cancel()">Cancel</button>
+        </div>
+    </div>
+
+</div>

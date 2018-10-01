@@ -1,0 +1,331 @@
+<%!
+    title = 'Splunk Admin Server Control'
+    from splunk.appserver.mrsparkle.lib.util import build_breadcrumbs_string
+    import splunk
+    from splunk.appserver.mrsparkle.lib import util, i18n
+%>
+<%namespace name="lib" file="//lib.html" import="*"/>
+<%inherit file="//layout/admin.html" />
+<%
+    version = int(cherrypy.config.get('version_label')[0])
+    ace = (version == 5)
+    bubbles = (version == 6)
+
+    ace = cherrypy.config.get('version_label').startswith("5.")
+    if ace or bubbles:
+        evt_local_source = '/' + '/'.join(['servicesNS', '-', APP['id'], 'data', 'inputs', 'win-event-log-collections', 'localhost'])
+        evt_local_uri  = make_url(['manager', APP['id'], 'data', 'inputs', 'win-event-log-collections', 'localhost'], _qs=dict(action='edit', uri=evt_local_source))
+        evt_remote_uri = make_url(['manager', APP['id'], 'data', 'inputs', 'win-event-log-collections', '_new'], _qs=dict(action='edit', ns=APP['id']))
+        breadcrumbs = build_breadcrumbs_string( [ ('Manager', '/manager'), ('Data inputs', make_url(['manager', namespace, 'datainputstats'], translate=False)) ])
+    else:
+        evt_local_source = '/' + '/'.join(['servicesNS', '-', APP['id'], 'admin', 'win-event-log-collections', 'localhost'])
+        evt_local_uri  = make_url(['manager', APP['id'], 'admin', 'win-event-log-collections', 'localhost'], _qs=dict(action='edit', uri=evt_local_source))
+        evt_remote_uri = make_url(['manager', APP['id'], 'admin', 'win-event-log-collections', '_new'], _qs=dict(action='edit', ns=APP['id']))
+        breadcrumbs = build_breadcrumbs_string( [ ('Manager', '/manager'), ('Data inputs', make_url(['manager', namespace, 'datainputstats'], translate=False)) ])
+%>
+
+% if ace or bubbles:
+<div class="dataInputsWrapper">
+    % if ace:
+    <h1>${_('Data inputs')}</h1>
+    % endif
+    <div class="dataInputsDesc">${_('Set up data inputs from files and directories, network ports, and scripted inputs. If you want to set up forwarding and receiving between two Splunk instances, go to <a href="%(url)s">Forwarding and receiving</a>.') %  dict([('url',make_url(['manager', namespace, 'forwardreceive']))])}</div>
+
+    <p class="splClearfix">
+        <a href="${make_url(['manager', APP['id'], 'adddata'], _qs=dict(breadcrumbs=breadcrumbs))}" class="splButton-primary">
+            <span>${_('Add data')}</span>
+        </a>
+    </p>
+
+    <br>
+    <div class="listWrapper">
+        <table class="splTable splTable-list" id="dataInputs">
+            % if indexData:
+                <tr>
+                    <th class="col-1">${_('Type')}</th>
+                    <th class="col-2">${_('Inputs')}</th>
+                    <th class="col-3">${_('Actions')}</th>
+                </tr>
+                % if winData:
+                 <tr>
+                    <td class="col-1 input_name"><a href="${evt_local_uri}">${_('Local event log collection')}</a></td>
+                    <td class="col-2">-</td>
+                    <td class="col-3"><a href="${evt_local_uri}">${_('Edit')}</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="input_description">${_('Collect event logs from this machine.')}</td>
+                </tr>
+
+                <tr>
+                    <td class="col-1 input_name"><a href="${make_url(['manager', APP['id'], 'data', 'inputs', 'win-event-log-collections'])}">${_('Remote event log collections')}</a></td>
+                    <td class="col-2">${indexData.get('elCount','0')}</td>
+                    <td class="col-3"><a href="${evt_remote_uri}">${_('Add new')}</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="input_description">${_('Collect event logs from remote hosts. Note: this uses WMI and requires a domain account.')}</td>
+                </tr>
+
+                % endif
+
+                 <tr>
+                    <td class="col-1 input_name"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'monitor'])}">${_('Files &amp; directories')}</a></td>
+                    <td class="col-2">${indexData.get('monitorCount','0')}</td>
+                    <td class="col-3"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'monitor', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="input_description">${_('Upload a file, index a local file, or monitor an entire directory. ')}</td>
+                </tr>
+
+                % if winData:
+
+                <tr>
+                    <td class="col-1 input_name"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'win-perfmon'])}">${_('Local performance monitoring')}</a></td>
+                    <td class="col-2">${indexData.get('perfCount','0')}</td>
+                    <td class="col-3"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'win-perfmon', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="input_description">${_('Collect performance data from local machine. ')}</td>
+                </tr>
+
+                <tr>
+                    <td class="col-1 input_name"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'win-wmi-collections'])}">${_('Remote performance monitoring')}</a></td>
+                    <td class="col-2">${indexData.get('wmiCount','0')}</td>
+                    <td class="col-3"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'win-wmi-collections', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="input_description">${_('Collect performance and event information from remote hosts. Requires domain credentials. ')}</td>
+                </tr>
+
+                % endif
+
+                <tr>
+                    <td class="col-1 input_name"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'tcp', 'raw'])}">${_('TCP')}</a></td>
+                    <td class="col-2">${indexData.get('tcpCount','0')}</td>
+                    <td class="col-3"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'tcp', 'raw', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="input_description">${_('Listen on a TCP port for incoming data, e.g. syslog. ')}</td>
+                </tr>
+
+                <tr>
+                    <td class="col-1 input_name"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'udp'])}">${_('UDP')}</a></td>
+                    <td class="col-2">${indexData.get('udpCount','0')}</td>
+                    <td class="col-3"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'udp', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="input_description">${_('Listen on a UDP port for incoming data, e.g. syslog. ')}</td>
+                </tr>
+
+                % if winData:
+
+                <tr>
+                    <td class="input_name"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'registry'])}">${_('Registry monitoring')}</a></td>
+                    <td class="col-2">${indexData.get('regCount','0')}</td>
+                    <td class="col-3"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'registry', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="input_description">${_('Have Splunk index the local Windows Registry, and monitor it for changes. ')}</td>
+                </tr>
+
+                <tr>
+                    <td class="col-1 input_name"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'ad'])}">${_('Active Directory monitoring')}</a></td>
+                    <td class="col-2">${indexData.get('adCount','0')}</td>
+                    <td class="col-3"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'ad', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="input_description">${_('Index and monitor Active Directory. ')}</td>
+                </tr>
+
+                % endif
+
+                 <tr>
+                    <td class="col-1 input_name"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'script'])}">${_('Scripts')}</a></td>
+                    <td class="col-2">${indexData.get('scriptCount','0')}</td>
+                    <td class="col-3"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'script', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="input_description">${_('Run custom scripts to collect or generate more data. ')}</td>
+                </tr>
+<!-- DBmon link: -->
+<%
+    from splunk.clilib import cli_common as cli
+    dbmonCfg = cli.getMergedConf("inputs")
+    dbmonCount = 0
+    for k,v in dbmonCfg.items():
+        if k.find("dbmon-") == 0:
+            dbmonCount += 1
+%>
+            <tr>
+               <td class="col-1 input_name"><a href="${make_url(['manager', namespace, 'dbx', 'dbmon'])}">${_('Database Inputs')}</a></td>
+               <td class="col-2">${dbmonCount}</td>
+               <td class="col-3"><a href="${make_url(['manager', namespace, 'dbx', 'dbmon', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+           </tr>
+            <tr>
+                <td colspan="3" class="input_description">${_('Fetch data from external SQL databases. ')}</td>
+            </tr>
+<!-- End of DBmon -->
+                % for input  in modInputs:
+                 <tr>
+                    <td class="col-1 input_name"><a href="${make_url(['manager', namespace, 'data', 'inputs', input['name']])}">${_(input['title'])}</a></td>
+                    <td class="col-2">${input['count']}</td>
+                    <td class="col-3"><a href="${make_url(['manager', namespace, 'data', 'inputs', input['name'], '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="input_description">${_(input['description'])}</td>
+                </tr>
+                % endfor
+            % else:
+                <tr>
+                    <td colspan="3">${_('Indexes data not returned')}</td>
+                </tr>
+            % endif
+
+        </table>
+    </div>
+</div>
+% else:
+<div class="dataInputsWrapper">
+    <h1>${_('Data inputs')}</h1>
+    <div class="dataInputsDesc">${_('Set up data inputs from files and directories, network ports, and scripted inputs. If you want to set up forwarding and receiving between two Splunk instances, go to <a href="%(url)s">Forwarding and receiving</a>.') %  dict([('url',make_url(['manager', namespace, 'forwardreceive']))])}</div>
+
+    <p class="splClearfix">
+        <a href="${make_url(['manager', APP['id'], 'adddata'], _qs=dict(breadcrumbs=breadcrumbs))}" class="splButton-primary">
+            <span>${_('Add data')}</span>
+        </a>
+    </p>
+
+    <br>
+    <table class="splTable" id="dataInputs">
+        % if indexData:
+            <tr>
+                <th>${_('Type')}</th>
+                <th>${_('Inputs')}</th>
+                <th>${_('Actions')}</th>
+            </tr>
+            % if winData:
+             <tr>
+                <td class="input_name"><a href="${evt_local_uri}">${_('Local event log collection')}</a></td>
+                <td>-</td>
+                <td><a href="${evt_local_uri}">${_('Edit')}</a></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="input_description">${_('Collect event logs from this machine.')}</td>
+            </tr>
+
+            <tr>
+                <td class="input_name"><a href="${make_url(['manager', APP['id'], 'admin', 'win-event-log-collections'])}">${_('Remote event log collections')}</a></td>
+                <td>${indexData.get('elCount','0')}</td>
+                <td><a href="${evt_remote_uri}">${_('Add new')}</a></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="input_description">${_('Collect event logs from remote hosts. Note: this uses WMI and requires a domain account.')}</td>
+            </tr>
+
+            % endif
+
+             <tr>
+                <td class="input_name"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'monitor'])}">${_('Files &amp; directories')}</a></td>
+                <td>${indexData.get('monitorCount','0')}</td>
+                <td><a href="${make_url(['manager', namespace, 'data', 'inputs', 'monitor', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="input_description">${_('Upload a file, index a local file, or monitor an entire directory. ')}</td>
+            </tr>
+
+            % if winData:
+
+            <tr>
+                <td class="input_name"><a href="${make_url(['manager', namespace, 'admin', 'win-perfmon'])}">${_('Local performance monitoring')}</a></td>
+                <td>${indexData.get('perfCount','0')}</td>
+                <td><a href="${make_url(['manager', namespace, 'admin', 'win-perfmon', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="input_description">${_('Collect performance data from local machine. ')}</td>
+            </tr>
+
+            <tr>
+                <td class="input_name"><a href="${make_url(['manager', namespace, 'admin', 'win-wmi-collections'])}">${_('Remote performance monitoring')}</a></td>
+                <td>${indexData.get('wmiCount','0')}</td>
+                <td><a href="${make_url(['manager', namespace, 'admin', 'win-wmi-collections', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="input_description">${_('Collect performance and event information from remote hosts. Requires domain credentials. ')}</td>
+            </tr>
+
+            % endif
+
+            <tr>
+                <td class="input_name"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'tcp', 'raw'])}">${_('TCP')}</a></td>
+                <td>${indexData.get('tcpCount','0')}</td>
+                <td><a href="${make_url(['manager', namespace, 'data', 'inputs', 'tcp', 'raw', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="input_description">${_('Listen on a TCP port for incoming data, e.g. syslog. ')}</td>
+            </tr>
+
+            <tr>
+                <td class="input_name"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'udp'])}">${_('UDP')}</a></td>
+                <td>${indexData.get('udpCount','0')}</td>
+                <td><a href="${make_url(['manager', namespace, 'data', 'inputs', 'udp', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="input_description">${_('Listen on a UDP port for incoming data, e.g. syslog. ')}</td>
+            </tr>
+
+            % if winData:
+
+            <tr>
+                <td class="input_name"><a href="${make_url(['manager', namespace, 'admin', 'win-regmon'])}">${_('Registry monitoring')}</a></td>
+                <td>${indexData.get('regCount','0')}</td>
+                <td><a href="${make_url(['manager', namespace, 'admin', 'win-regmon', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="input_description">${_('Have Splunk index the local Windows Registry, and monitor it for changes. ')}</td>
+            </tr>
+
+            <tr>
+                <td class="input_name"><a href="${make_url(['manager', namespace, 'admin', 'win-admon'])}">${_('Active Directory monitoring')}</a></td>
+                <td>${indexData.get('adCount','0')}</td>
+                <td><a href="${make_url(['manager', namespace, 'admin', 'win-admon', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="input_description">${_('Index and monitor Active Directory. ')}</td>
+            </tr>
+
+            % endif
+
+             <tr>
+                <td class="input_name"><a href="${make_url(['manager', namespace, 'data', 'inputs', 'script'])}">${_('Scripts')}</a></td>
+                <td>${indexData.get('scriptCount','0')}</td>
+                <td><a href="${make_url(['manager', namespace, 'data', 'inputs', 'script', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="input_description">${_('Run custom scripts to collect or generate more data. ')}</td>
+            </tr>
+<!-- DBmon link: -->
+<%
+    from splunk.clilib import cli_common as cli
+    dbmonCfg = cli.getMergedConf("inputs")
+    dbmonCount = 0
+    for k,v in dbmonCfg.items():
+        if k.find("dbmon-") == 0:
+            dbmonCount += 1
+%>
+            <tr>
+               <td class="input_name"><a href="${make_url(['manager', namespace, 'dbx', 'dbmon'])}">${_('Database Inputs')}</a></td>
+               <td>${dbmonCount}</td>
+               <td><a href="${make_url(['manager', namespace, 'dbx', 'dbmon', '_new'], _qs=dict(action='edit'))}">${_('Add new')}</a></td>
+           </tr>
+            <tr>
+                <td colspan="3" class="input_description">${_('Fetch data from external SQL databases. ')}</td>
+            </tr>
+<!-- End of DBmon -->
+        % else:
+            <tr>
+                <td colspan="3">${_('Indexes data not returned')}</td>
+            </tr>
+        % endif
+
+    </table>
+</div>
+% endif

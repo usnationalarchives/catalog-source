@@ -1,0 +1,17 @@
+<div id="modalMessageTitle" class="modal-header">
+</div>
+<div id="modalMessageBody" class="modal-body url-message">
+  <div class="center-div logoHeader">
+    <img src="/images/NARA_Logo.svg" height="40" width="40" alt="NATIONAL ARCHIVES CATALOG" err-src="../../images/NARA_Logo.png">
+    NATIONAL ARCHIVES
+  </div>
+	<center><em class="title">You are now leaving the National Archives Website</em></center>
+	<center class="text">Click the link below to continue or wait {{time}} seconds to be transferred to:</center>
+	<center class="text url"><a id="externalLink" ng-href="{{url}}" ng-click="onClick()" ng-bind="url">[external URL]</a></center>
+	<center class="text">Thank you for visiting the National Archives online!</center>
+	<p class="text">We have provided a link to this site because it has information that may interest you. This link is not an endorsement by the National Archives of the opinions, products, or services presented on this site, or any sites linked to it.
+	   The National Archives is not responsible for the legality or accuracy of information on this site, the policies, or for any costs incurred while using this site.</p>
+</div>
+<div id="modalMessageButtons" class="modal-footer">
+	<button class="btn btn-primary" ng-click="ok()">OK</button>
+</div>

@@ -1,0 +1,72 @@
+<div class="row tagItem noMarginsSides item">
+    <div class="row noMarginsSides ">
+        <div class="col-xs-1" ng-bind="$index + offset + 1" ng-class="{removed: transcription['@action'] === 'DELETE' || transcription['@action'] === 'REMOVE'}"></div>
+
+        <div class="col-xs-6 text-left" ><a target="_blank" ng-href="#/id/{{transcription.object['@naid']}}" ng-bind="transcription.title" class="color-torea-bay" ng-class="{removed: transcription['@action'] === 'DELETE' || transcription['@action'] === 'REMOVE'}"></a></div>
+
+        <div class="col-xs-1"><a class="color-torea-bay" ng-href="#/id/{{transcription.object['@naid']}}/{{transcription.object['@pageNum']}}/public?contributionType=transcription" target="_blank" ng-bind-template="{{transcription.object['@pageNum']}} / {{transcription.object['@totalPages']}}" ng-class="{removed: transcription['@action'] === 'DELETE' || transcription['@action'] === 'REMOVE'}"></a></div>
+
+        <div class="col-xs-1" ng-if="transcription['@authorIsNaraStaff'] === 'false'"><a class="color-torea-bay" target="_blank" ng-href="#/accounts/{{transcription['@authorUserId']}}/contributions?contributionType=transcriptions" ng-bind="transcription['@authorUserId']" ng-class="{removed: transcription['@action'] === 'DELETE' || transcription['@action'] === 'REMOVE'}"></a></div>
+        <div class="col-xs-1" ng-if="transcription['@authorIsNaraStaff'] === 'true'"><a class="color-torea-bay" target="_blank" ng-href="#/accounts/{{transcription['@authorUserId']}}/contributions?contributionType=transcriptions"  ng-bind="transcription['@authorFullName']" ng-class="{removed: transcription['@action'] === 'DELETE' || transcription['@action'] === 'REMOVE'}"></a></div>
+
+        <div id="tr{{$index}}" class="col-xs-1" ng-bind="OpaUtils.fancyDate(transcription['@when'])" ng-class="{removed: transcription['@action'] === 'DELETE' || transcription['@action'] === 'REMOVE'}"></div>
+
+        <div class="col-xs-1" ng-if="transcription['@action'] === 'ADD'">New</div>
+        <div class="col-xs-1" ng-if="transcription['@action'] === 'UPDATE' || transcription['@action'] === 'RESTORE' || transcription['@action'] === 'DELETE' || transcription['@action'] === 'REMOVE'">Update</div>
+
+        <div ng-if="transcription.history.length > 0" class="col-xs-1"><a href="" rel="#" data-toggle="collapse" data-target="#tnote{{$index}}" class="color-black"><span class="glyphicons glyphicons-notes-2"></span></a></div>
+
+    </div>
+
+    <div id="tnote{{$index}}" class="row noteGroup noPaddingSides panel-collapse collapse">
+        <div ng-if="transcription.history.length > 0" class="note row noMarginsSides col-xs-12" ng-repeat="note in transcription.history" ng-class="{noteBorder: $index != 0}">
+            <div class="col-xs-3">
+                <span class="bold">Moderator:</span>
+                <span>{{note['@fullName']}}</span>
+            </div>
+            <div class="col-xs-2">
+                <span class="bold">{{note['@action'].toLowerCase() | capitalize}}:</span>
+                <span ng-bind="OpaUtils.fancyDate(note['@logTS'])"></span>
+            </div>
+            <div class="col-xs-3">
+                <span class="bold">Reason:</span>
+                <span>{{note['@reason']}}</span>
+            </div>
+            <div class="col-xs-4">
+                <span class="bold">Notes:</span>
+                <span>{{note['@notes']}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="teaser{{$index}}"class="row noMarginsSides transcriptionActionArea panel-collapse collapse in">
+        <div class="teaserModeration ">
+            <pre >{{transcription.transcription.teaser | removeNewLines}} ... <a href="" rel="#" ng-click="reviewTranscription('#moderationTranscription'+$index,'#teaser'+$index,$index,transcription.object,transcription.transcription['@version'])">Review</a></pre>
+        </div>
+    </div>
+
+    <div id="moderationTranscription{{$index}}" class="row noMarginsSides panel-collapse collapse">
+        <div class="moderationTranscription">
+            <div class="transcriptionText">
+                <pre ng-bind="transcriptionText[$index]">
+                </pre>
+            </div>
+
+            <div class="controlsItemModeration">
+                <div class="pull-left">
+                    <button class="btn btn-link" ng-click="openVersioningModal(transcription)" >View Previous Versions</button>
+                </div>
+
+                <div class="pull-right">
+                    <button ng-if="transcription['@action'] != 'REMOVE'" class="btn removeButton" ng-click="openRemoveTranscriptionModal(transcription)">Remove</button>
+                    <button class="btn btn-link" ng-click="cancelModeration('#moderationTranscription'+$index,'#teaser'+$index)">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>

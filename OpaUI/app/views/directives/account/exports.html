@@ -1,0 +1,90 @@
+<div class="col-xs-12">
+    <hr>
+    <div class="container">
+        <div class="row title-div">
+            <h1 class="title">Bulk Downloads</h1>
+            <a class="float-right" ng-href="/accounts/{{Auth.userName()}}"><span class="glyphicons glyphicons-restart"></span> Go back to My Account</a>
+        </div>
+        <div class="row margin-15-top">
+            <div class="col-xs-2 header">
+                <span>NAME</span>
+            </div>
+            <div class="col-xs-2 header">
+                <span>STATUS</span>
+            </div>
+            <div class="col-xs-1 header">
+                <span class="abbreviation" title="PERCENT COMPLETE">% COMPLETE
+                </span>
+            </div>
+            <div class="col-xs-1 header">
+                <span class="abbreviation" title="NUMBER OF ITEMS">NO. OF ITEMS
+                </span>
+            </div>
+            <div class="col-xs-1 header">
+                <span class="abbreviation" title="SIZE (In GIGABYTES)">SIZE (In GB)
+
+                </span>
+            </div>
+            <div class="col-xs-1 header">
+                <span>FORMAT</span>
+            </div>
+            <div class="col-xs-1 header">
+                <span>REQUESTED</span>
+            </div>
+            <div class="col-xs-1 header">
+                <span>EXPIRES</span>
+            </div>
+            <div class="col-xs-1 header">
+                <span>DOWNLOAD</span>
+            </div>
+            <div class="col-xs-1 header">
+            </div>
+        </div>
+        <hr class="margin-10-top margin-10-bottom">
+        <div class="exports" ng-repeat="export in exports | filter:{bulkExport: true}">
+            <div class="row titles">
+                <div class="col-xs-2">
+                    <span ng-bind="export['exportName']"></span>
+                </div>
+                <div class="col-xs-2">
+                    <span class="status bold" ng-show="export['status'] != 'Processing'" ng-class="{'failed': export['status'] == 'Failed'}" ng-bind="export['status']"></span>
+                    <span ng-repeat="i in [] | range:progress(export['percentageComplete'])" ng-show="export['status'] == 'Processing'">
+                        <span class="status fa fa-circle"></span>
+                    </span>
+                    <span ng-repeat="i in [] | range:5-progress(export['percentageComplete'])" ng-show="export['status'] == 'Processing'">
+                        <span class="status fa fa-circle-thin"></span>
+                    </span>
+                </div>
+                <div class="col-xs-1">
+                    <span ng-bind-template="{{progress(export['percentageComplete']) * 20}}%"></span>
+                </div>
+                <div class="col-xs-1">
+                    <span ng-bind="export['totalProcesedRecords']"></span>
+                </div>
+                <div class="col-xs-1">
+                    <span ng-bind="{{(export['fileSize'] / 1073741824) | number : 3}}"></span>
+                </div>
+                <div class="col-xs-1">
+                    <span ng-bind="export['exportFormat']"></span>
+                </div>
+                <div class="col-xs-1 left-aligned">
+                    <span ng-bind="OpaUtils.fancyDateMMMFormat(export['requestTs'])"></span>
+                </div>
+                <div class="col-xs-1 left-aligned">
+                    <span ng-bind="OpaUtils.fancyDateMMMFormat(export['expiresTs'])"></span>
+                </div>
+                <div class="col-xs-1">
+                    <span ng-hide="export['status'] == 'Completed'">-</span>
+                    <a class="bold" target="_blank" ng-href="{{configServices.API_LOCATION + export['downloadUrl']}}" ng-show="export['status'] == 'Completed'">Download</a>
+                </div>
+                <div class="col-xs-1 header">
+                  <a href="" rel="#" ng-click="deleteExport(export['exportId'])"><span id="deleteExport{{$index}}" class="glyphicons glyphicons-circle-remove link"> </span></a>
+                </div>
+            </div>
+            <hr class="margin-5-top margin-5-bottom">
+        </div>
+        <div class="row margin-40-bottom">
+            <em class="download-ready"><span class="glyphicons glyphicons-circle-exclamation-mark"></span> Your download-ready file will be in a compressed tar.gz format.</em>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<span id="paging" class="hidden-print">
+  <d class="noMargins">
+    <ul id="paginationControl" class="pagination pagination-sm" ng-model="currentPage">
+
+      <li ng-class="{disabledArrows: currentPage <= 1}"><a ng-if="currentPage > 1"
+                                                           href="{{firstPageUrl()}}"
+                                                           title="First Page"><span><<</span>
+                                                        </a>
+                                                        <a ng-if="currentPage <= 1"><span style="color:#cccccc"><<</span></a>
+      </li>
+      <li ng-class="{disabledArrows: currentPage <= 1}"><a ng-if="currentPage > 1"
+                                                           href="{{previousPageUrl()}}"
+                                                           title="Previous Page"><span><</span>
+                                                        </a>
+                                                        <a ng-if="currentPage <= 1"><span style="color:#cccccc"><</span></a>
+      </li>
+      <li ng-show="page1>0"><a href="{{pageNumberUrl(page1)}}" class="hidden-xs hidden-sm"
+                               ng-class="{current: page1 === currentPage}">{{page1}}</a>
+      </li>
+      <li ng-show="page2>0"><a href="{{pageNumberUrl(page2)}}" class="hidden-xs hidden-sm"
+                               ng-class="{current: page2 === currentPage}">{{page2}}</a>
+      </li>
+      <li ng-show="page3>0"><a href="{{pageNumberUrl(page3)}}" class="hidden-xs hidden-sm"
+                               ng-class="{current: page3 === currentPage}">{{page3}}</a>
+      </li>
+      <li>
+        <div class="jumpPagination">
+
+          <form class="hidden-xs hidden-sm" name="jumToPageForm" ng-submit="pageNumber(nav.targetPage)">
+            <label class="sr-only" for="jumpToPageInput{{$id}}">Jump to page number</label>
+
+
+            <span>  Page: </span>
+
+            <input id="jumpToPageInput{{$id}}" type="text" title="Enter a number greater or equals to 1." pattern="\d*"
+                   class="targetPageInput" ng-model="nav.targetPage"
+                   onload="setCustomValidity('Please enter a valid number.')"
+                   oninput="try{setCustomValidity('')}catch(e){}"/>
+
+            <span>of          {{totalPages()}}</span>
+
+          </form>
+
+          <form class="visible-xs visible-sm" name="jumToPageForm" ng-submit="pageNumber(nav.targetPage)">
+            <label class="sr-only" for="jumpToPageInputsm">Jump to page number</label>
+
+            <span>  Page: </span>
+
+            <input id="jumpToPageInputsm" type="text" title="Enter a number greater or equals to 1."
+                   class="targetPageInput" ng-model="nav.targetPage"
+                   onload="setCustomValidity('Please enter a valid number.')"
+                   oninput="try{setCustomValidity('')}catch(e){}"/>
+            <span>of          {{totalPages()}}</span>
+
+          </form>
+
+        </div>
+      </li>
+
+      <li ng-class="{disabledArrows: last()}"><a ng-if="!last()" href="{{nextPageUrl()}}" title="Next Page"><span>></span></a>
+                                              <a ng-if="last()"><span style="color:#cccccc" ng-class="{disabledArrows: last()}">></span></a>
+      </li>
+      <li ng-class="{disabledArrows: last()}"><a ng-if="!last()" href="{{lastPageUrl()}}" title="Last Page"><span>>></span></a>
+                                              <a ng-if="last()"><span style="color:#cccccc" ng-class="{disabledArrows: last()}">>></span></a>
+      </li>
+
+
+    </ul>
+  </div>
+</div>

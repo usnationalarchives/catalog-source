@@ -1,0 +1,328 @@
+#advancedSearch {
+  width: 90%;
+  button {
+    width: 55px;
+    padding: 3px 6px;
+    margin-right: 20px;
+    margin-top: 7px;
+    font-family: $source-sans-pro;
+    font-size: 0.75em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+}
+
+.advancedSearchForm {
+  margin: 0 auto;
+  p {
+    font-size: 0.813em;
+    font-weight: bold;
+    margin: 10px 13px;
+    padding-left: 0;
+  }
+  .headerNav {
+    margin-bottom: 13px;
+    margin-top: 13px;
+    padding: 0;
+  }
+  .radio-inline {
+    padding: 0 20px 10px 5px;
+    height: 22px;
+  }
+  .datasource {
+    padding: 0 0 5px 15px;
+    font-size: 1em;
+    label {
+      padding: 0;
+    }
+  }
+  label,.rangeDatesCongressLabel,.labelWithSomeChilds {
+    font-family: $source-sans-pro;
+    font-size: 0.813em;
+    font-weight: normal;
+    margin-top: 5px;
+    margin-left: 0;
+    padding: 0 0 0 10px;
+  }
+  .container {
+    height: 196px;
+    border: 1px solid lightgray;
+    padding: 0 10px;
+    overflow-y: scroll;
+  }
+  fieldset {
+    margin-top: 25px;
+    padding-left: 0;
+  }
+  legend {
+    font-family: $source-sans-pro;
+    font-size: 0.813em;
+    padding-bottom: 5px;
+    border-bottom: 1px solid $steel-blue;
+  }
+  input[type="text"] {
+    border-radius: 0;
+    margin-bottom: 20px;
+    margin-top: 5px;
+    font-family: $source-sans-pro;
+    font-size: 0.813em;
+  }
+  .padding-input {
+    padding-left: 20px;
+  }
+  .add-on {
+    margin: 0;
+  }
+  #date1, #date2, #date3, #date4, #date5, #date6, #date7, #date8 {
+    margin-bottom: 0;
+  }
+  select {
+    border-radius: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-family: $source-sans-pro;
+    font-size: 0.813em;
+    padding: 5px;
+  }
+  .padding-select {
+    padding: 2px 5px;
+    margin-bottom: 15px;
+  }
+  input[type="checkbox"] {
+    margin-left: 0;
+    margin-right: 5px;
+    margin-top: 3px;
+  }
+  input[type='radio'] {
+    vertical-align: middle;
+    position: relative;
+    bottom: 2px;
+  }
+  .note {
+    font-family: $source-sans-pro;
+    font-size: 0.75em;
+    margin-bottom: 15px;
+    padding-left: 8px;
+  }
+  .note-datasource {
+    font-size: 0.8em;
+    margin-bottom: 15px;
+    padding-left: 10px;
+  }
+  .padding-note {
+    padding-left: 30px;
+    padding-right: 0;
+    margin-bottom: 10px;
+    width: 140px;
+  }
+  .padding-note2 {
+    padding-left: 30px;
+    padding-right: 0;
+    margin-bottom: 10px;
+    width: 200px;
+  }
+
+  hr {
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-top: 1px solid $steel-blue;
+  }
+
+  .labelCalendarAdvanceSearch{
+    font-family: $source-sans-pro;
+    font-size: 0.813em;
+    font-weight: normal;
+    margin-top: 5px;
+    margin-left: 0;
+    padding-right: 10px;
+    line-height: 3;
+  }
+  .calendarKendo {
+    margin:0 !important;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    width: 90px;
+    font-size: 14px !important;
+    .k-icon {
+      background-image: none;
+      position: relative;
+      display: inline-block;
+      left: 1px;
+      font-family: 'Glyphicons Regular';
+      font-size: 1em;
+      font-style: normal;
+      font-weight: normal;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+    }
+    .k-icon::before {
+      content: "\E046   ";
+    }
+  }
+
+  .calendarKendo[disabled] {
+    cursor: not-allowed;
+    background-color: #eeeeee;
+  }
+
+  .calendarKendoFull{
+    margin:0 !important;
+    font-size: 14px !important;
+    .k-icon {
+      background-image: none;
+      position: relative;
+      display: inline-block;
+      left: 1px;
+      font-family: 'Glyphicons Regular';
+      font-size: 1em;
+      font-style: normal;
+      font-weight: normal;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+    }
+    .k-icon::before {
+      content: "\E046   ";
+    }
+  }
+
+  .controlAdvanceSearch{
+    margin-bottom: 20px;
+  }
+
+  .sliderCongressDiv {
+    padding: 10px 15px;
+  }
+
+  .noUi-connect {
+    background: $havelock-blue;
+  }
+
+  .grayedOut {
+    .noUi-connect{
+      background: $gray;
+    }
+    color: $gray;
+  }
+
+  .congressRangeDates {
+    width: 100%;
+    //height: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .congressInput {
+    height: 22px;
+    margin: 0 !important;
+    padding: 0 5px;
+  }
+
+  .table-cell {
+    display: table-cell;
+  }
+
+  .labelCongress {
+    text-align: right;
+    label {
+      padding-left: 0;
+    }
+  }
+}
+
+@media (min-width: 200px) and (max-width: 767px) {
+  .advancedSearchForm {
+    input[type="text"] {
+      font-size: 1.0em;
+      height: 30px;
+    }
+    label,.rangeDatesCongressLabel {
+      padding-left: 0;
+      margin: 0;
+      font-size: 1em;
+    }
+    .checkbox {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+    .note {
+      margin-bottom: 5px;
+    }
+    select {
+      height: 38px;
+    }
+    .labelCongress {
+      text-align: left;
+    }
+    .sliderCongressDiv{
+      padding: 10px 35px;
+    }
+  }
+  #advancedSearch {
+    width: 100%;
+    p {
+      font-size: 0.95em;
+    }
+    .wrapper {
+      margin-left: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    button {
+
+      padding-left: 7px;
+      padding-right: 7px;
+      margin-right: 5px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .mobileInline {
+    display: inline-block;
+    width: 25%;
+    margin-bottom: 0px;
+    vertical-align: middle;
+    select{
+      margin: 0;
+    }
+  }
+
+  .padding-note {
+    padding-left: 40px;
+    padding-right: 0;
+    margin-bottom: 10px;
+    width: 150px;
+  }
+  .padding-note2 {
+    padding-left: 40px;
+    padding-right: 0;
+    margin-bottom: 10px;
+    width: 210px;
+  }
+
+  #rangeDateControl {
+    padding-left: 25px;
+
+    #tabsDateAdvSearch {
+      margin-top: 5px;
+    }
+
+    #exactDate, #range, #recurringDate {
+      left: -15px;
+    }
+  }
+}
+
+
+#tabsDateAdvSearch{
+  margin-bottom: 25px;
+}
+
+//Make the slider a bit round
+.noUi-handle {
+  border-radius: 20px;
+}
+//End of advancedSearchForm
+
+.defaultDateText {
+  color: $gray;
+}

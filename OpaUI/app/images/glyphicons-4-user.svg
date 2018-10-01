@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   x="0px"
+   y="0px"
+   width="124"
+   height="156"
+   viewBox="0 0 124 156"
+   xml:space="preserve"
+   id="svg3018"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="glyphicons-4-user.svg"><metadata
+   id="metadata3029"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+   id="defs3027" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="816"
+   inkscape:window-height="621"
+   id="namedview3025"
+   showgrid="false"
+   inkscape:zoom="1.2291667"
+   inkscape:cx="82.740333"
+   inkscape:cy="83.652227"
+   inkscape:window-x="2173"
+   inkscape:window-y="16"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="svg3018"
+   fit-margin-top="0"
+   fit-margin-left="0"
+   fit-margin-right="0"
+   fit-margin-bottom="0" />
+<g
+   id="glyphicons"
+   transform="matrix(5.3913043,0,0,5.2049307,-70.086956,-46.172573)">
+	<g
+   id="user_2_">
+		<path
+   id="user"
+   d="m 35,30.208 c -0.644,-0.366 -4.843,-2.851 -7,-3.724 v -3.777 c 0.624,-0.456 1,-1.158 1,-2.223 V 17.5 C 29,15.025 27.5,13 24.5,13 c -3,0 -4.5,2.025 -4.5,4.5 0,0 0,0.484 0,2.984 0,1.075 0.376,1.779 1,2.233 v 3.767 c -2.032,0.873 -6.356,3.357 -7,3.724 -0.801,0.455 -1,0.888 -1,1.94 0,0.43 0,2.352 0,2.352 0,0.275 0.225,0.5 0.5,0.5 h 22 c 0.275,0 0.5,-0.225 0.5,-0.5 0,0 0,-1.922 0,-2.352 0,-1.052 -0.199,-1.485 -1,-1.94 z"
+   inkscape:connector-curvature="0" />
+	</g>
+</g>
+<g
+   id="Layer_2"
+   transform="translate(37.906784,53.898302)">
+</g>
+<g
+   id="nyt_x5F_exporter_x5F_info"
+   style="display:none"
+   transform="translate(37.906784,53.898302)">
+</g>
+</svg>

@@ -1,0 +1,526 @@
+<tbody>
+  <tr>
+    <td>q</td>
+    <td class="valueApi">
+      <div class="form-group">
+        <label class="sr-only" for="qInputSearch">query</label>
+        <input type="text" class="form-control" id="qInputSearch" placeholder="query" ng-model="qInputSearch">
+      </div>
+    </td>
+    <td class="hidden-xs hidden-sm"> Keyword search over the full-text content (and selected full-text fields such as title).
+      Full query expressions can be used as the value for 'q'. See section 3.5 for more details.
+      The 'q' parameter is optional. When missing, the search results will be based entirely on the filter parameters below.
+      The exact list of fields which will be searched by the 'q' parameter will be different for each different type of content source, but usually includes embedded text content plus high-quality full text fields such as 'title', 'description', etc.
+      See the appropriate Data Model Definition (DMD) document for each source to identify exactly what fields are searched by 'q'.
+      <br/>
+      Examples:
+      <ul>
+        <li><span class="code">q=Navy</span></li>
+        <li><span class="code">q=Kennedy and NASA</span></li>
+        <li><span class="code">q=kennedy missile crisis</span></li>
+        <li><span class="code">q=johnson and space and (nasa or "space agency")</span></li>
+      </ul>
+    </td>
+  </tr>
+  <tr class="visible-xs visible-sm">
+    <td colspan="2">
+      <div class="bold">Description</div>
+      Keyword search over the full-text content (and selected full-text fields such as title).
+      Full query expressions can be used as the value for 'q'. See section 3.5 for more details.
+      The 'q' parameter is optional. When missing, the search results will be based entirely on the filter parameters below.
+      The exact list of fields which will be searched by the 'q' parameter will be different for each different type of content source, but usually includes embedded text content plus high-quality full text fields such as 'title', 'description', etc.
+      See the appropriate Data Model Definition (DMD) document for each source to identify exactly what fields are searched by 'q'.
+      <br />
+      Examples:
+      <ul>
+        <li><span class="code">q=Navy</span></li>
+        <li><span class="code">q=Kennedy and NASA</span></li>
+        <li><span class="code">q=kennedy missile crisis</span></li>
+        <li><span class="code">q=johnson and space and (nasa or "space agency")</span></li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td>naIds</td>
+    <td>
+      <div class="form-group">
+        <label class="sr-only" for="naidInputSearch">NAID</label>
+        <input type="text" class="form-control" id="naidInputSearch" placeholder="NAID" ng-model="naidInputSearch" ng-disabled="tagInputSearch">
+      </div>
+    </td>
+    <td class="hidden-xs hidden-sm">
+      The primary identifier for Catalog will be the 'National Archives ID' (NAID), which is used to access all content.
+      <br />
+      Example:
+      <ul class="breakLongCode">
+        <li><span class="code">naIds=2668751</span></li>
+        <li><span class="code">naIds=6037881,2268076,7461922</span></li>
+      </ul>
+    </td>
+  </tr>
+  <tr class="visible-xs visible-sm">
+    <td colspan="2">
+      <div class="bold">Description</div>
+      The primary identifier for Catalog will be the 'National Archives ID' (NAID), which is used to access all content.
+      <br />
+      Example:
+      <ul class="breakLongCode">
+        <li><span class="code">naIds=2668751</span></li>
+        <li><span class="code">naIds=6037881,2268076,7461922</span></li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td>objectIds</td>
+    <td>
+      <div class="form-group">
+        <label class="sr-only" for="objectInputSearch">Object ID</label>
+        <input type="text" class="form-control" id="objectInputSearch" placeholder="Require NAID" ng-model="objectInputSearch" ng-disabled="!naidInputSearch">
+      </div>
+    </td>
+    <td class="hidden-xs hidden-sm">
+      To enable this field fill first NAID.
+      <br/>
+      Example:
+      <ul>
+        <li><span class="code">objectIds=14293115</span></li>
+        <li><span class="code">objectIds=14293115,14293116,14293117</span></li>
+      </ul>
+    </td>
+  </tr>
+  <tr class="visible-xs visible-sm">
+    <td colspan="2">
+      <div class="bold">Description</div>
+      To enable this field fill first NAID.
+      <br/>
+      Example:
+      <ul class="breakLongCode">
+        <li><span class="code">objectIds=14293115</span></li>
+        <li><span class="code">objectIds=14293115,14293116,14293117</span></li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td>Field Name</td>
+    <td>
+      <div class="form-group">
+        <label for="fieldNameSelectSearch">Field Name </label>
+        <select id="fieldNameSelectSearch" class="form-control" ng-options="item.value group by item.group for item in fieldNamesSearch"
+                data-ng-model="fieldNameSelectSearch" ng-disabled="tagInputSearch">
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="fieldNameInputValueSearch">Field Value </label>
+        <input type="text" class="form-control" id="fieldNameInputValueSearch" placeholder="Require Field Name" ng-disabled="fieldNameSelectSearch == fieldNamesSearch[0] || tagInputSearch">
+      </div>
+    </td>
+    <td class="hidden-xs hidden-sm">
+      Further, any individual field can be used for keyword searches.
+      The query expression can be any expression specified in section 3.5.1.
+      Note that "field" in this context can include sub-fields as well (such as "description.title").
+      For keyword search fields, you may omit intermediate tags.
+      Only the first and last tags are required.
+      <br />
+      Example:
+      <ul class="breakLongCode">
+        <li><span class="code">description.fileUnit=10031403</span></li>
+        <li><span class="code">description.fileUnit=Donated Security Classified</span></li>
+        <li><span class="code">description.fileUnit.dataControlGroup=ou=RDTP1,ou=groups</span></li>
+        <li><span class="code">description.series.title=General Correspondence</span></li>
+        <li><span class="code">description.series.recordHistory=2013-05-13T00:00:00</span></li>
+        <li><span class="code">description.series.descriptionAuthorArray.descriptionAuthor.authorName=Andreea Vlaicu</span></li>
+        <li><span class="code">description.item=naId:10031403</span></li>
+        <li><span class="code">objects.object=263036</span></li>
+        <li><span class="code">objects.object.technicalMetadata.name=UserDefined</span></li>
+        <li><span class="code">"description.fileUnit.parentSeries.creatingOrganizationArray=" </span> Searches all  &lt;creatingOrganizationArray&gt; tags in the fileUnit.parentSeries description</li>
+        <li><span class="code">"description.item.dataControlGroup.groupCd="</span> Searches all &lt;groupCd&gt; tags found within the &lt;dataControlGroup&gt; tags in the item description</li>
+      </ul>
+    </td>
+  </tr>
+  <tr class="visible-xs visible-sm">
+    <td colspan="2">
+      <div class="bold">Description</div>
+      Further, any individual field can be used for keyword searches.
+      The query expression can be any expression specified in section 3.5.1.
+      Note that "field" in this context can include sub-fields as well (such as "description.title").
+      For keyword search fields, you may omit intermediate tags.
+      Only the first and last tags are required.
+      <br />
+      Example:
+      <ul class="breakLongCode">
+        <li><span class="code">description.fileUnit=10031403</span></li>
+        <li><span class="code">description.fileUnit=Donated Security Classified</span></li>
+        <li><span class="code">description.fileUnit.dataControlGroup=ou=RDTP1,ou=groups</span></li>
+        <li><span class="code">description.series.title=General Correspondence</span></li>
+        <li><span class="code">description.series.recordHistory=2013-05-13T00:00:00</span></li>
+        <li><span class="code">description.series.descriptionAuthorArray.descriptionAuthor.authorName=Andreea Vlaicu</span></li>
+        <li><span class="code">description.item=naId:10031403</span></li>
+        <li><span class="code">objects.object=263036</span></li>
+        <li><span class="code">objects.object.technicalMetadata.name=UserDefined</span></li>
+        <li><span class="code">"description.fileUnit.parentSeries.creatingOrganizationArray=" </span> Searches all  &lt;creatingOrganizationArray&gt; tags in the fileUnit.parentSeries description.</li>
+        <li><span class="code">"description.item.dataControlGroup.groupCd="</span> Searches all &lt;groupCd&gt; tags found within the &lt;dataControlGroup&gt; tags in the item description.</li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td>intField</td>
+    <td>
+      <div class="form-group">
+        <label for="intFieldInputSearch">Int Field </label>
+        <!--<select id="intFieldSelectSearch" class="form-control" data-ng-model="intFieldSelectSearch">                  -->
+        <!--</select>-->
+        <input type="text" id="intFieldInputSearch" class="form-control" data-ng-model="intFieldInputSearch" ng-disabled="tagInputSearch" />
+      </div>
+
+      <div class="form-group">
+        <label for="intFieldInput2Search">Field Value </label>
+        <input type="text" class="form-control" id="intFieldInput2Search" ng-model="intFieldInput2Search" placeholder="Require Int Field" ng-disabled="!intFieldInputSearch">
+      </div>
+    </td>
+    <td class="hidden-xs hidden-sm">
+      intField is used to restrict results based on an integer or integer range.
+      Note that only select fields can be used for integer range expressions.
+      Integer expressions can use operators specified in section 3.5.3.
+      <br />
+      Example:
+      <ul class="breakLongCode">
+        <li><span class="code">objects.object.technicalMetadata.fileSize= range(1000000,5000000)</span></li>
+      </ul>
+    </td>
+  </tr>
+  <tr class="visible-xs visible-sm">
+    <td colspan="2">
+      <div class="bold">Description</div>
+      intField is used to restrict results based on an integer or integer range.
+      Note that only select fields can be used for integer range expressions.
+      Integer expressions can use operators specified in section 3.5.3.
+      <br />
+      Example:
+      <ul class="breakLongCode">
+        <li><span class="code">objects.object.technicalMetadata.fileSize= range(1000000,5000000)</span></li>
+      </ul>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>dateField</td>
+    <td>
+      <div class="form-group">
+        <label for="dateFieldInputSearch">Date Field Name </label>
+        <input id="dateFieldInputSearch" type="text" class="form-control" data-ng-model="dateFieldInputSearch" ng-disabled="tagInputSearch " />
+      </div>
+
+      <div class="form-group">
+        <label for="dateFieldInput2Search">Date Field Value </label>
+        <input type="text" class="form-control" id="dateFieldInput2Search" placeholder="Require Date Field Name" ng-model="dateFieldInput2Search" ng-disabled="!dateFieldInputSearch ">
+      </div>
+    </td>
+    <td class="hidden-xs hidden-sm">
+      dateField is used to restrict results based on a date or date range.
+      Note that only select fields can be used for date range expressions.
+      See section 3.5.2 for date expressions available to search date fields.
+      <br />
+      Example:
+      <ul class="breakLongCode">
+        <li><span class="code">description.recordHistory.created.dateTime=range(2000,2001)</span></li>
+        <li><span class="code">description.descriptionAuthorArray.descriptionAuthor.descriptionDateArray.dasDate.logicalDate=range(1900,1980)</span></li>
+      </ul>
+    </td>
+  </tr>
+  <tr class="visible-xs visible-sm">
+    <td colspan="2">
+      <div class="bold">Description</div>
+      dateField is used to restrict results based on a date or date range.
+      Note that only select fields can be used for date range expressions.
+      See section 3.5.2 for date expressions available to search date fields.
+      <br />
+      Example:
+      <ul class="breakLongCode">
+        <li><span class="code">description.recordHistory.created.dateTime=range(2000,2001)</span></li>
+        <li><span class="code">description.descriptionAuthorArray.descriptionAuthor.descriptionDateArray.dasDate.logicalDate=range(1900,1980)</span></li>
+      </ul>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>sort</td>
+    <td>
+      <div class="form-group">
+        <label for="sortSelectSearch">Sort By Field </label>
+        <select id="sortSelectSearch" class="form-control" ng-options="item.value group by item.group for item in sortOptions"
+                data-ng-model="sortSelectSearch" ng-disabled="tagInputSearch ">
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="sortTypeSelectSearch">Sort Type </label>
+        <select id="sortTypeSelectSearch" class="form-control" data-ng-model="sortTypeSelectSearch" ng-disabled="tagInputSearch || sortSelectSearch === sortOptions[0]">
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+      </div>
+    </td>
+    <td class="hidden-xs hidden-sm">
+      Default value is Ascending
+    </td>
+  </tr>
+  <tr class="visible-xs visible-sm">
+    <td colspan="2">
+      <div class="bold">Description</div>
+      Default value is Ascending
+    </td>
+  </tr>
+
+  <tr>
+    <td>resultTypes</td>
+    <td>
+      <div class="form-group">
+        <label for="resultTypeSearch">Result Types</label>
+        <select multiple id="resultTypeSearch" class="form-control" ng-options="item for item in resultTypesList"
+                data-ng-model="resultTypeSearch" ng-disabled="tagInputSearch ">
+
+        </select>
+      </div>
+    </td>
+    <td class="hidden-xs hidden-sm">
+      Specifies a list of result types to select. Types can be any of:
+      <ul>
+        <li>holding : All NARA holdings, includes record groups, collections, file units, series, and items.</li>
+        <li>recordGroup : Record group archival records.</li>
+        <li>collection : Collection archival records.series - Series archival records.</li>
+        <li>fileUnit : File unit archival records</li>
+        <li>item : Item archival records.</li>
+        <li>object : Digital objects (files)</li>
+        <li>authority : All authority records, includes person, organization, topicalSubject, geographicSubject, and specialRecordsType</li>
+        <li>person : People authority records</li>
+        <li>organization : Organization authority records</li>
+        <li>topicalSubject : Topical subject authority records</li>
+        <li>geographicSubject : Geographic subject authority records</li>
+        <li>specialRecordsType : Special records types authority records</li>
+        <li>archivesWeb : Web pages from archives.gov.</li>
+        <li>presidentialWeb : Web pages from presidential libraries.</li>
+      </ul>
+      If no TYPE parameter is specified, the Catalog will select all types.
+    </td>
+  </tr>
+  <tr class="visible-xs visible-sm">
+    <td colspan="2">
+      <div class="bold">Description</div>
+      Specifies a list of result types to select. Types can be any of:
+      <ul>
+        <li>holding : All NARA holdings, includes record groups, collections, file units, series, and items.</li>
+        <li>recordGroup : Record group archival records.</li>
+        <li>collection : Collection archival records.series - Series archival records.</li>
+        <li>fileUnit : File unit archival records</li>
+        <li>item : Item archival records.</li>
+        <li>object : Digital objects (files)</li>
+        <li>authority : All authority records, includes person, organization, topicalSubject, geographicSubject, and specialRecordsType</li>
+        <li>person : People authority records</li>
+        <li>organization : Organization authority records</li>
+        <li>topicalSubject : Topical subject authority records</li>
+        <li>geographicSubject : Geographic subject authority records</li>
+        <li>specialRecordsType : Special records types authority records</li>
+        <li>archivesWeb : Web pages from archives.gov.</li>
+        <li>presidentialWeb : Web pages from presidential libraries.</li>
+      </ul>
+      If no TYPE parameter is specified, the Catalog will select all types.
+    </td>
+  </tr>
+
+  <tr>
+    <td>machineTags</td>
+    <td>
+      <div class="form-group">
+        <label for="machineTagsInputSearch">Machine Tags</label>
+        <input id="machineTagsInputSearch" type="text" class="form-control" ng-model="machineTagsInputSearch" ng-disabled="tagInputSearch"/>
+      </div>
+    </td>
+    <td class="hidden-xs hidden-sm">
+      Machine tag expressions are specified in section 3.5.4.
+      <div class="bold">{namespace}:{field}:{expr}</div>
+      <div>Search for a query expression within a specific field and namespace.
+        Note that any query expression from section 3.5.1 can be put inside of {expr}.
+        Example:
+        <ul>
+          <li><span class="code">nara:title:"president lincoln"</span></li>
+          <li><span class="code">nara:title:(president or congressman)</span></li>
+        </ul>
+      </div>
+
+      <div class="bold">{namespace}:{field}:*</div>
+      <div>Search for anything which has the specified namespace and field in a tag.
+        Example:
+        <ul>
+          <li><span class="code">nara:title:*</span></li>
+          <li><span class="code">tc:date:*</span></li>
+        </ul>
+      </div>
+
+      <div class="bold">*:{field}:{expr}</div>
+      <div>Search for a query expression within a specific field and namespace.
+        Note that any query expression from section 3.5.1 can be put inside of {expr}.
+        Example:
+        <ul>
+          <li><span class="code">title:"president lincoln"</span></li>
+          <li><span class="code">title:(president or congressman) </span></li>
+        </ul>
+      </div>
+
+      <div class="bold">*:{field}:*</div>
+      <div>Search for any machine tag with the specified field in any namespace.
+        Example:
+        <ul>
+          <li><span class="code">*:title:*</span></li>
+          <li><span class="code">*:date:*</span></li>
+        </ul>
+      </div>
+
+      <div class="bold">{namespace}:*:{expr}</div>
+      <div>Search for a query expression within a specific namespace across all fields.
+        Note that any query expression from section 3.5.1 can be put inside of {expr}.
+        Example:
+        <ul>
+          <li><span class="code">nara:*:"president lincoln"</span></li>
+          <li><span class="code">nara:*:(president or congressman)</span></li>
+        </ul>
+      </div>
+
+      <div class="bold">{namespace}:*:*</div>
+      <div>Search for any instance of the specified namespace across all fields.
+        Example:
+        <ul>
+          <li><span class="code">nara:*:*</span></li>
+          <li><span class="code">nara:*:*</span></li>
+        </ul>
+      </div>
+
+      <div class="bold">{expr}</div>
+      <div>Search for a query expression within any machine tag.
+        Note that any query expression from section 3.5.1 can be put inside of {expr}.
+        Example:
+        <ul>
+          <li><span class="code">"president lincoln"</span></li>
+          <li><span class="code">(president or congressman)</span></li>
+        </ul>
+      </div>
+    </td>
+  </tr>
+  <tr class="visible-xs visible-sm">
+    <td colspan="2">
+      <div class="bold">Description</div>
+      Machine tag expressions are specified in section 3.5.4.
+      <div class="bold">{namespace}:{field}:{expr}</div>
+      <div>Search for a query expression within a specific field and namespace.
+        Note that any query expression from section 3.5.1 can be put inside of {expr}.
+        Example:
+        <ul>
+          <li><span class="code">nara:title:"president lincoln"</span></li>
+          <li><span class="code">nara:title:(president or congressman)</span></li>
+        </ul>
+      </div>
+
+      <div class="bold">{namespace}:{field}:*</div>
+      <div>Search for anything which has the specified namespace and field in a tag.
+        Example:
+        <ul>
+          <li><span class="code">nara:title:*</span></li>
+          <li><span class="code">tc:date:*</span></li>
+        </ul>
+      </div>
+
+      <div class="bold">*:{field}:{expr}</div>
+      <div>Search for a query expression within a specific field and namespace.
+        Note that any query expression from section 3.5.1 can be put inside of {expr}.
+        Example:
+        <ul>
+          <li><span class="code">title:"president lincoln"</span></li>
+          <li><span class="code">title:(president or congressman) </span></li>
+        </ul>
+      </div>
+
+      <div class="bold">*:{field}:*</div>
+      <div>Search for any machine tag with the specified field in any namespace.
+        Example:
+        <ul>
+          <li><span class="code">*:title:*</span></li>
+          <li><span class="code">*:date:*</span></li>
+        </ul>
+      </div>
+
+      <div class="bold">{namespace}:*:{expr}</div>
+      <div>Search for a query expression within a specific namespace across all fields.
+        Note that any query expression from section 3.5.1 can be put inside of {expr}.
+        Example:
+        <ul>
+          <li><span class="code">nara:*:"president lincoln"</span></li>
+          <li><span class="code">nara:*:(president or congressman)</span></li>
+        </ul>
+      </div>
+
+      <div class="bold">{namespace}:*:*</div>
+      <div>Search for any instance of the specified namespace across all fields.
+        Example:
+        <ul>
+          <li><span class="code">nara:*:*</span></li>
+          <li><span class="code">nara:*:*</span></li>
+        </ul>
+      </div>
+
+      <div class="bold">{expr}</div>
+      <div>Search for a query expression within any machine tag.
+        Note that any query expression from section 3.5.1 can be put inside of {expr}.
+        Example:
+        <ul>
+          <li><span class="code">"president lincoln"</span></li>
+          <li><span class="code">(president or congressman)</span></li>
+        </ul>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>resultFields</td>
+    <td>
+      <div class="form-group">
+        <label for="resultFieldInputSearch">Result Fields</label>
+        </select>
+        <select multiple id="resultFieldInputSearch" class="form-control" ng-options="item.value group by item.group for item in resultFieldsSearch"
+                data-ng-model="resultFieldInputSearch" ng-disabled="tagInputSearch" ng-required="checkWhatExport()">
+        </select>
+      </div>
+    </td>
+    <td class="hidden-xs hidden-sm">
+      List of fields to return in the result set.
+      If a field is given that cannot be put in the return (such as a field that does not exist), an error is returned.
+      Nested fields can be individually returned by specifying the tag (or sub-tag or attribute) with "field.tag.tag" notation.
+      <span class="code">Note: If resultFields is missing, all fields in the index entry are returned.</span>
+      <ul class="breakLongCode">
+        <li><span class="code">resultFields=description</span></li>
+        <li><span class="code">resultFields=description.series.recordHistory.created.dateTime</span></li>
+        <li><span class="code">resultFields=description,objects</span></li>
+      </ul>
+    </td>
+  </tr>
+  <tr class="visible-xs visible-sm">
+    <td colspan="2">
+      <div class="bold">Description</div>
+      List of fields to return in the result set.
+      If a field is given that cannot be put in the return (such as a field that does not exist), an error is returned.
+      Nested fields can be individually returned by specifying the tag (or sub-tag or attribute) with "field.tag.tag" notation.
+      <span class="code">Note: If resultFields is missing, all fields in the index entry are returned.</span>
+      <ul class="breakLongCode">
+        <li><span class="code">resultFields=description</span></li>
+        <li><span class="code">resultFields=description.series.recordHistory.created.dateTime</span></li>
+        <li><span class="code">resultFields=description,objects</span></li>
+      </ul>
+    </td>
+  </tr>
+
+</tbody>

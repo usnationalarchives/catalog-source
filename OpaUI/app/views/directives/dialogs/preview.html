@@ -1,0 +1,13 @@
+<div id="previewModal" class="modal-header preview-modal">
+	<div class="modal-title results inline-block"><a ng-click="goToDescription()" ng-bind-html="title"></a></div>
+	<button type="button" class="modal-title results close float-right inline-block" ng-click="close()">Close X</button>
+</div>
+<div id="modalMessageBody" class="modal-body preview-modal height100">
+	<div class="container-fluid height100">
+		<div class="row noMarginsSides height100">
+			<div id="workspaceVisor" class="col-xs-12 height100" ng-controller="contentCtrl">
+				<div data-visor="true" class="height100"></div>
+			</div>
+		</div>
+	</div>
+</div>

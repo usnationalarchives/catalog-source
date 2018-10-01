@@ -1,0 +1,41 @@
+.statistics {
+  color: $black;
+  width: 80%;
+  margin: 20px auto;
+  div.statistics-title {
+    margin-bottom: 20px;
+    span.statistics-title {
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+  }
+  .panel-heading {
+    overflow: hidden;
+    .panel-title {
+      a,span {
+        font-weight: bold;
+      }
+    }
+  }
+  a.statistics-toggle:hover {
+    text-decoration: none;
+  }
+  .statistics-toggle:before {
+    font-family: 'Glyphicons Regular';
+    content: "\e601";
+    color: $black;
+    position: relative;
+    left: -10px;
+  }
+
+  .statistics-toggle.collapsed:before {
+    content: "\e602";
+    color: $black;
+  }
+  .table {
+    th.col1 {
+      width: 100px;
+    }
+  }
+
+}

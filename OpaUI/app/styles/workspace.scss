@@ -1,0 +1,511 @@
+#workspaceModal .modal-dialog {
+  height: 100%;
+  width: 95%;
+
+  .modal-content,.container-fluid{
+    height: 100%;
+  }
+
+  .modal-header{
+    height: 6% !important;
+  }
+
+  .modal-body{
+    height: 94% !important;
+  }
+}
+
+
+#rowWorkspaceVisor{
+  height: 55%;
+  background-color: $concrete;
+}
+
+#rowWorkspaceEditArea{
+  height: 45%;
+}
+
+#workspaceModalLabel {
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.workspaceTitle {
+  padding: 7px 10px 5px;
+  background-color: white;
+  button {
+    font-weight: bold;
+    font-size: 1em;
+  }
+}
+
+.workspaceTitleColor a {
+  color: $torea-bay;
+}
+
+#workspaceVisor {
+  background-color: $concrete;
+  height: 100%;
+}
+
+#workspaceTabs {
+  font-size: 0.875em;
+  margin-bottom: 5px;
+  ul {
+    border: none;
+
+    li {
+      width: 25%;
+      text-align: center;
+      border: 0;
+      border-bottom: solid $silver 2px;
+
+      a {
+        border: 0;
+        color: $biscay;
+        padding-bottom: 0;
+        margin-right: 0;
+      }
+
+      &.active {
+        > a {
+          border: 0;
+          font-weight: bold;
+
+          &:hover, &:focus {
+            border: none;
+            border-color: transparent;
+          }
+        }
+        border-bottom: solid $darkGrayishCyan 5px;
+      }
+    }
+  }
+}
+
+.lastSaveTranscription{
+  display: table-cell;
+  padding: 10px;
+}
+
+#workspaceArea {
+
+  padding-right: 0;
+  padding-left: 0;
+  border: solid $silver 1px;
+  height: 80%;
+  font-size: 0.813em;
+
+  .tab-pane {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    .emptyTab {
+      height: 100%;
+      width: 100%;
+      display: table;
+
+      p {
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+        background-color: $light-gray;
+        a{
+          color: $biscay;
+        }
+      }
+    }
+  }
+
+  textarea{
+    height: 100%;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+  }
+
+  #tagsInput {
+    font-size: 0.875em;
+    border-bottom: solid $silver 1px;
+    padding-top: 10px;
+
+    padding-bottom: 10px;
+
+    .btn {
+      margin: 0px;
+      margin-top: 5px;
+      padding: 3px 5px 3px 5px;
+    }
+  }
+
+  #tagsLegend {
+    color: black;
+    padding-left: 0;
+    font-size: 13px;
+  }
+
+  #transcribe,#translate
+  {
+    font-size: 1em;
+    background-color: $white;
+    height: 100%;
+    overflow-y: hidden;
+
+    #transcription,#translation {
+      height: 100%;
+      #contributors{
+        width: 100%;
+        height: 20%;
+        border-bottom: solid 1px $chambray;
+        padding: 10px 15px 10px 15px;
+        ul{
+          margin-bottom: 0px;
+          li{
+            padding: 0px;
+          }
+        }
+      }
+    }
+  }
+}
+
+#tag{
+  overflow-y: scroll;
+}
+
+//Show hover background color only on desktops
+@media only screen and (min-width: 1025px) {
+  #workspaceTabs {
+    ul {
+      li {
+        width: 200px;
+      }
+    }
+  }
+
+  .tagList {
+    ul {
+      li {
+        span:hover {
+          background-color: $link-water;
+        }
+      }
+    }
+  }
+}
+
+
+.tagList {
+  padding: 10px;
+  font-size: 0.875em;
+
+  ul {
+    li {
+      padding-bottom: 14px;
+      padding-left: 2px;
+      padding-right: 2px;
+      span{
+        border: solid $silver 1px;
+        padding: 3px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        font-size: small;
+        background-color: $white;
+
+        a {
+          color: $torea-bay;
+          text-decoration: none;
+          line-height: 1.7;
+        }
+
+        a:focus{
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  form{
+    margin-right: 10px;
+    margin-bottom: 10px;
+    input{
+      height: 25px;
+    }
+  }
+
+
+  span{
+    p{
+      font-size: 0.875em;
+    }
+  }
+
+  .deleteButtonTag{
+    background-color: transparent;
+    border: none;
+    color: $guardsman-red;
+    padding: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+  }
+
+  .userTag{
+    background-color: $link-water;
+  }
+}
+
+#workspaceRightPanel {
+  padding-top: 10px;
+  height: 80%;
+  a {
+    color: $torea-bay;
+  }
+}
+
+#actionButtonsTranscription{
+  height: 20%;
+  position:relative;
+
+  .bottomLeft{
+    position:absolute;
+    bottom: 20px;
+    left: 0;
+  }
+
+  button{
+    font-size: 0.875em;
+    font-weight: bold;
+    padding: 1px 15px 1px 15px;
+  }
+
+
+}
+
+.loginToContribute {
+  text-align: center;
+  margin-top: 15px;
+
+  button {
+    font-size: 0.75em;
+    color: $torea-bay;
+    font-weight: bold;
+    border: solid $link-water thin;
+  }
+}
+
+#logoutFromContribute
+{
+  text-align: center;
+  margin-top: 15px;
+  ul{
+    margin-bottom: 0px;
+    li{
+      padding: 0px;
+      a{
+        font-size: 0.813em;
+        padding: 6px;
+      }
+    }
+  }
+}
+
+#workspaceShare {
+
+  text-align: center;
+  margin-top: 15px;
+  button {
+    font-size: 0.813em;
+    color: $torea-bay;
+  }
+}
+
+#workspaceLinksFooter {
+
+  text-align: center;
+  margin-top: 15px;
+  ul {
+    li {
+      a {
+        color: $torea-bay;
+        font-size: 0.688em;
+      }
+    }
+  }
+}
+
+#loginRow{
+  background-color: $silver;
+  padding: 20px;
+}
+
+#workspaceResponsiveModal{
+  .modal-dialog {
+    width: 100%;
+    padding: 0;
+    margin: 0
+  }
+  .modal-header{
+    border-radius: 0;
+    background-color: $white;
+    padding: 5px 10px;
+  }
+  .modal-body{
+    padding: 0;
+  }
+  .modal-content {
+    height: 100%;
+    border-radius: 0;
+  }
+  .modal-footer{
+    margin: 0;
+    padding: 0;
+  }
+  .link{
+    font-family: $source-sans-pro;
+    font-size: 0.813em;
+    color: $torea-bay;
+  }
+  .text{
+    font-family: $source-sans-pro;
+    font-size: 0.813em;
+    color: $black;
+  }
+  .title{
+    font-family: $merriweather-font;
+    font-size: 0.813em;
+    max-height: 30px;
+    min-height: 25px;
+    padding: 0 5px;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: $white;
+    overflow: hidden;
+  }
+  .paging{
+    padding: 5px;
+    margin: 0;
+    position: relative;
+  }
+  .paging-header{
+    font-family: $merriweather-font;
+    text-align: center;
+    font-size: 0.813em;
+    display: inline-block;
+    margin: auto;
+  }
+  .glyphicons{
+    font-size: 0.875em;
+  }
+  .margin-right{
+    margin-right: 5%;
+  }
+  .visor-input{
+    text-align: center;
+    width: 50px;
+  }
+  .visor{
+    height: 60%;
+  }
+  .height {
+    height: 50vh;
+  }
+  .openSeadragonControls, .nav-arrow{
+    display: none !important;
+  }
+  #rowWorkspaceEditArea{
+    height: 37vh;
+  }
+  #actionButtonsTranscription{
+    height: 7vh;
+    position: relative;
+    bottom: 0;
+    .bottomLeft{
+      position: relative;
+      bottom: 0;
+      left: 0;
+    }
+  }
+  #contributors{
+    font-size: 0.813em;
+  }
+  .logintp{
+    min-height: 400px;
+  }
+}
+
+@media (max-height: 700px){
+  #workspaceArea {
+    height: 80%;
+  }
+}
+
+@media (max-height: 520px){
+  #workspaceArea {
+    height: 75%;
+  }
+  #workspaceResponsiveModal{
+    #rowWorkspaceEditArea{
+      height: 32vh;
+    }
+  }
+  .openSeadragonControls{
+    .glyphicons{
+      font-size: 0.813em;
+    }
+  }
+  .workspaceTitleColor{
+    font-size: 0.875em !important;
+  }
+  #workspaceArea #tagsInput {
+    padding-bottom: 0;
+  }
+  p.tipTextPadding {
+    margin-bottom: 0;
+    padding-bottom: 0 !important;
+  }
+}
+
+@media (max-height: 420px){
+  #workspaceArea {
+    height: 66%;
+  }
+}
+
+.transcription-text {
+  height: 90% !important;
+  min-height: 90% !important;
+  max-height: 90% !important;
+  cursor: text !important;
+  background-color: $white !important;
+}
+
+.transcription-text-edition{
+  height: 100% !important;
+  cursor: text !important;
+  background-color: $white !important;
+}
+
+.transcription-locked-tooltip {
+  height: 90%;
+  width: 100%;
+  display: block !important;
+}
+.transcription-locked-tooltip-edition {
+  height: 100%;
+  width: 100%;
+  display: block !important;
+}
+
+
+.control-bar{
+  height: 44px;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+

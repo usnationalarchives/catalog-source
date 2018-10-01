@@ -1,0 +1,18 @@
+<header>
+  <div id="header" class="col-xs-12">
+    <button class="hidden-xs btn btn-link headerbtnlink" ng-click="searchFocus()" data-toggle="collapse" data-target="#menuResponsive">Go to Search</button>
+    <button class="hidden-xs btn btn-link headerbtnlink" ng-click="contentFocus()" data-toggle="collapse" data-target="#menuResponsive">Go to Content</button>
+
+    <div ng-click="goHomeClear()" class="pull-left logoHeader">
+      <a>
+        <img src="../../images/NARA_Logo.svg" height="40" width="40" alt="NATIONAL ARCHIVES CATALOG" err-src="../../images/NARA_Logo.png">
+        <h1>
+          <span  class="hidden-inline-xs">NATIONAL ARCHIVES</span><span id="title_the" class="visible-inline-xs">THE</span> CATALOG
+        </h1>
+      </a>
+    </div>
+    <div id="menuHeader">
+      <button type="button" class="btn" data-toggle="collapse" data-target="{{ $root.isHome ?'#menuBarHome':'#menuBar'}}" aria-expanded="false"><span class="glyphicons glyphicons-menu-hamburger"></span>MENU</button>
+    </div>
+  </div>
+</header>

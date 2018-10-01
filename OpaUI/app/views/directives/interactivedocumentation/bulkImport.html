@@ -1,0 +1,135 @@
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="headingBulkImport" ng-click="toggle('#collapseBulkImport')">
+    <div class="panel-title">
+      <a class="collapsed" data-toggle="collapse" data-parent="#accordionID" data-target="#collapseBulkExport" href="" aria-expanded="false" aria-controls="collapseBulkExport">
+        <span class="apiCallPost">POST</span>
+        Bulk Import
+      </a>
+    </div>
+  </div>
+  <div id="collapseBulkImport" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingBulkImport">
+    <div class="panel-body">
+
+      <div class="pull-right">
+        <div class="well well-sm margin-15-right" ng-class="{'modePanelLiveMode':lifeMode === 'true'}">
+          <label class="radio-inline">
+            <input type="radio" name="mockModeBulkImport" id="inlineRadio1" value="false" ng-model="lifeMode" ng-click="setMockMode()"> Mock Mode
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="mockModeBulkImport" id="inlineRadio2" value="true" ng-model="lifeMode" ng-click="setLiveMode()"> Live Mode
+          </label>
+
+          <div id="linkShowModeExplanation">
+            <a href="" rel="#" class="text-right" data-toggle="collapse" data-target="#collapseModeExplanationBI" aria-expanded="false" aria-controls="collapseModeExplanation">
+              Mode detail
+            </a>
+          </div>
+        </div>
+      </div>
+      <div data-mode-api id="collapseModeExplanationBI" class="collapseModeExplanation"></div>
+
+      <div class="apiDescriptions">
+        To perform a bulk import into Catalog using NARA's Online Catalog API, you would need to use the following endpoint:
+        <br />
+        <span class="code breakLongCode"><span ng-bind="configServices.API_END_POINT"></span>/bulk-imports?entity={Metadata}&content={Text}</span>
+        <br />
+        <br />
+        Select a Metadata and enter the JSON data in the text area below.
+        Click Submit to see the response from the API.
+        <br />
+        <br />
+
+        <div class="alert alert-warning" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          This method require credentials. You will need to add them as part of the REST request.
+        </div>
+
+
+        <form class="validate-form" name="bulkImportForm" ng-submit="bulkImport(bulkImportForm.$valid)">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Parameter</th>
+              <th class="valueApi">Value</th>
+              <th class="hidden-xs">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>entity</td>
+              <td>
+                <div class="form-group">
+                  <label for="entitySelectImport">Metadata</label>
+                  <select id="entitySelectImport" class="form-control" data-ng-model="entitySelectImport" data-ng-change="setContributionText()" required="">
+                    <option value="">Select one</option>
+                    <option value="tag">Tags</option>
+                    <option value="transcription">Transcriptions</option>
+                  </select>
+                </div>
+              </td>
+              <td class="hidden-xs">
+                <div class="bold">Tags</div>
+                <div>The permitted fields per contributions should have the following combinations
+                  <ul>
+                    <li><span class="code">naId,text</span></li>
+                    <li><span class="code">naId,objectId,text</span></li>
+                  </ul>
+                </div>
+                <br />
+                <div class="bold">Transcriptions</div>
+                <div>
+                  <ul>
+                    <li><span class="code">naId,objectId,text</span></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            <tr class="visible-xs">
+              <td class="bold"> Description </td>
+              <td>
+                <div class="bold">Tags</div>
+                <div>The object fields per contribution must have one of the following combinations
+                  <ul>
+                    <li><span class="code">naId,text</span></li>
+                    <li><span class="code">naId,objectId,text</span></li>
+                  </ul>
+                </div>
+                <br />
+                <div class="bold">Transcriptions</div>
+                <div>
+                  <ul>
+                    <li><span class="code">naId,objectId,text</span></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>content</td>
+              <td colspan="2">
+                <div class="form-group">
+                  <label for="contentBulkImport">JSON Data</label>
+                  <textarea id="contentBulkImport" class="form-control apiResponse" rows="10" data-ng-model="contentBulkImport" required=""></textarea>
+                </div>
+              </td>
+            </tr>
+            <tr class="visible-xs">
+              <td class="bold"> Description </td>
+              <td> </td>
+            </tr>
+            </tbody>
+          </table>
+          <div class="alert alert-danger" role="alert" ng-show="lifeMode === 'true'">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Warning:</span>
+            <span ng-bind="alertLiveMode"></span>
+          </div>
+
+          <button class="btn btn-default" type="submit">Submit</button>
+          <button class="btn btn-default" type="reset" ng-click="resetBulkImport()">Reset</button>
+        </form>
+        <div data-response-panel id="responsePanelBulkImport" class="panel collapse" data-action="action" data-call="apicall" data-response="responseTextArea" data-only-live-mode="onlyLiveMode" data-error-response="errorResponse" data-life-mode="lifeMode"></div>
+      </div>
+    </div>
+  </div>
+</div>

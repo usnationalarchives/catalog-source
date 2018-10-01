@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+	http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd 
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<description>Example job to get you started. It provides a skeleton for
+		a typical batch application.
+	</description>
+
+	<batch:step id="abstractWorker">
+		<batch:tasklet transaction-manager="transactionManager">
+<!-- 			<batch:chunk reader="reader" writer="writerJaiImageIo" commit-interval="1000" 
+				/> -->
+			<batch:chunk reader="reader" writer="writerImageMagick"
+				commit-interval="1000" />
+		</batch:tasklet>
+	</batch:step>
+	<batch:job id="jp2Converter">
+		<batch:step id="workDistribution" next="performWork">
+			<batch:tasklet transaction-manager="transactionManager"
+				ref="workDistributor">
+			</batch:tasklet>
+		</batch:step>
+
+		<!-- <batch:step id="performWork" parent="abstractWorker" next="summarize"> 
+			</batch:step> -->
+		<batch:split id="performWork" task-executor="taskExecutor"
+			next="summarize">
+			<batch:flow>
+				<batch:step id="worker1" parent="abstractWorker">
+				</batch:step>
+			</batch:flow>
+			<batch:flow>
+				<batch:step id="worker2" parent="abstractWorker">
+				</batch:step>
+			</batch:flow>
+			<batch:flow>
+				<batch:step id="worker3" parent="abstractWorker">
+				</batch:step>
+			</batch:flow>
+			<batch:flow>
+				<batch:step id="worker4" parent="abstractWorker">
+				</batch:step>
+			</batch:flow>
+		</batch:split>
+		<batch:step id="summarize">
+			<batch:tasklet transaction-manager="transactionManager"
+				ref="summarizer">
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+
+	<task:executor id="taskExecutor" pool-size="0-25" />
+</beans>

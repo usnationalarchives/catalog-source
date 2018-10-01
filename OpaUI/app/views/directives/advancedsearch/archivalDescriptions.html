@@ -1,0 +1,109 @@
+<div>
+  <fieldset ng-disabled="!showSection(sections.DESCRIPTIONS)" name="ArchivalDescriptionsData" class="col-xs-12" ng-class="{grayedOut: !showSection(sections.DESCRIPTIONS)}">
+    <div class="form-group">
+      <label for="typeArchivalMaterials" class="control-label col-xs-12 col-sm-3"
+             title="{{toolTips.TYPE_OF_ARCHIVAL_MATERIALS}}">
+        Type of Archival Materials:<span class="sr-only" ng-bind="toolTips.TYPE_OF_ARCHIVAL_MATERIALS"></span>
+      </label>
+      <select id="typeArchivalMaterials" multiple class="col-xs-12 col-sm-9"
+              ng-model="TypeArchivalMaterialsList.selectedValues"
+              ng-options="obj.Value as obj.Name for obj in TypeArchivalMaterialsList"></select>
+    <span class="note col-sm-offset-4 col-sm-8 "><em class="hidden-inline-xs hidden-inline-sm hidden-inline-md">Ctrl +
+      click to select multiple or deselect an item</em></span>
+    </div>
+    <div class="form-group">
+      <label for="levelOfDescriptions" class="control-label col-xs-12 col-sm-3"
+             title="{{toolTips.LEVEL_OF_DESCRIPTIONS}}">
+        Level of Descriptions:<span class="sr-only" ng-bind="toolTips.LEVEL_OF_DESCRIPTIONS"></span>
+      </label>
+      <select id="levelOfDescriptions" ng-multiple="true" multiple class="col-xs-12 col-sm-9"
+              ng-model="levelOfDescriptions.selectedValues"
+              ng-options="obj.Value as obj.Name for obj in levelOfDescriptions"></select>
+    <span class="note col-sm-offset-4 col-sm-8 "><em class="hidden-inline-xs hidden-inline-sm hidden-inline-md">Ctrl +
+      click to select multiple or deselect an item</em></span>
+    </div>
+    <div class="form-group">
+      <label for="fileFormat" class="control-label col-xs-12 col-sm-3"
+             title="{{toolTips.FILE_FORMAT_OF_ARCHIVAL_DESCRIPTIONS}}">
+        File Format of Archival Descriptions:<span class="sr-only" ng-bind="toolTips.FILE_FORMAT_OF_ARCHIVAL_DESCRIPTIONS"></span>
+      </label>
+      <select id="fileFormat" multiple class="col-xs-12 col-sm-9"
+              ng-model="fileFormat.selectedValues" ng-options="obj.Value as obj.Name for obj in fileFormat"></select>
+    <span class="note col-sm-offset-4 col-sm-8 "><em class="hidden-inline-xs hidden-inline-sm hidden-inline-md">Ctrl +
+      click to select multiple or deselect an item</em></span>
+    </div>
+    <div class="form-group">
+      <label for="locationValue" class="control-label col-xs-12 col-sm-3"
+             title="{{toolTips.LOCATION_OF_ARCHIVAL_MATERIALS}}">
+        Location of Archival Materials:<span class="sr-only" ng-bind="toolTips.LOCATION_OF_ARCHIVAL_MATERIALS"></span>
+      </label>
+      <select id="locationValue" multiple class="col-xs-12 col-sm-9"
+              ng-model="ArchivalMaterialsLocation.selectedValues"
+              ng-options="obj.Value as obj.Name for obj in ArchivalMaterialsLocation | orderBy:'Name'"> </select>
+  <span class="note col-sm-offset-4 col-sm-8 "><em class="hidden-inline-xs hidden-inline-sm hidden-inline-md">Ctrl +
+    click to select multiple or deselect an item</em></span>
+    </div>
+    <div class="form-group">
+      <label for="title" class="control-label col-xs-12 col-sm-3" title="{{toolTips.TITLE}}">
+        Title:<span class="sr-only" ng-bind="toolTips.TITLE"></span>
+      </label>
+      <input type="text" id="title" class="col-xs-12 col-sm-9" ng-model="titleAdvancedSearch" title="{{toolTips.TITLE}}">
+    </div>
+    <div class="form-group">
+      <label for="geograficRef" class="control-label col-xs-12 col-sm-3" title="{{toolTips.GEOGRAPHIC_REFERENCES}}">
+        Geographic References:<span class="sr-only" ng-bind="toolTips.GEOGRAPHIC_REFERENCES"></span>
+      </label>
+      <input type="text" id="geograficRef" class="col-xs-12 col-sm-9" ng-model="geograficRef"
+             title="{{toolTips.GEOGRAPHIC_REFERENCES}}">
+    </div>
+    <div class="form-group">
+      <label for="creator" class="control-label col-xs-12 col-sm-3" title="{{toolTips.CREATOR}}">
+        Creator:<span class="sr-only" ng-bind="toolTips.CREATOR"></span>
+      </label>
+      <input type="text" id="creator" class="col-xs-12 col-sm-9" ng-model="creator" title="{{toolTips.CREATOR}}">
+    </div>
+    <div class="form-group">
+      <label for="DescriptionId" class="control-label col-xs-12 col-sm-3" title="{{toolTips.DESCRIPTION_IDENTIFIER}}">
+        Description Identifier:<span class="sr-only" ng-bind="toolTips.DESCRIPTION_IDENTIFIER"></span>
+      </label>
+      <input type="text" id="DescriptionId" ng-model="DescriptionId" class="col-xs-12 col-sm-9" title="{{toolTips.DESCRIPTION_IDENTIFIER}}">
+    </div>
+  </fieldset>
+  <fieldset class="col-xs-12" ng-disabled="!showSection(sections.DESCRIPTIONS)" ng-class="{grayedOut: !enableCongressionalRecords || !showSection(sections.DESCRIPTIONS)}">
+    <legend title="{{toolTips.CONGRESSIONAL_RECORDS}}" >
+      Congressional Records<span class="sr-only" ng-bind="toolTips.CONGRESSIONAL_RECORDS"></span></legend>
+
+    <div class="labelWithSomeChilds col-sm-3 col-xs-12" title="{{toolTips.CONGRESS_RANGE}}">Congress Range:<span class="sr-only" ng-bind="toolTips.CONGRESS_RANGE"></span></div>
+
+    <div class="col-sm-9 col-xs-12 noPaddingSides margin-20-bottom margin-5-top">
+      <div class="col-xs-12 col-md-6 noPaddingSides margin-5-top">
+        <div class="col-xs-5 noPaddingSides labelCongress"><label for="beginCongress" title="{{toolTips.BEGIN_CONGRESS}}">Begin
+          Congress:<span class="sr-only" ng-bind="toolTips.BEGIN_CONGRESS"></span></label></div>
+        <div class="col-xs-3 padding-10-sides">
+          <input type="text" class="form-control congressInput" id="beginCongress" ng-model="congressRangeFrom"
+                 ng-change="changeCongressValue(true)" ng-disabled="!enableCongressionalRecords">
+        </div>
+        <div class="col-xs-4 rangeDatesCongressLabel noPaddingSides" ng-bind-template="({{yearsCongressBegin}})">
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-6 noPaddingSides margin-5-top">
+        <div class="col-xs-5 noPaddingSides labelCongress"><label for="endCongress" title="{{toolTips.END_CONGRESS}}">End
+          Congress:<span class="sr-only" ng-bind="toolTips.END_CONGRESS"></span></label></div>
+        <div class="col-xs-3 padding-10-sides">
+          <input type="text" class="form-control congressInput" id="endCongress" ng-model="congressRangeTo"
+                 ng-change="changeCongressValue(false)" ng-disabled="!enableCongressionalRecords">
+        </div>
+        <div class="col-xs-4 rangeDatesCongressLabel noPaddingSides" ng-bind-template="({{yearsCongressEnd}})">
+        </div>
+      </div>
+
+      <div class="col-xs-12 sliderCongressDiv" ng-class="{grayedOut: !enableCongressionalRecords}">
+        <span class="sr-only" ng-bind="toolTips.CONGRESS_SLIDER"></span>
+        <div id="sliderRangeCongress" slider ng-from="congressRangeFrom" ng-to="congressRangeTo" start="minCongressValue"
+             end="maxCongressValue" step=1 ng-disabled="!enableCongressionalRecords || !showSection(sections.DESCRIPTIONS)" title="{{toolTips.CONGRESS_SLIDER}}"></div>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+

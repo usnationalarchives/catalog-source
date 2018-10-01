@@ -1,0 +1,9 @@
+<div class="hidden-print">
+    <div class="center-div noMargins" ng-hide="noItems">
+        <ul id="paginationControl" class="pagination pagination-sm" ng-model="currentPage" ng-show="currentPage!==0">
+            <li ng-class="{disabledArrows: currentPage <= 1}"><a href="" ng-click="decreasePageNumber()">Prev</a></li>
+            <li><a href="" ng-click="pageNumber(currentPage)" class="current" ng-show="currentPage!==0">{{currentPage}}</a></li>
+            <li ng-class="{disabledArrows: last()}"><a href="" ng-click="increasePageNumber()">Next</span></a></li>
+        </ul>
+    </div>
+</div>

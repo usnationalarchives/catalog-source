@@ -1,0 +1,6 @@
+<div id="resultsView" class="col-md-12">
+    <h1 class="hidden">Results</h1>
+    <div data-result ng-repeat="result in searchSvc.results" ng-hide="noResults"></div>
+    <div result-web-group ng-if="!searchSvc.results || searchSvc.results.length <= 2"></div>
+    <div ng-include src="'views/directives/results/noResults.html'" ng-show="noResults"></div>
+</div>

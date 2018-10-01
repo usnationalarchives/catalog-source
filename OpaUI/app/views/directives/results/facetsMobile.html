@@ -1,0 +1,44 @@
+<div class="container-fluid">
+    <div class="row noMarginsSides padding-5-bottom">
+        <div class="col-xs-12">
+            <button class="noPaddingRight padding-10-left btn btn-link mobileFacetTextMedium" ng-click="returnToSearch()">
+                <span class="glyphicons glyphicons-chevron-left">&nbsp;</span>Return to results
+            </button>
+            <hr class="no-margin-top no-margin-bottom">
+        </div>
+        <div class="col-xs-12 margin-5-top ">
+            <span class="margin-5-left pull-left mobileFacetTextBig padding-5-top"><strong>Refine By</strong></span>
+            <button class="btn btn-primary pull-right applyFacetButton mobileFacetTextBig" ng-click="applyMobileFacets()"><strong>Apply</strong>
+            </button>
+        </div>
+        <hr>
+    </div>
+    <div class="row noMarginsSides">
+        <div class="col-xs-12">
+            <form>
+                <div class="panel panel-default mobileFacet" ng-repeat="facet in searchSvc.facets track by $index">
+                    <div class="panel-heading" data-toggle="collapse" data-target="#filter{{$index}}" ng-click="OpaUtils.toggle('#filter' + $index, '#filter' + $index + 'Link', '', 'facet-toggle')" >
+                        <span class="panel-title">
+                            <button class="btn btn-link color-torea-bay mobileFacetTextBig" >{{facet.displayName}}</button>
+                            <a class="color-torea-bay facet-toggle collapsed float-right" id="{{'filter'+ $index +'Link'}}" rel="/mobileFacets"></a>
+                        </span>
+                    </div>
+                    <div id="filter{{$index}}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="mobileFacetFilters" ng-repeat="value in facet.v | facetOrderBy:'count':true:facet.searchEngineName" ng-click="value.isApplied = ! value.isApplied">
+                                <input type="checkbox" class="disabled" ng-model="value.isApplied"/>&nbsp;
+                                <span class="color-torea-bay mobileFacetTextMedium">{{value.displayName}}</span>
+                                <span class="color-gray mobileFacetTextMedium">({{value.count}})</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row noMarginsSides padding-15-top padding-15-bottom">
+        <div class="col-xs-12">
+            <button class="btn btn-primary pull-right applyFacetButton mobileFacetTextBig" ng-click="applyMobileFacets()"><strong>Apply</strong></button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div id="bodyHome" ng-style="HomeService.style" class="col-xs-12 noPaddingSides height100">
+  <div id="floatArea" class="col-xs-12 noPaddingSides">
+  <div id="announcements" class="col-xs-12 noPaddingSides" ng-if="AnnouncementService.text">
+    <p><span class="glyphicons glyphicons-alert"></span> <span ng-bind="AnnouncementService.text"></span></p>
+  </div>
+  <div id="menuBarHome" menu-header class="col-xs-12 noPaddingSides collapse in">
+  </div>
+
+</div>
+  <div id="search" class="col-sm-7 col-md-6">
+    <form class="form-inline" role="form" ng-submit="search()">
+      <div class="form-group col-xs-11 noPaddingSides" >
+        <label for="inputSearch" class="sr-only">Search Term</label>
+        <input type="text" class="form-control" id="inputSearch" ng-model="searchSvc.query">
+      </div>
+      <div class="col-xs-1 noPaddingSides" style="width:35px">
+        <button type="submit" class="btn"><span class="glyphicons glyphicons-search"></span></button>
+      </div>
+    </form>
+    <form class="form-inline" style= "width:0px">
+      <div id="advancedsearchlink" >
+        <a href="/advancedsearch">Advanced Search</a>
+      </div>
+    </form>
+  </div>
+
+  <div id="citation">
+    <a ng-href="#/id/{{HomeService.image['@naId']}}"><span ng-bind=" HomeService.image['@title'] | truncateEllipse : HomeService.MAX_LENGTH_CITATION " class="citationTitle"></span>&nbsp;&nbsp;<span ng-bind="HomeService.image['@naId']"></span></a>
+  </div>
+</div>

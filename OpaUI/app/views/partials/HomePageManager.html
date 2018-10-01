@@ -1,0 +1,113 @@
+<div class="container">
+  <div class="row noMarginsSides">
+    <div data-multibar-actions-common></div>
+  </div>
+
+  <div id="" class="row noMarginsSides"
+       ng-class="{headerAdmin: AccountRights == 'accountAdminMod' || AccountRights == 'accountAdmin', headerMod : AccountRights == 'moderator'}">
+    <h1>Manage the Catalog Home Page</h1>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div id="homePageAdminTabs" class="noMargins noPaddingSides">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+          <li id="announcementTab" class="no-margin-top noMarginLeft"
+              data-ng-class="{active: tabType == TAB_VALUES.ANNOUNCEMENT}"
+              ng-click="setTab(TAB_VALUES.ANNOUNCEMENT)">
+            <a class="no-padding-top" href="" rel="#" data-target="#announcementTabPane"
+               data-toggle="tab">Announcements</a>
+          </li>
+          <li id="backgroundImagesTab" class="no-margin-top"
+              data-ng-class="{active: tabType == TAB_VALUES.BACKGROUND_IMAGES}"
+              ng-click="setTab(TAB_VALUES.BACKGROUND_IMAGES)">
+            <a class="no-padding-top" rel="#" data-target="#backgroundImagesTabPane" data-toggle="tab">Background
+              Images</a>
+          </li>
+        </ul>
+      </div>
+      <div id="manageHomePageTab" class="tab-content noMarginsSides">
+        <div class="tab-pane margin-15-top col-xs-12" id="announcementTabPane"
+             data-ng-class="{active: tabType == TAB_VALUES.ANNOUNCEMENT}">
+          <form role="form">
+            <div class="form-group">
+              <label for="announcementTextArea" class="hidden">Announcement Text</label>
+                <textarea id="announcementTextArea" class="col-xs-12 col-md-7 margin-10-right"
+                          ng-model="announcementText" placeholder="Enter announcement text..."></textarea>
+              <div class="checkbox col-xs-8 col-md-3">
+                <label>
+                  <input type="checkbox" ng-model="enableAnnouncement">Display in Home Page
+                </label>
+              </div>
+              <div class="pull-left margin-5-top">
+                <button type="submit" class="btn"
+                        data-ng-class="{adminUser: AccountRights == 'accountAdminMod' || AccountRights == 'accountAdmin', moderator: AccountRights == 'moderator'}"
+                        ng-click="saveAnnouncement()">Save
+                </button>
+                <button type="submit" class="btn btn-link" ng-click="getAnnouncement()">Cancel</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="tab-pane col-xs-12 margin-40-top" id="backgroundImagesTabPane"
+             data-ng-class="{active: tabType == TAB_VALUES.BACKGROUND_IMAGES}">
+          <form role="form">
+            <div class="form-group col-xs-12 col-md-5">
+              <label for="imageParentNaID" class="control-label col-xs-12 col-md-7"
+                     title="Image Parent Record NARA ID">
+                Parent Record NAID:
+              </label>
+              <input type="text" id="imageParentNaID" ng-model="ImageParentNaId"
+                     title="Image Parent Record NARA ID" class="col-xs-12 col-md-5">
+            </div>
+            <div class="form-group col-xs-12 col-md-4">
+              <label for="imageObjectID" class="control-label col-xs-12 col-md-6"
+                     title="Image Object Identifier">
+                Object ID:
+              </label>
+              <input type="text" id="imageObjectID" ng-model="ImageObjectId"
+                     title="Image Object Identifier" class="col-xs-12 col-md-6">
+            </div>
+            <div class="form-group col-xs-12 col-md-3">
+              <div class="">
+                <button type="submit" class="btn"
+                        data-ng-class="{adminUser: AccountRights == 'accountAdminMod' || AccountRights == 'accountAdmin', moderator: AccountRights == 'moderator'}"
+                        ng-click="addImage()">Add
+                </button>
+                <button type="submit" class="btn btn-link" ng-click="clearBackgroundImageForm()">Cancel</button>
+              </div>
+            </div>
+            <div class="form-group col-xs-12">
+              <span class="control-label col-xs-12 col-md-3 backgroundImg-label">
+                Background Images:
+              </span>
+              <div class="table-responsive col-xs-12 col-md-9">
+                <table id="backgroundImagesTable" class="table table-striped" summary="background-images">
+                  <thead>
+                  <tr>
+                    <th class="normal-font">NAID</th>
+                    <th class="normal-font">OBJ. ID</th>
+                    <th class="normal-font">TITLE</th>
+                    <th class="normal-font">REMOVE</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="img in Images">
+                      <td title="Container Id"><a ng-href="/id/{{img['@naId']}}" target="_blank" ng-bind="img['@naId']"></a></td>
+                      <td title="Object Id" ng-bind="img['@objectId']"></td>
+                      <td title="Container Title"><a ng-href="/id/{{img['@naId']}}" target="_blank" ng-bind="img['@title']"></a></td>
+                      <td title="Remove">
+                        <button class="btn btn-link" ng-click="removeImage($index)">
+                          <span class="glyphicons glyphicons-remove deleteButton"></span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

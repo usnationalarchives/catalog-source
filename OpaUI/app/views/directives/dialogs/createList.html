@@ -1,0 +1,29 @@
+<div class="modal fade" id="createList" tabindex="-1" role="dialog" aria-labelledby="createListLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">Close &times;</button>
+        <span class="modal-title" id="createListLabel">Create New List</span>
+      </div>
+      <div class="modal-body">
+        <div class="col-sm-offset-2 col-sm-10 dialog-error" ng-show="$parent.error">
+          <span class="glyphicons glyphicons-warning-sign">
+            <em ng-bind="$parent.error"></em>
+          </span>
+        </div>
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label for="inputNewList" class="col-sm-4 control-label">New List Name:</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control no-margin-top" id="inputNewList" placeholder="" ng-model="newListName">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="createNewList(newListName)">Add to List</button>
+        <button type="button" class="btn btn-link link" data-dismiss="modal" >Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,958 @@
+//regular user
+.regular {
+  color: $white;
+  background-color: $chambray;
+}
+
+//admin user
+.adminUser {
+  color: $white;
+  background-color: $salva;
+}
+
+//moderator user
+.moderator {
+  color: $white;
+  background-color: $celery;
+}
+
+#loginPartial{
+  padding-top: 90px;
+  @media (max-height: 586px) {
+    padding-top: 10px;
+  }
+}
+
+.logintp {
+  text-align: center;
+  display: inline-block;
+  font-family: $source-sans-pro;
+  font-weight: normal;
+  font-size: 1em;
+  h2 {
+    font-size: 1.2em;
+    display: inline-block;
+    margin: 0 10px;
+  }
+  a {
+    line-height: 40px;
+    margin: 10px;
+    :hover {
+      text-decoration: none;
+    }
+    img {
+      height: 40px;
+      width: 202px;
+    }
+  }
+  label {
+    font-weight: normal;
+    padding-left: 15px;
+  }
+  .login-panel {
+    margin-bottom: 15px;
+    display: block;
+  }
+  .login-area {
+    margin-top: 20px;
+  }
+  .form-group {
+    white-space: nowrap;
+    .form-control {
+      margin-top: 0;
+    }
+    label {
+      margin-bottom: 0;
+    }
+  }
+  .login-title {
+    background: url("../images/img_login_deco1px.png") center repeat-x;
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    h2 {
+      background-color: #ffffff;
+      padding: 0 10px;
+    }
+  }
+  .btn-primary {
+    margin-left: 60px;
+  }
+}
+
+
+@media (max-width: 767px) {
+  .logintp {
+    text-align: center;
+    margin: 0 auto;
+    display: inline-block;
+    h2 {
+      font-family: $merriweather-font;
+      font-size: 1.2em;
+      font-weight: normal;
+      display: inline-block;
+      margin: 0 10px;
+    }
+
+    a {
+      line-height: 40px;
+      margin: 10px auto;
+      display: block;
+      :hover {
+        text-decoration: none;
+      }
+      img {
+        height: 40px;
+        width: 202px;
+      }
+    }
+
+    .login-panel {
+      margin-bottom: 0;
+      display: block;
+    }
+
+    .login-area {
+      margin-top: 20px;
+    }
+
+    .form-group {
+      .form-control {
+        margin-top: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      label {
+        margin-bottom: 0;
+        display: block;
+      }
+      button {
+        margin: 5px auto;
+      }
+    }
+
+    .login-title {
+      background: none;
+      width: 100%;
+      display: block;
+      margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      h2 {
+        padding: 0;
+        text-align: left;
+        font-weight: bold;
+        font-size: 1em;
+        display: block;
+      }
+
+    }
+    .login-buttons {
+      margin: 0 auto;
+      height: 27px;
+      vertical-align: middle;
+      text-align: center;
+      width: 178px;
+      button, a {
+        display: inline-block;
+        line-height: 25px;
+        text-align: right;
+        margin: auto 0;
+        padding: 0 15px;
+      }
+      a {
+        padding: 5px 15px;
+        background-color: #555555;
+        color: #ffffff;
+      }
+    }
+  }
+}
+
+#registration, #thanYouRegistration, .activationRegistration, #resetPassword, #passwordReset {
+  font-family: $source-sans-pro;
+  font-style: normal;
+  font-size: 1em;
+  .title {
+    margin-top: 60px;
+    color: $black;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  label {
+    font-weight: normal;
+    margin-left: 30px;
+    margin-bottom: 0px;
+  }
+  input {
+    margin-left: 30px;
+  }
+  .check-label {
+    margin-left: 15px;
+  }
+  #fullnamePublic {
+    margin-left: 0px;
+  }
+  .info-nara {
+    font-size: 0.75em;
+    color: $black;
+  }
+  .offset {
+    padding-left: 45px;
+  }
+  .buttons {
+    padding-left: 80px;
+  }
+  a {
+    line-height: 24px;
+    margin: 10px;
+    :hover {
+      text-decoration: none;
+    }
+    img {
+      height: 24px;
+      width: 130px;
+    }
+    p{
+      font-family: $source-sans-pro;
+      color: $black;
+      font-size: 1em;
+    }
+  }
+  .center {
+    text-align: center;
+  }
+}
+
+@mixin help-block($icon, $color) {
+  position: relative;
+  display: inline-block;
+  padding: 0 20px 0 15px;
+  width: 350px;
+  @media (max-width: 420px) {
+    width: 200px;
+  }
+  margin-left: 15px;
+  margin-top: 0px;
+  font-size: 0.75em;
+  color: $black;
+  &:before {
+    position: absolute;
+    color: $color;
+    top: 0;
+    left: 0px;
+    font-family: 'Glyphicons Regular';
+    font-weight: normal;
+    font-style: normal;
+    display: inline-block;
+    text-decoration: inherit;
+    content: $icon;
+  }
+}
+
+
+.help-block-circle{
+  @include help-block("\e195", $black);
+}
+.help-block-triangle{
+  @include help-block("\e079", $red);
+  @media (max-width: 780px) {
+    margin-left: 40px;
+    margin-top: 10px;
+  }
+}
+
+.error{
+  @include help-block("\e079", $red);
+  color: $red;
+  margin-left: 30px;
+  font-style: italic;
+  width: 90%;
+}
+
+.activationRegistration, #resetPassword, #passwordReset {
+  .title {
+    padding: 5px 0;
+  }
+  label {
+    font-weight: normal;
+    margin-left: 0px;
+    margin-bottom: 0px;
+  }
+  input {
+    margin-left: 0px;
+  }
+  .buttons {
+    padding-left: 70px;
+  }
+  button{
+    padding: 3px 6px;
+  }
+  .padding{
+    padding-left: 62px;
+  }
+  .padding-extra{
+    padding-left: 64px;
+  }
+}
+
+#resetPassword{
+  .buttons{
+    padding-left: 53px;
+  }
+}
+
+
+@media (min-width: 319px) and (max-width: 767px) {
+  #registration{
+    p.help-block-circle{
+      width: 200px;
+      margin-left: 40px;
+      margin-top: 10px;
+    }
+    .check-label{
+      margin-top: 10px;
+      margin-left: 40px;
+    }
+    .title {
+      margin-top: 30px;
+      padding: 5px;
+    }
+  }
+}
+
+.logintp, #registration, #thanYouRegistration, .activationRegistration, #passwordReset {
+  .btn-primary {
+    font-family: $source-sans-pro;
+    font-size: 1em;
+    font-weight: normal;
+    padding: 0 6px 0 6px;
+  }
+  .center {
+    text-align: center;
+  }
+}
+
+.dialog-error {
+  color: $red;
+  text-align: left;
+  padding-left: 5px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  .fa-warning {
+    margin-bottom: 10px;
+  }
+  > span > em {
+    font-size: 1em;
+    word-spacing: -10px;
+    line-height: 1.5em;
+  }
+}
+
+.no-margin-top {
+  margin-top: 0;
+}
+
+#resetpassword {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  .title-with-background{
+    background-color: #DCE6F2;
+    font-family: $source-sans-pro;
+    font-weight:  bold;
+    font-size: 1.2em;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  p{
+    margin-bottom: 30px;
+  }
+  button.btn.btn-primary{
+    padding: 1px 10px;
+  }
+  button.btn.btn-link{
+    padding: 1px 0 1px 10px;
+  }
+  label{
+    font-family: $source-sans-pro;
+    font-weight:  normal;
+    font-size: 1em;
+  }
+}
+
+.accountTable.table{
+
+  span{
+    word-wrap: break-word;
+  }
+  #resetPassword {
+    font-size: 16px;
+  }
+
+  a:focus{
+    color: $navy-blue;
+  }
+}
+
+.accountPage {
+
+  .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td
+  {
+    border-bottom: 1px dashed #dddddd;
+    border-top: none;
+  }
+
+  .table > thead > tr > th{
+    border: none;
+    font-size: 0.813em;
+    text-align: center;
+  }
+
+  .table > tbody > tr > td{
+    font-size: 0.813em;
+    text-align: center;
+  }
+
+  .small-title {
+    font-weight: bold;
+    font-size: 1em;
+  }
+  .statsTitle {
+    color: black;
+    font-weight: bold;
+    font-size: 0.813em;
+    padding: 15px;
+    padding-left: 20px;
+  }
+  hr {
+    margin-bottom: 0;
+  }
+  a {
+    color: $torea-bay;
+  }
+  h1{
+    font-size: 1em;
+    color: #404040;
+    font-weight: bold
+  }
+//  .padding-topbottom{
+//    padding-top: 2%;
+//  }
+  .sectionHeader {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 1.2em;
+    @media (max-width: 768px) {
+      font-size: 0.813em;
+    }
+  }
+  .sectionBody {
+    padding:20px;
+    @media (max-width: 768px) {
+      font-size: 0.813em;
+    }
+  }
+  padding-left: 0px;
+  padding-right: 0px;
+  .row {
+    margin-right: 0;
+    margin-left: 0;
+    //padding-right: 0;
+    .padding-20-right{
+      padding-right: 20px;
+    }
+  }
+  .row.padding-20-right {
+    padding-right: 20px;
+  }
+  ul {
+    padding-left: 0;
+    list-style: none;
+    li {
+      margin-bottom: 10px;
+      margin-top: 10px;
+      @media (max-width: 768px) {
+        font-size: 1em;
+      }
+    }
+  }
+
+  .table-legend {
+    color: $gray;
+    font: 0.875em;
+    font-weight: normal;
+  }
+  .title {
+    font-size: 1.45em;
+    color: $tundora;
+    font-weight: bold;
+    padding-top: 0;
+    padding-bottom: 0;
+    h2{
+        font-size: 1em;
+        font-weight: bold;
+    }
+    div {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+  a.notifications {
+    font-size: 1em;
+    color: $gray;
+  }
+
+  .AccountInformationSection {
+    font-size: 12px;
+    margin-bottom: 0;
+    margin-top: 0;
+    div {
+      padding-bottom: 0;
+      padding-top: 5px;
+    }
+    label {
+      padding-right: 10px;
+    }
+    ul li {
+      color: $torea-bay;
+      margin-bottom: 5px;
+      margin-top: 5px;
+    }
+  }
+
+  .accountInfoRow {
+    div {
+      padding-left: 0px;
+      font-size: 1em;//0.75em;
+      padding-top: 0;
+    }
+
+    div.fullName{
+      padding-left: 10px;
+      input[type="checkbox"]{
+        margin-right: 5px;
+        margin-top: -5px;
+      }
+      label{
+        margin-top: 0;
+        margin-right: 5px;
+        font-weight: normal;
+        vertical-align:middle;
+        font-size:1em !important;
+      }
+
+    }
+  }
+
+  ul.showInline {
+    li {
+      display: inline;
+      margin-right: 8%;
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+  }
+
+  /*For elements that are shown 4 in a row*/
+  .rowAccount-4{
+    width: 24%;
+    display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  /*For elements that are shown 2 in a row*/
+  .rowAccount-2{
+    width: 35%;
+    display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .show-xs-landscape {
+    display: none;
+  }
+
+  /*When the phone is set on landscape mode*/
+  @media (min-width: 320px) and (max-width: 479px) {
+    .hidden-inline-portrait {
+      display: none !important;
+    }
+    .show-xs-landscape {
+      display: inline !important;
+    }
+
+    .rowAccount-4,.rowAccount-2{
+      width: 100%  !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .col-xs-12 {
+      padding-left: 20px;
+    }
+  }
+
+  .content-toggle:after {
+    font-family: 'Glyphicons Regular';
+    content: "\e601";
+    color: $scorpion;
+  }
+
+  .content-toggle.collapsed:after {
+    content: "\e602";
+    color: $scorpion;
+  }
+
+  #announcementTextArea {
+    height: 65px;
+  }
+}
+
+.selectedLink{
+  font-weight: bold;
+}
+
+#myLists {
+  div.centre {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .margin-top-25-a {
+    display: inline-block;
+    margin-top: 25px;
+    position: absolute;
+    bottom: 10px;
+  }
+  .MyLists{
+    padding: 0 5px 150px;
+    position: relative;
+    min-height: 350px;
+  }
+  .heading{
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
+  #rowsPerPageControl select {
+    padding-left: 0px;
+  }
+
+  .listActions {
+    padding: 10px;
+  }
+
+  .itemListTableHeader {
+    padding: 10px;
+  }
+  .listItemHeader {
+    text-align: center;
+    color: $gray;
+  }
+
+  .listItemNumber {
+    text-align: center;
+  }
+
+  .listItem {
+    padding: 10px;
+    border-bottom: dashed 1px $silver-chalice;
+    font-family: $source-sans-pro;
+  }
+
+  .listItemTitle {
+    color: $torea-bay;
+    font-family: $source-sans-pro;
+
+    a {
+      color: inherit;
+    }
+  }
+  .margin-bottom{
+    margin-bottom: 6px;
+  }
+
+  .listItemMetadata {
+
+  }
+
+  .listItemLink {
+    a {
+      color: $torea-bay;
+      text-decoration: underline;
+    }
+  }
+
+  .listView {
+    background-color: $concrete;
+    padding: 5px;
+    margin-left: 0px;
+    .manageLists {
+      div {
+
+        margin-right: 0px;
+        margin-left: 0px;
+
+        padding-right: 0;
+        padding-left: 0;
+        a {
+          color: $midnight-blue;
+          font-size: 0.75em;
+          vertical-align: text-top;
+        }
+      }
+      text-align: right;
+    }
+  }
+  h1.title {
+    font-size: 1.45em;
+    font-weight: bold;
+  }
+  h2.instructions {
+    color: $gray;
+    font-style: italic;
+    font-size: 1em;
+  }
+
+  li, .linkItem {
+    color: $lochmara;
+    font-size: 1em;
+  }
+  .linkItem{
+    font-size: 0.875em;
+  }
+
+
+  @media all and (max-width: 1024px) {
+    margin-left: 30px;
+
+  }
+  #renameListConfirmation {
+    .row {
+      margin-bottom: 5px;
+      label {
+        font-size: 1em;
+      }
+    }
+  }
+}
+
+#contributions{
+  font-family: $source-sans-pro;
+  font-size: 1em;
+  font-weight: normal;
+  color: $black;
+  .title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: black;
+    margin-top: 20px;
+  }
+  .tabs{
+    ul {
+      text-align: center;
+      li {
+        border: 0;
+        button {
+          color: $blumine;
+          border: none;
+          -webkit-border-radius: 0;
+          -moz-border-radius: 0;
+          border-radius: 0;
+        }
+        &.active {
+          > button {
+            color: $midnight-blue;
+            border: 0;
+            font-weight: bold;
+            padding-bottom: 4px;
+          }
+          border-bottom: solid $steel-blue;
+        }
+      }
+    }
+  }
+  .active{
+    font-weight: bold;
+    color: $midnight-blue;
+  }
+  .margin-top{
+    margin: 10px 0;
+    label{
+      font-weight: normal;
+    }
+  }
+  .font-medium{
+    font-size: 0.813em;
+  }
+  .title-div{
+    margin: 0;
+    padding: 0 15px;
+  }
+  .note{
+    font-size: 0.813em;
+    color: black;
+    position: absolute;
+    top: 15px;
+  }
+  .tag-note{
+    position: initial;
+    margin-left: 20px;
+  }
+  .tab-pane{
+    margin: 10px 0;
+    min-height: 200px;
+    max-height: 200px;
+    border: 1px solid $alto;
+  }
+  .header{
+    text-align: center;
+    color: $gray;
+  }
+  .selectedTag{
+    border: solid $silver 1px;
+    padding: 3px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    font-size: small;
+    color: $torea-bay;
+    text-decoration: none;
+    background-color: $link-water;
+  }
+
+  .selectedTag:focus{
+    text-decoration: underline;
+  }
+  .center{
+    display: table;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .titles{
+    padding: 3px 0;
+    border-top: dashed 1px $silver;
+    margin: 0;
+  }
+}
+
+li.load-more {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  padding: 0;
+}
+
+.margin-table{
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.title {
+  font-size: 1.45em;
+  font-weight: bold;
+}
+
+.disabled{
+  color: $silver-chalice;
+}
+
+.notificationTableHeader{
+  color: $gray;
+  font-size: 0.875em;
+  font-weight: normal;
+}
+
+.notificationAction{
+  color: #428BCA !important;
+}
+
+#myNotifications {
+  .table th{
+    text-align: center;
+  }
+  .centered{
+    text-align: center;
+  }
+
+}
+
+.header{
+  text-align: center;
+  color: $gray;
+  font-size: 0.813em;
+  a{
+    color: $gray;
+  }
+  a:hover, a:focus{
+    color: $mine-shaft;
+  }
+}
+
+.download-ready{
+  font-size: 0.813em;
+  color: $cod-gray;
+}
+
+.exports{
+  font-size: 0.813em;
+  div{
+    text-align: center;
+  }
+  .link{
+    font-size: 1.45em;
+    padding: 4px;
+  }
+  .link:hover{
+    cursor: pointer;
+  }
+}
+
+.status{
+  color: $green-haze;
+}
+
+.failed{
+  color: $guardsman-red;
+}
+
+div.left-aligned{
+  text-align: left;
+}
+
+.word-wrap{
+  word-wrap: break-word;
+}
+
+.account-bottom {
+  padding-bottom: 2%;
+}
+
+@media (max-width: 991px) {
+  .accountPage .accountInfoRow div.fullName {
+    margin-top: 6px;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 479px) {
+  .accountPage .sectionBody {
+    padding: 10px;
+  }
+  .accountPage .AccountInformationSection {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .tabsMyContributions{
+    ul{
+      display: inline-table;
+    }
+  }
+}
+
+
+.backgroundImg-label{
+  font-weight:bold;
+}

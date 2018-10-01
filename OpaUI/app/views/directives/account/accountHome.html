@@ -1,0 +1,284 @@
+<hr/>
+<div class="container accountPage">
+  <div class="row title">
+    <div><h1 class="no-margin-top padding-5-sides">My Account</h1></div>
+  </div>
+  <div class="row pull-right padding-5-sides padding-10-bottom">
+    <a class="notifications pull-right" ng-href="/accounts/{{Auth.userName()}}/notifications">
+      <span class="glyphicons glyphicons-bell"></span>
+      <em>
+        <span class="hidden-inline-xs">You have</span> <span
+        ng-bind="notifications['totalNew'] ? notifications['totalNew']  : 0">
+        </span> notification<span ng-if="notifications['totalNew'] != 1">s</span>
+      </em>
+    </a>
+  </div>
+
+  <div class="row"
+       data-ng-show="AccountInformation.rights == 'accountAdminMod' || AccountInformation.rights == 'accountAdmin'">
+    <div class="row"
+         data-ng-show="AccountInformation.rights == 'accountAdminMod' || AccountInformation.rights == 'accountAdmin'">
+      <div class="sectionHeader col-xs-12"
+           data-ng-class="{adminUser: AccountInformation.rights == 'accountAdminMod' || AccountInformation.rights == 'accountAdmin'}">
+        <span>Manage User Accounts</span></div>
+      <div class="sectionBody col-xs-12">
+        <div class="rowAccount-2">
+          <span class="glyphicons glyphicons-user-add font-size-17pt"></span>
+          <a href="/administratorWorkbench?tabType=register" class="padding-5-left">Create an Account</a>
+        </div>
+        <div class="rowAccount-2">
+          <span class="glyphicons glyphicons-group font-size-17pt"></span>
+          <a href="/administratorWorkbench?tabType=manage" class="padding-5-left">Manage Accounts</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row"
+       data-ng-show="AccountInformation.rights == 'moderator' || AccountInformation.rights == 'accountAdminMod'">
+    <div class="sectionHeader col-xs-12"
+         data-ng-class="{regular: AccountInformation.rights == 'regular', adminUser: AccountInformation.rights == 'accountAdminMod' || AccountInformation.rights == 'accountAdmin', moderator: AccountInformation.rights == 'moderator'}">
+      <span>Moderate User Contributions</span></div>
+    <div class="sectionBody col-xs-12">
+      <div class="rowAccount-4">
+        <span class="glyphicons glyphicons-tags font-size-17pt"></span>
+        <a href="/moderatorWorkbench?tabType=tag">Tags</a>
+      </div>
+      <div class="rowAccount-4">
+        <span class="glyphicons glyphicons-notes font-size-17pt"></span>
+        <a href="/moderatorWorkbench?tabType=transcription">Transcriptions</a>
+      </div>
+      <div class="rowAccount-4">
+        <span class="glyphicons glyphicons-comments font-size-17pt"></span>
+        <a href="/moderatorWorkbench?tabType=comment">Comments</a>
+      </div>
+      <!--<div class="rowAccount-4">-->
+      <!--<span class="glyphicons glyphicons-translate font-size-17pt"></span>-->
+      <!--<a href="/moderatorWorkbench?tabType=translation">Translations</a>-->
+      <!--</div>-->
+    </div>
+  </div>
+  <div class="row"
+       data-ng-show="AccountInformation.rights == 'accountAdminMod' || AccountInformation.rights == 'moderator'">
+    <div class="sectionHeader col-xs-12"
+         data-ng-class="{adminUser: AccountInformation.rights == 'accountAdminMod', moderator: AccountInformation.rights == 'moderator'}">
+      <span>Manage the Catalog Home Page</span></div>
+    <div class="sectionBody col-xs-12">
+      <div class="rowAccount-2">
+        <span class="glyphicons glyphicons-voice font-size-17pt"></span>
+        <a href="/homePageManager?tabType=announcement">Announcements</a>
+      </div>
+      <div class="rowAccount-2">
+        <span class="glyphicons glyphicons-picture font-size-17pt"></span>
+        <a href="/homePageManager?tabType=backgroundImages">Background Images</a>
+      </div>
+    </div>
+  </div>
+  <div class="row"
+       data-ng-show="AccountInformation.rights == 'accountAdminMod' || AccountInformation.rights == 'moderator'">
+    <div class="sectionHeader col-xs-12"
+         data-ng-class="{adminUser: AccountInformation.rights == 'accountAdminMod', moderator: AccountInformation.rights == 'moderator'}">
+      <span>Manage the Online Availability Notification</span></div>
+    <div class="sectionBody col-xs-12">
+      <div class="rowAccount-2">
+        <span class="glyphicons glyphicons-header font-size-17pt"></span>
+        <a href="/moderatorWorkbench?tabType=onlineavailability">Online Availability Notification</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="sectionHeader col-xs-12"
+         data-ng-class="{regular: AccountInformation.rights == 'regular', adminUser: AccountInformation.rights == 'accountAdminMod' || AccountInformation.rights == 'accountAdmin', moderator: AccountInformation.rights == 'moderator'}">
+      <span>My Contributions</span></div>
+    <div class="sectionBody col-xs-12">
+
+      <div class="rowAccount-4">
+        <span class="glyphicons glyphicons-tags font-size-17pt"></span>
+        <a ng-href="/accounts/{{Auth.userName()}}/contributions?contributionType=tags" class="padding-5-left">
+          <span ng-bind="contributions.tags['@total']"></span> Tags</a>
+      </div>
+      <div class="rowAccount-4">
+        <span class="glyphicons glyphicons-notes font-size-17pt"></span>
+        <a ng-href="/accounts/{{Auth.userName()}}/contributions?contributionType=transcriptions" class="padding-5-left">
+          <span ng-bind="contributions.transcriptions['@total']"></span>
+          Transcriptions</a>
+      </div>
+      <div class="rowAccount-4">
+        <span class="glyphicons glyphicons-comments font-size-17pt"></span>
+        <a ng-href="/accounts/{{Auth.userName()}}/contributions?contributionType=comments" class="padding-5-left">
+          <span ng-bind="contributions.comments['@total']"></span> Comments</a>
+      </div>
+      <!-- <div class="rowAccount-2">
+         <span class="glyphicons glyphicons-translate font-size-17pt"></span>
+         <a ng-href="/accounts/{{Auth.userName()}}/contributions?contributionType=translations" class="padding-5-left">
+           <span ng-bind="contributions.translations['@total']"></span>
+           Translations</a>
+       </div>-->
+    </div>
+  </div>
+
+  <div class="row padding-20-sides padding-20-bottom">
+
+    <div class="padding-5-bottom">
+      <a data-toggle="collapse" data-target="#tagsStatistics"
+         class="content-toggle collapsed visible-inline-xs visible-inline-sm color-black">
+        Contribution Stats
+      </a>
+    </div>
+
+    <div class="hidden-xs hidden-sm ">
+      <table summary="Contribution Statistics" class="table table-condensed table-responsive">
+        <thead>
+        <th><span class="hidden">TIME FRAME</span></th>
+        <th class="table-legend">TAGS</th>
+        <th class="table-legend">COMMENTS</th>
+        <th class="table-legend">TRANSCRIPTIONS</th>
+        <!--<th class="table-legend">TRANSLATIONS</th>-->
+        <th class="table-legend">TOTAL</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in contributionsStatsHeaders">
+          <td class="table-legend text-align-left">{{item[0]}}</td>
+          <td><span ng-bind="contributions.tags['{{item[1]}}']"></span></td>
+          <td><span ng-bind="contributions.comments['{{item[1]}}']"></span></td>
+          <td><span ng-bind="contributions.transcriptions['{{item[1]}}']"></span></td>
+          <!--<td><span ng-bind="contributions.translations['{{item[1]}}']"></span></td>-->
+          <td><strong><span ng-bind="contributions['{{item[1]}}']"></span></strong></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- DIFFERENT LAYOUT TABLE FOR PHONE AND TABLET -->
+    <div id="tagsStatistics" class="panel-collapse collapse  ">
+      <table summary="Contribution Statistics" class="table table-responsive visible-xs visible-sm" ng-repeat="item in contributionsStatsHeaders">
+        <tbody>
+        <tr>
+          <th><span class="hidden">CONTRIBUTION TYPE</span></th>
+          <th class="table-legend">{{item[0]}}</th>
+        </tr>
+        <tr>
+          <td class="table-legend text-align-left">TAGS</td>
+          <td><span ng-bind="contributions.tags['{{item[1]}}']"></span></td>
+        </tr>
+        <tr>
+          <td class="table-legend text-align-left">COMMENTS</td>
+          <td><span ng-bind="contributions.comments['{{item[1]}}']"></span></td>
+        </tr>
+        <tr>
+          <td class="table-legend text-align-left">TRANSCRIPTIONS</td>
+          <td><span ng-bind="contributions.transcriptions['{{item[1]}}']"></span></td>
+        </tr>
+        <!--  <tr>
+            <td class="table-legend text-align-left">TRANSLATIONS</td>
+            <td><span ng-bind="contributions.translations['{{item[1]}}']"></span></td>
+          </tr>-->
+        <tr>
+          <td class="table-legend text-align-left">TOTAL</td>
+          <td><strong><span ng-bind="contributions['{{item[1]}}']"></span></strong></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="sectionHeader col-xs-12"
+         data-ng-class="{regular: AccountInformation.rights == 'regular', adminUser: AccountInformation.rights == 'accountAdminMod' || AccountInformation.rights == 'accountAdmin', moderator: AccountInformation.rights == 'moderator'}">
+      My Lists
+    </div>
+    <div class="sectionBody col-xs-12">
+      <span>
+        <span class="glyphicons glyphicons-list font-size-17pt"></span>
+         <a ng-href="/accounts/{{Auth.userName()}}/lists">
+           <span ng-bind="listCount"></span> Lists</a>
+      </span>
+    </div>
+  </div>
+  <div class="row hidden-xs">
+    <div class="sectionHeader col-xs-12"
+         data-ng-class="{regular: AccountInformation.rights == 'regular', adminUser: AccountInformation.rights == 'accountAdminMod' || AccountInformation.rights == 'accountAdmin', moderator: AccountInformation.rights == 'moderator'}">
+      Bulk Downloads
+    </div>
+    <div class="sectionBody col-xs-12">
+      <span class="glyphicons glyphicons-download font-size-17pt"></span>
+      <a href="/accounts/{{Auth.userName()}}/exports">
+        <span ng-bind-template="{{exports['pending']}} pending, {{exports['complete']}} complete"></span>
+      </a>
+    </div>
+  </div>
+  <div class="row account-bottom">
+    <div class="sectionHeader col-xs-12"
+         data-ng-class="{regular: AccountInformation.rights == 'regular', adminUser: AccountInformation.rights == 'accountAdminMod' || AccountInformation.rights == 'accountAdmin', moderator: AccountInformation.rights == 'moderator'}">
+      <span>Account Information</span>
+    </div>
+    <div class="sectionBody col-xs-12">
+      <div class="col-sm-9 AccountInformationSection">
+        <div data-ng-switch on="AccountInformation.rights" class="row">
+          <label for="userType" class="col-xs-4 col-md-3 col-lg-2 noMargins">User Type: </label>
+          <input id="userType" class="hidden">
+          <span data-ng-switch-when="regular" ng-if="AccountInformation.type !== 'power'">Registered User</span>
+          <span data-ng-switch-when="regular" ng-if="AccountInformation.type === 'power'">Power User</span>
+          <span data-ng-switch-when="moderator">Moderator</span>
+          <span data-ng-switch-when="accountAdmin">Account Administrator</span>
+          <span data-ng-switch-when="accountAdminMod">Administrator/Moderator</span>
+        </div>
+        <div class="row">
+          <label for="userName" class="col-xs-4 col-md-3 col-lg-2 noMargins">Username: </label>
+          <input id="userName" class="hidden">
+          <span ng-bind="AccountInformation.userId"></span>
+        </div>
+        <div id="InfoRow" class="row accountInfoRow">
+          <label for="fullName" class="col-xs-4 col-md-3 col-lg-2 noMargins">Fullname: </label>
+
+          <div class="col-xs-8 col-md-4">
+            <input id="fullName" class="hidden">
+            <span ng-bind="AccountInformation.fullName"></span>
+          </div>
+          <div class="col-xs-offset-4 col-xs-8 col-md-offset-0 col-md-5 col-lg-6 pull-left fullName"
+               data-ng-show="!Auth.isNaraStaff()">
+            <input id="checkFullName" type="checkbox" data-ng-model="AccountInformation.isFullNamePublic"
+                   data-ng-checked="AccountInformation.isFullNamePublic" data-ng-Change="DisplayFullNameToPublic()">
+            <label for="checkFullName">Display Full Name to Public</label>
+          </div>
+          <div class="col-xs-offset-4 col-xs-8 col-md-offset-0 col-md-5 col-lg-6 pull-left fullName"
+               data-ng-show="Auth.isNaraStaff()">
+            <em><span>(As a NARA staff member, your full name will be displayed to the public)</span></em>
+          </div>
+        </div>
+        <div class="row">
+          <label for="email" class="col-xs-4 col-md-3 col-lg-2 noMargins">Email:</label>
+          <input id="email" class="hidden">
+          <span ng-bind="AccountInformation.email"></span>
+        </div>
+      </div>
+      <div class="col-sm-3 AccountInformationSection">
+        <ul class="">
+          <li>
+            <button class="btn btn-link no-padding-bottom no-padding-top" data-toggle="modal"
+                    data-target="#changePassword">Change Password
+            </button>
+          </li>
+          <li>
+            <button class="btn btn-link no-padding-bottom no-padding-top" data-toggle="modal"
+                    data-target="#changeEmail">Change email address
+            </button>
+          </li>
+          <li>
+            <button class="btn btn-link no-padding-bottom no-padding-top" data-toggle="modal"
+                    data-target="#changeFullName">Change full name
+            </button>
+          </li>
+          <li>
+            <button class="btn btn-link no-padding-bottom no-padding-top" data-toggle="modal"
+                    data-target="#deactivateAccount">Deactivate your account
+            </button>
+          </li>
+        </ul>
+        <div change-password></div>
+        <div change-email-address></div>
+        <div change-full-name></div>
+        <div deactivate-account></div>
+      </div>
+    </div>
+  </div>
+</div>

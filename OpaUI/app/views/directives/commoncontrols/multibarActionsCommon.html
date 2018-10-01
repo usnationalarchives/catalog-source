@@ -1,0 +1,29 @@
+<div id="multibarActions" class="hidden-print">
+	<ul class="list-inline pull-right noMargins">
+
+		<li class="divider-vertical-multibar" ng-show="naId"></li>
+		<li>
+            <button addthis-toolbox></button>
+		</li>
+
+        <li class="divider-vertical-multibar" ng-show="Auth.isLoggedIn() && naId"></li>
+        <li ng-show="Auth.isLoggedIn() && naId">
+            <button type="button" class="btn btn-link" data-toggle="collapse" data-parent="#accordion"
+                    data-target="#listscollapse">
+                <span class="hidden-inline-portrait">Add to My</span> Lists
+            </button>
+        </li>
+
+		<li class="divider-vertical-multibar" ng-show="naId"></li>
+		<li ng-show="naId">
+			<button type="button" class="btn btn-link" data-toggle="modal" ng-click="exportFromContentDetails()">Export
+			</button>
+		</li>
+
+		<li class="divider-vertical-multibar" ng-show="naId"></li>
+		<li  ng-show="naId">
+			<button type="button" class="btn btn-link printButton no-padding-top no-padding-bottom" data-toggle="modal" ng-click="printFromContentDetails()" title="Print this page">
+        <span class="glyphicons glyphicons-print"></span> <span class="hidden">Print this page</span> </span></button>
+		</li>
+	</ul>
+</div>

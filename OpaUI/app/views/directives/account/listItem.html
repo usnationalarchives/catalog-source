@@ -1,0 +1,40 @@
+<div class="row listItem">
+    <div class="col-xs-2">
+        <label for="selectRecord{{$index}}" class="hidden">Select records number {{$index}}</label>
+        <input id="selectRecord{{$index}}" type="checkbox" ng-model="selectedOpaId" ng-checked="ListsService.selectedRecords.indexOf(viewList.opaId) > -1"
+               class="individualItems" ng-click="toggleSelection(viewList.opaId, false)">
+    </div>
+
+    <div class="col-xs-1 listItemNumber">
+        <span ng-bind="$index + 1 + offset"></span>
+    </div>
+
+    <div class="col-xs-9">
+        <div class="listItemTitle">
+            <a href="{{generateURL(viewList)}}" target="_blank">
+                <span ng-repeat="header in viewList.briefResults.titleLine | orderBy:'order'" ng-switch on="header.name" ng-class="checkVisibility(header.priority)"><!--
+                    --><span ng-if="$index > 1">,</span><!--
+                    --><span ng-switch-when="title" ng-bind="header.value.trim()"></span><!--
+                    --><span ng-switch-when="date" ng-bind-template=",&nbsp;{{header.value}}"></span><!--
+                    --><span ng-switch-default ng-bind="header.value.trim()"></span><!--
+                 --></span>
+            </a>
+        </div>
+
+        <div class="listItemMetadata" ng-repeat="metadata in viewList.briefResults.metadataArea | orderBy:'order'" ng-class="checkVisibility(metadata.priority)">
+            <span ng-if="viewList.naId && metadata.label" ng-class="{'record-from': isRecordFrom(metadata),'bold': !isRecordFrom(metadata)}" ng-bind-template="{{metadata.label}}:&nbsp;"></span>
+            <span ng-if="metadata.name != 'creators'" ng-class="{'record-from': isRecordFrom(metadata)}" ng-bind="metadata.value"></span>
+            <span ng-if="metadata.name == 'creators'" ng-repeat="creator in metadata.value track by $index">
+                <span ng-if="$index != 0">,&nbsp;</span>
+                <span ng-bind="creator"></span>
+            </span>
+        </div>
+
+        <div class="listItemLink" ng-if="viewList.naId">
+            <a href="#/id/{{viewList.naId}}" target="_blank" ng-bind="createUrlListItem(viewList.naId)"></a>
+        </div>
+        <div class="listItemLink" ng-if="!viewList.naId">
+            <a ng-href="{{viewList.contentDetailUrl}}" target="_blank" ng-bind="viewList.contentDetailUrl"></a>
+        </div>
+    </div>
+</div>

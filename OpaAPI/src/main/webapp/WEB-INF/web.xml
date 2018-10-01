@@ -1,0 +1,118 @@
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+
+	<display-name>NARA OPA API</display-name>
+
+	<servlet>
+		<servlet-name>OpaAPI</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>OpaAPI</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/ResourceNotFound</location>
+	</error-page>
+
+	<error-page>
+		<error-code>403</error-code>
+		<location>/ForbiddenAccess</location>
+	</error-page>
+
+	<error-page>
+		<error-code>405</error-code>
+		<location>/ResourceNotFound</location>
+	</error-page>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/OpaAPI-servlet.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>gov.nara.opa.api.utils.SessionListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- START Spring Security Filters -->	
+	<!-- <filter> <filter-name>requestContextFilter</filter-name> <filter-class>org.springframework.web.filter.RequestContextFilter</filter-class> 
+		</filter> <filter-mapping> <filter-name>requestContextFilter</filter-name> 
+		<url-pattern>/*</url-pattern> </filter-mapping> -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- END Spring Security Filters -->
+
+	<!-- START PUT uses parameters in request body  -->
+	<filter>
+	    <filter-name>httpPutFormContentFilter</filter-name>
+	    <filter-class>org.springframework.web.filter.HttpPutFormContentFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+	    <filter-name>httpPutFormContentFilter</filter-name>
+	    <servlet-name>OpaAPI</servlet-name>
+	</filter-mapping>
+	<!-- END PUT uses parameters in request body  -->
+	
+	<filter>
+	    <filter-name>encoding-filter</filter-name>
+	    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+	    <init-param>
+	       <param-name>encoding</param-name>
+	       <param-value>UTF-8</param-value>
+	    </init-param>
+	    <init-param>
+	       <param-name>forceEncoding</param-name>
+	       <param-value>true</param-value>
+	    </init-param>
+	 </filter>
+	 
+	 <filter-mapping>
+	    <filter-name>encoding-filter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	 </filter-mapping>
+
+	<!-- <filter> <filter-name>corsFilter</filter-name> <filter-class>gov.nara.opa.api.security.CrossOriginRequestSharingFilter</filter-class> 
+		<init-param> <param-name>validOrigins</param-name> <param-value>.*</param-value> 
+		</init-param> </filter> <filter-mapping> <filter-name>corsFilter</filter-name> 
+		<url-pattern>/*</url-pattern> </filter-mapping> -->
+
+	<welcome-file-list>
+		<welcome-file>
+	      index.jsp
+	    </welcome-file>
+	</welcome-file-list>
+
+	<!-- <resource-ref> <description>OPA Database</description> <res-ref-name>OpaDB</res-ref-name> 
+		<res-type>javax.sql.DataSource</res-type> <res-auth>Container</res-auth> 
+		</resource-ref> -->
+
+	<!-- ==================== Default Session Configuration ================= -->
+	<!-- You can set the default session timeout (in minutes) for all newly -->
+	<!-- created sessions by modifying the value below. -->
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+		<cookie-config>
+			<name>JSESSIONID</name>
+			<path>/</path>
+			<http-only>true</http-only>
+		</cookie-config>
+	</session-config>
+</web-app>

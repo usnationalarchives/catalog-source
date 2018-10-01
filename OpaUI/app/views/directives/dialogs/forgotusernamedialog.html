@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="close()">Close &times;</button>
+    <h1 class="modal-title" id="forgotUsernameModalLabel">Forgot Username?</h1>
+</div>
+<div class="modal-body">
+    <p class="dialog-text col-sm-12">If you have forgotten your username, please enter your registered email below and click the ‘Submit’ button. We will email you your username.<br></p>
+    <div class="col-sm-offset-2 col-sm-10 dialog-error" ng-show="error">
+					<span class="glyphicons glyphicons-warning-sign">
+						<em ng-bind="error"></em>
+					</span>
+    </div>
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label for="inputEmail" class="col-sm-2 control-label">Email:</label>
+            <div class="col-sm-6">
+                <input type="email" class="form-control no-margin-top" id="inputEmail" placeholder="" ng-model="email" maxlength="100" required>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="forgetUsername(email)">Submit</button>
+    <a href="" rel="#" ng-click="close()">Cancel</a>
+</div>

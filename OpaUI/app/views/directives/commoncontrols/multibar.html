@@ -1,0 +1,47 @@
+<div id="multibar" class="container-fluid" ng-show="isSearch">
+	<div class="row">
+		<!-- DESKTOP -->
+		<div id="multibarResults"
+		     class="col-lg-offset-2 col-md-offset-2 hidden-sm hidden-xs" ng-show="searchFinished">
+			<span  ng-if="!searchSvc.limitExceeded && !noResults">{{offset + 1}} – {{(offsetEnd)}} of </span>
+            <span class="adjustResults"> {{totalRecords | number}} results</span>
+			<span ng-if="!searchSvc.limitExceeded"> in {{queryTime | number:2}} seconds.</span>
+			<span ng-if="didYouMean">Did you mean&nbsp;<button class="btn btn-link didYouMean noPadding" ng-click="searchDidYouMean(didYouMean)" ng-bind="didYouMean"></button>?</span>
+			<span ng-if="searchSvc.thesaurus">
+			<button ng-class="{'display-block': Auth.isLoggedIn()}" id="showExpandedLink" type="button" class="btn btn-link noPadding" data-toggle="modal" data-target="#expandedQuery" tabindex="0">Show expanded search terms</button>
+			</span>
+            <div class="colorGuardsmanRed" ng-if="searchSvc.limitExceeded">
+                 <p>For performance considerations, results beyond {{Auth.getRowsQueryLimit()}} records cannot be displayed.</p>
+            </div>
+		</div>
+        <div id="totalResultsMobile" class="visible-xs visible-sm pull-left" ng-bind-template="{{totalRecords| number}} results">
+        </div>
+		<div data-multibar-actions class="pull-right" ng-class="{'is-search': isSearch}">
+		</div>
+	</div>
+
+    <!-- MOBILE -->
+    <div class="row visible-xs hidden-print" ng-if="searchSvc.thesaurus || didYouMean">
+        <button ng-if="didYouMean" id="didYouMeanMobile" class="col-xs-12 btn btn-link didYouMean padding-5-top padding-5-bottom" ng-click="searchDidYouMean(didYouMean)">
+            Did you mean&nbsp;<span ng-bind="didYouMean"></span>?
+        </button>
+        <button ng-if="searchSvc.thesaurus" id="showExpandedLinkMobile" type="button" class="col-xs-12 btn btn-link padding-5-top padding-5-bottom" data-toggle="modal" data-target="#expandedQuery" tabindex="0">
+            Show expanded search terms
+        </button>
+    </div>
+    <div class="visible-xs visible-sm colorGuardsmanRed col-xs-12" ng-if="searchSvc.limitExceeded">
+        <p>For performance considerations, results beyond {{Auth.getRowsQueryLimit()}} records cannot be displayed.</p>
+    </div>
+
+	<div accordion-bar ng-if="!noResults" class="hidden-print"></div>
+	<!-- Modal Print -->
+	<div print-dialog ng-if="!noResults" class="hidden-print"></div>
+
+	<!-- Modal Export -->
+	<div export-dialog ng-if="!noResults" class="hidden-print"></div>
+
+    <div bulk-export-dialog ng-if="!noResults" class="hidden-print"></div>
+
+	<!-- Modal Expanded Query -->
+	<div expanded-query="" class="hidden-print"></div>
+</div>

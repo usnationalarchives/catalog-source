@@ -1,0 +1,14 @@
+<div class="row result">
+    <div result-web-group ng-if="$index == 2"></div>
+    <div class="imageResult col-xs-4 col-sm-2 col-lg-1">
+        <label for="checkResults{{$index+1}}" class="hidden" ng-if="!isSearchWithin">Check</label>
+        <input id="checkResults{{$index+1}}" type="checkbox" ng-model="value" ng-click="toggleSelection(result.opaId, false)"
+         ng-checked="searchSvc.selectedResults.indexOf(result.opaId) > -1" ng-show="checkboxes()" ng-if="!isSearchWithin">
+        <a ng-class="{imgWidth: checkboxes()}" href="" ng-click="raisePreviewModal(result)" tabindex="0">
+            <div class="thumbnailResult">
+                <img ng-src="{{searchSvc.getThumbnail(result)}}" err-src="images/missingimage.svg" class="img-responsive" alt="Thumbnail{{$index}}"/>
+                <img ng-if="showPlusSign(result)" src="images/plusIcon18x18.png" class="plusSign" alt="Expand"/>
+           </div>
+        </a>
+    </div>
+</div>

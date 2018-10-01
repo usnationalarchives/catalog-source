@@ -1,0 +1,45 @@
+<div class="menu">
+  <div id="mainMenu">
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="http://www.archives.gov/" target="_blank" >ARCHIVES.GOV</a>
+      </li>
+      <li ng-if="!Auth.isLoggedIn()">
+        <a href="/login" >LOGIN</a>
+      </li>
+      <li ng-if="Auth.isLoggedIn()">
+        <a ng-href="/accounts/{{Auth.userName()}}" >{{Auth.getDisplayName()}}</a>
+      </li>
+      <li ng-if="Auth.isLoggedIn()">
+        <a href="" rel="#" ng-click="logout()" >LOG OUT</a>
+      </li>
+      <li ng-if="!Auth.isLoggedIn()">
+        <a href="/registration" >REGISTER</a>
+      </li>
+      <li>
+        <a target='_blank' href="https://www.archives.gov/veterans" >VETERANS' SERVICE RECORDS</a>
+      </li>
+      <li>
+        <a target='_blank' href="http://www.archives.gov/research/catalog/help/using.html" >HELP</a>
+      </li>
+
+      <li>
+        <a target='_blank' href="https://github.com/usnationalarchives/Catalog-API" >API</a>
+      </li>
+
+      <li>
+        <a target='_blank' href="http://www.archives.gov/contact/" >CONTACT US</a>
+      </li>
+    </ul>
+  </div>
+  <div id="disclosureMenu">
+    <ul class="list-inline">
+      <li><a href="http://www.archives.gov/about/" target="_blank" >About Us</a></li>
+
+      <li><a href="http://www.archives.gov/global-pages/privacy.html" target="_blank" >Privacy Policy</a></li>
+      <br />
+      <li><a href="http://www.archives.gov/global-pages/accessibility.html" target="_blank" >Accessibility</a></li>
+      <li><a href="http://www.archives.gov/foia/" target="_blank" >FOIA</a></li>
+      <li><a href="http://www.usa.gov/" target="_blank" >USA.gov</a></li></ul>
+  </div>
+</div>

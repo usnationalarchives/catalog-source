@@ -1,0 +1,291 @@
+@mixin administratorBackgroundColor {
+  background-color: $salva;
+}
+
+#headerAdministrator, .headerAdmin {
+  margin-bottom: 20px;
+  padding: 10px;
+  text-align: center;
+  color: $white;
+  @include administratorBackgroundColor;
+  h1{
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0;
+  }
+}
+
+#tabsAdministrator, #homePageAdminTabs {
+  font-size: 15px;
+  height: 12%;
+  margin: 10px 0px 20px 0px;
+  padding-left: 10px;
+  ul {
+    border: none;
+
+    li {
+      width: 175px;
+      text-align: center;
+      border: 0;
+      margin-left: 10px;
+      margin-right: 10px;
+
+      a {
+        border: 0;
+        color: $midnight-blue;
+        padding-bottom: 5px;
+      }
+
+      &.active {
+        > a {
+          border: 0;
+          font-weight: bold;
+
+          &:hover, &:focus {
+            border: none;
+            border-color: transparent;
+          }
+        }
+        border-bottom: solid $salva 5px;
+      }
+    }
+  }
+}
+
+#tabsContentAdministrator {
+  padding-left: 25px;
+}
+
+#createAccount {
+  label {
+    font-weight: normal;
+    text-align: right;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  input {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  ::-webkit-input-placeholder {
+    font-style: italic;
+  }
+
+  :-moz-placeholder {
+    /* Firefox 18- */
+    font-style: italic;
+  }
+
+  ::-moz-placeholder {
+    /* Firefox 19+ */
+    font-style: italic;
+  }
+
+  :-ms-input-placeholder {
+    font-style: italic;
+  }
+  @media (max-width: 784px) {
+    label {
+      text-align: center;
+    }
+  }
+}
+
+#manageAccounts {
+  hr {
+    border-top: 1px solid $silver-chalice;
+  }
+  label {
+    font-weight: normal;
+    text-align: right;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  /*input{
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }*/
+  @media (max-width: 784px) {
+    label {
+      text-align: center;
+    }
+  }
+}
+
+.accountTable {
+
+  tr th{
+    font-weight: normal;
+    vertical-align: top !important;
+  }
+
+  tr td, tr th {
+    font-size: 12px;
+    text-align: center;
+    word-wrap: break-word;
+  }
+
+  tr td.editReason {
+    text-align: left;
+  }
+
+  i {
+    font-size: 14px;
+    color: $torea-bay;
+  }
+}
+
+.accountTable.table {
+  border-collapse: collapse;
+  border-spacing: 3px;
+}
+
+.accountTable.table > thead > tr > th,
+.accountTable.table > thead > tr > td,
+.accountTable.table > tbody > tr > th,
+.accountTable.table > tbody > tr > td
+{
+  border: 0;
+}
+
+.accountTable.table > thead,
+.accountTable.table > tbody > tr.notExpanded
+{
+  border-bottom: 1px dashed $silver;
+}
+
+.accountTable.table > tbody > tr.Expanded
+{
+  border-top: 1px dashed $silver;
+  border-bottom: 0;
+}
+
+.accountTable.table > tbody > tr.ExtraFields {
+
+  border-bottom: 3px dashed $gray;
+}
+
+.editable-input {
+  margin-top: 0;
+  padding-top: 5px;
+  width: 100%;
+}
+
+.accountTable.table {
+  border-collapse: collapse
+}
+
+/* Ensure no space between cells   */
+tr.strikeout td.applyStrikeout {
+  position: relative
+}
+
+/* Setup a new coordinate system   */
+tr.strikeout td.applyStrikeout:before {
+  /* Create a new element that       */
+  content: " "; /* …has no text content            */
+  position: absolute; /* …is absolutely positioned       */
+  left: 0;
+  top: 50%;
+  width: 100%; /* …with the top across the middle */
+  border-bottom: 1px solid #000; /* …and with a border on the top   */
+}
+
+.successMessage {
+  color: $green-haze;
+}
+
+.notesStyle {
+  margin-top: 0;
+  margin-left: 5px;
+  background-color: #F2F2F2;
+  border: 1px solid $silver-solid !important;
+  padding: 10px;
+  padding-left: 20px;
+  label {
+    font-weight: bold !important;
+  }
+}
+
+.error-message-style {
+  color: $guardsman-red !important;
+  font-size: 0.8em !important;
+}
+
+.font-weight-style {
+  font-weight: bold !important;
+}
+
+input:invalid, select:invalid {
+  box-shadow: none;
+  -moz-box-shadow: none;
+}
+
+.note-border-box-style {
+  border-top: 1px solid $silver-solid !important;
+  border-bottom: 1px solid $silver-solid !important;
+  border-left: 1px solid $silver-solid !important;
+  border-right: 1px solid $silver-solid !important;
+}
+
+.editable-error {
+  color: $red;
+}
+
+
+.administratorActionButtons{
+  margin-top: 5px;
+}
+
+/*Classes for new reason modal on administrator workbench*/
+.administratorModals{
+  background-color: $salva;
+  color: $white;
+
+  button{
+    color: $white !important;
+    font-size: inherit;
+    font-weight: normal !important;
+
+  }
+}
+
+.administratorReasonDialog{
+  .btn-link {
+    background-color: transparent !important;
+    color: $torea-bay;
+  }
+}
+
+.account-manager-pagin {
+  >div>div:last-of-type {
+    text-align: right;
+  }
+  display: inline-block;;
+  vertical-align: middle;
+  margin-top: 5px;
+}
+
+@media (min-width: 320px) and (max-width: 1023px){
+  .account-manager-pagin {
+    #paginationControl {
+      width: 100%;
+      padding: 0;
+      a {
+        width: 37px;
+      }
+      a.current {
+        width: 29px;
+      }
+    }
+  }
+}
+
+.account-searcher {
+  text-align: right;
+}
+
+.pagingAccounts {
+  margin-top: -5px;
+}
+

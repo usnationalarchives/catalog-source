@@ -1,0 +1,376 @@
+/*Img routes*/
+$plusSign: "../images/plusIcon18x18.png";
+
+.didYouMean {
+  border: none;
+  line-height: inherit;
+}
+
+.searchTerm {
+  font-weight: bold !important;
+}
+
+#resultsView {
+  padding: 10px;
+}
+
+.result {
+  padding: 5px;
+  margin: 0 0 15px;
+}
+
+.imgWidth {
+  width: 72%;
+}
+
+.imageResult {
+  padding-left: 0;
+  padding-right: 0;
+  input {
+    margin: 0 5px 0 0;
+    display: inline-block;
+    vertical-align: top;
+  }
+  img {
+    display: block;
+    margin: auto;
+    max-height: 100px;
+  }
+
+  a {
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+    position: relative;
+    margin-right: 10%;
+    .thumbnailResult {
+      position: relative;
+      display: inline-block;
+      height: 100%;
+      width: 100%;
+    }
+    .plusSign {
+      display: none;
+      padding-left: 0;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 18px;
+      height: 18px;
+    }
+  }
+  a:focus .thumbnailResult img {
+    border: 1px solid $havelock-blue;
+  }
+}
+
+.titleResult {
+  a {
+    font-weight: bold;
+    font-size: 1em;
+    color: $torea-bay;
+  }
+}
+
+@media (max-width: 991px) and (min-width: 320px)
+{
+  .centeredDiv{
+    width: 98%;
+    margin: 0 auto !important;
+  }
+}
+
+/*Portrait mode detection for smartphones*/
+@media (max-width: 590px) {
+  .titleResult {
+    a {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: $torea-bay;
+    }
+  }
+  .imageResult {
+    img {
+      position: relative;
+    }
+  }
+}
+
+//Media queries to position the plus icon over the image in the different screen sizes
+@media (min-width: 1024px) and (max-width: 1279px) {
+
+  .imageResult {
+    a{
+      .plusSign{
+        right: 18px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1920px) {
+
+  .imageResult {
+    a{
+      .plusSign{
+        right: 18px;
+      }
+    }
+  }
+}
+
+
+
+.dateResult {
+  font-weight: bold;
+  color: $gray;
+}
+
+.teaser {
+  padding-top: 5px;
+}
+
+.resultDetail {
+  padding-top: 5px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+/*Results Online*/
+
+.resultWeb {
+  padding-bottom: 10px;
+}
+
+.descriptionResultWeb {
+  border-left-color: $silver-chalice;
+  border-left-style: solid;
+  border-left-width: 5px;
+}
+
+.marginResultWeb {
+  padding-left: 15px;
+  padding-right: 0;
+}
+
+.teaserWeb {
+  padding-left: 10px;
+}
+
+.titleGroupWeb {
+  font-weight: bold;
+  color: $torea-bay;
+  display: inline-block;
+  text-decoration: underline;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+.webArea {
+  font-style: oblique;
+  color: $green-haze;
+  padding-left: 10px;
+}
+
+.titleWeb {
+  padding-left: 10px;
+  display: inline-block;
+  font-weight: bold;
+  color: $torea-bay;
+}
+
+.imgResult {
+  position: relative;
+  display: inline-block;
+}
+
+.no-touch .thumbnailResult:hover {
+  .plusSign {
+    display: inline-block;
+  }
+}
+
+.plusIcon:hover {
+  position: absolute;
+  display: inline-block;
+  right: 0;
+  bottom: 0;
+  display: inline-block;
+}
+
+//FACETS
+#facets {
+  font-size: 1.0em;
+  hr {
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-color: $silver;
+  }
+  ul {
+    padding-left: 8px;
+    list-style-position: inherit;
+    li {
+      margin-top: 3px;
+      margin-bottom: 3px;
+      font-size: 5pt;
+      line-height: 200%;
+      button {
+        text-align: left;
+        font-size: 11pt;
+        vertical-align: top;
+        white-space: normal;
+        word-break: normal;
+        word-wrap: break-word;
+      }
+    }
+  }
+  button {
+    color: $torea-bay;
+  }
+  .filter {
+    padding: 10px;
+    strong {
+      cursor: pointer;
+    }
+  }
+  .content-toggle:after {
+    font-family: 'Glyphicons Regular';
+    content: "\e602";
+    color: $scorpion;
+  }
+  .content-toggle.collapsed:after {
+    content: "\e224";
+    color: $scorpion;
+  }
+  a.expandFiltersLabel {
+    font-style: italic;
+    font-weight: bold;
+  }
+}
+
+#stickyFacetFilters {
+  border-bottom: 1px solid $silver;
+  line-height: 30px;
+}
+
+.stickyFilter {
+  background-color: #eaf1fa;
+  border: 1px solid $botticelli;
+  color: $torea-bay;
+  font-weight: normal;
+  font-size: 0.813em;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  word-break: break-word;
+  white-space: normal;
+  word-wrap: normal;
+  word-wrap: break-word;
+  padding: 3px 7px;
+  display: inline-block;
+  line-height: 1;
+  border-radius: 10px;
+  margin-top: 3px;
+  text-align: left;
+}
+
+.stickyFilter:focus {
+  outline: 0;
+  text-decoration: underline;
+  color: $torea-bay;
+}
+
+.stickyFilter:hover {
+  text-decoration: underline;
+  color: $torea-bay;
+}
+
+.filterLabel {
+  font-weight: normal;
+  font-size: 0.813em;
+  padding: 5px;
+}
+
+.applyFacetButton {
+  position: relative;
+  left: -10px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.mobileFacet {
+  margin: 0;
+  border-radius: 0;
+  border: none;
+}
+
+.mobileFacetFilters {
+  margin-left: 5px;
+  font-size: 0.813em;
+  padding-top: 10px;
+  padding-bottom: 15px;
+}
+
+.mobileFacetTextBig {
+  font-size: 1.4em;
+}
+
+.mobileFacetTextMedium {
+  font-size: 16px;
+}
+
+.facet-toggle:after {
+  font-family: 'Glyphicons Regular';
+  content: "\e601";
+}
+
+.facet-toggle.collapsed:after {
+  content: "\e602";
+}
+
+.search-within {
+  .well-within {
+    border-radius: 20px;
+    margin: 10px;
+    overflow: hidden;
+    padding: 10px;
+    position: relative;
+    span.searchTerm {
+      font-weight: inherit !important;
+    }
+    .record-hierarchy {
+      color: $celery;
+    }
+  }
+}
+
+.close-well {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.jumpPagination {
+  float: left;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 0.813em;
+  margin-top: 5px;
+  text-align: center;
+  position: relative !important;
+}
+
+.targetPageInput
+{
+  max-width: 35px;
+  text-align: center;
+}
+
+.record-from {
+  color: $sycamore;
+  font-style: italic;
+  font-size: 1em;
+}

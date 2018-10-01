@@ -1,0 +1,63 @@
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="headingThree" ng-click="toggle('#collapseThree')">
+    <div class="panel-title">
+      <a class="collapsed" data-toggle="collapse" data-parent="#accordionID" data-target="#collapseThree" href="" aria-expanded="false" aria-controls="collapseThree">
+        <span class="apiCallPost">POST</span>
+        Login
+      </a>
+    </div>
+  </div>
+  <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    <div class="panel-body">
+      <div class="apiDescriptions">
+        To login to Catalog using NARA's Online Catalog API, you would need to use the following endpoint:
+        <br />
+        <span class="code breakLongCode"><span ng-bind="configServices.API_END_POINT"></span>/login?user={userName}&password={password}</span>
+        <form name="userLoginForm" ng-submit="userLogin(userLoginForm.$valid)" class="validate-form">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Value</th>
+              <th class="hidden-xs">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>userName</td>
+              <td>
+                <div class="form-group">
+                  <label class="sr-only" for="userNameInputLogin">Username (required)</label>
+                  <input type="text" class="form-control" id="userNameInputLogin" placeholder="required" required="" ng-model="userNameInputLogin">
+                </div>
+              </td>
+              <td class="hidden-xs"> Example: jsmith </td>
+            </tr>
+            <tr class="visible-xs">
+              <td class="bold"> Description </td>
+              <td> Example: jsmith </td>
+            </tr>
+            <tr>
+              <td>password</td>
+              <td>
+                <div class="form-group">
+                  <label class="sr-only" for="passwordInputLogin">Password (required)</label>
+                  <input type="text" class="form-control" id="passwordInputLogin" placeholder="required" required="" ng-model="passwordInputLogin">
+                </div>
+              </td>
+              <td class="hidden-xs"> Password must contain minimum of 8 characters and can contain special characters or numbers </td>
+            </tr>
+            <tr class="visible-xs">
+              <td class="bold"> Description </td>
+              <td>Password must contain minimum of 8 characters and can contain special characters or numbers </td>
+            </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-default" type="submit">Submit</button>
+          <button class="btn btn-default" type="reset" ng-click="resetLogin()">Reset</button>
+        </form>
+        <div data-response-panel id="responsepanelLogin" class="panel-collapse collapse" data-action="action" data-call="apicall" data-response="responseTextArea"  data-life-mode="lifeMode" data-only-live-mode="onlyLiveMode" data-error-response="errorResponse"></div>
+      </div>
+    </div>
+  </div>
+</div>

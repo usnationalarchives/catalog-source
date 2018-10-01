@@ -1,0 +1,37 @@
+<div class="noResults" >
+    <div class="row">
+        <div ng-show="searchTermsText === ''">There are no search terms entered.</div>
+        <div ng-show="searchTermsText != ''">There are no search results found using the search term: {{searchTermsText}}</div>
+    </div>
+    <hr>
+    <div class="row">
+        <h2>What should I do next?</h2>
+        <!-- no query term-->
+        <div ng-show="searchTermsText === ''">
+            <ul>
+                <li>Enter a search term or terms. If you are searching for a person's name, read our <a href="http://www.archives.gov/research/search/help/family-history.html">Search Tips for Family Historians.</a></li>
+                <li>Read more about <a href="http://www.archives.gov/research/search/help/search-tips.html">How to Search.</a></li>
+                <li>Visit our <a href="http://www.archives.gov/research/topics">Research Topics Pages</a> for more ideas.</li>
+                <li>If you would like to request copies of military service records, use our separate online system called <a href="http://www.archives.gov/veterans/military-service-records/">eVetRecs</a> to make your request.</li>
+                <li>Read about <a href="http://www.archives.gov/research/whats-here.html">What's here and what's not</a> and <a href="http://www.archives.gov/research/search/help/whats-included.html">What is included in this search?.</a></li>
+                <!--Commented out until R2/R3
+                <li>Try <a href="#/browse">browsing</a> to find what you are looking for.</li>
+                -->
+            </ul>
+        </div>
+        <!-- no results -->
+        <div ng-show="searchTermsText != ''">
+            <ul>
+                <li>Check your spelling and perhaps try alternate spellings. If you are searching for a person's name, read our <a href="http://www.archives.gov/research/search/help/family-history.html">Search Tips for Family Historians.</a></li>
+                <li>If you used quotes around your keywords, try the search without them. Read more about <a href="http://www.archives.gov/research/search/help/search-tips.html">How to Search.</a></li>
+                <li>Your search may have been too specific. Try a broader topic or related topic. Visit our <a href="http://www.archives.gov/research/topics">Research Topics Pages</a> for more ideas.</li>
+                <li>If you would like to request copies of military service records, use our separate online system called <a href="http://www.archives.gov/veterans/military-service-records/">eVetRecs</a> to make your request.</li>
+                <li>The National Archives might not have what you are looking for. Read about <a href="http://www.archives.gov/research/whats-here.html">What's here and what's not</a> and <a href="http://www.archives.gov/research/search/help/whats-included.html">What is included in this search?.</a></li>
+                <li>The National Archives might have what you are looking for, but it is not available online.</li>
+                <!--Commented out until R2/R3
+                <li>Try <a href="#/browse">browsing</a> to find what you are looking for.</li>
+                -->
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2996"
+   viewBox="0 0 124 156"
+   version="1.2"
+   inkscape:version="0.48.5 r10040"
+   width="100%"
+   height="100%"
+   sodipodi:docname="topicalsubject.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview30"
+     showgrid="false"
+     inkscape:zoom="1.5128205"
+     inkscape:cx="62"
+     inkscape:cy="78"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2996" />
+  <defs
+     id="defs2998">
+    <linearGradient
+       id="linearGradient5266"
+       y2="77.655"
+       gradientUnits="userSpaceOnUse"
+       x2="119.77"
+       gradientTransform="matrix(0.98300971,0,0,0.96590909,1.4713372,-88.507232)"
+       y1="77.655"
+       x1="3.6636">
+      <stop
+         id="stop3780"
+         stop-color="#f8f7f3"
+         offset="0" />
+    </linearGradient>
+    <filter
+       id="filter6992"
+       color-interpolation-filters="sRGB">
+      <feFlood
+         id="feFlood6994"
+         flood-color="rgb(0,0,0)"
+         flood-opacity="0.7"
+         result="flood" />
+      <feComposite
+         id="feComposite6996"
+         operator="in"
+         result="composite1"
+         in2="SourceGraphic"
+         in="flood" />
+      <feGaussianBlur
+         id="feGaussianBlur6998"
+         stdDeviation="2"
+         result="blur" />
+      <feOffset
+         id="feOffset7000"
+         dy="2"
+         dx="0"
+         result="offset" />
+      <feComposite
+         id="feComposite7002"
+         operator="over"
+         result="composite2"
+         in2="offset"
+         in="SourceGraphic" />
+    </filter>
+    <filter
+       id="filter7052"
+       color-interpolation-filters="sRGB">
+      <feFlood
+         id="feFlood7054"
+         flood-color="rgb(0,0,0)"
+         flood-opacity="0.5"
+         result="flood" />
+      <feComposite
+         id="feComposite7056"
+         operator="in"
+         result="composite1"
+         in2="SourceGraphic"
+         in="flood" />
+      <feGaussianBlur
+         id="feGaussianBlur7058"
+         stdDeviation="1"
+         result="blur" />
+      <feOffset
+         id="feOffset7060"
+         dy="0"
+         dx="0"
+         result="offset" />
+      <feComposite
+         id="feComposite7062"
+         operator="over"
+         result="composite2"
+         in2="offset"
+         in="SourceGraphic" />
+    </filter>
+  </defs>
+  <metadata
+     id="metadata3001">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <rect
+     style="fill-opacity:0"
+     x="0"
+     y="0.43636"
+     width="118.65"
+     height="150.77"
+     id="rect3004" />
+  <rect
+     style="fill-opacity:0"
+     x="49.599998"
+     y="104.15"
+     width="6.4818001"
+     height="6.7635999"
+     id="rect3006" />
+  <rect
+     style="fill:url(#linearGradient5266);fill-rule:nonzero;filter:url(#filter6992)"
+     x="5.0727"
+     y="-85.363998"
+     width="114.14"
+     height="143.73"
+     transform="matrix(1.0440372,0,0,1.0574849,-2.8025382,91.22541)"
+     id="rect3008" />
+  <text
+     sodipodi:linespacing="149%"
+     x="61.442043"
+     y="60.54158"
+     line-height="149.00000095%"
+     stroke-miterlimit="4"
+     font-style="normal"
+     font-size="26px"
+     xml:space="preserve"
+     font-weight="normal"
+     style="font-size:26px;font-style:normal;font-weight:normal;text-align:center;line-height:149.00000094999999000%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#595959;stroke-width:0;stroke-miterlimit:4;font-family:sans-serif"
+     id="text6148"><tspan
+       x="61.442043"
+       y="60.54158"
+       line-height="150%"
+       style="text-align:center;line-height:150%;text-anchor:middle;"
+       id="tspan3204">Topical</tspan><tspan
+       x="61.442043"
+       y="99.54158"
+       line-height="150%"
+       style="text-align:center;line-height:150%;text-anchor:middle;"
+       id="tspan3528">Subject</tspan></text>
+  <flowRoot
+     font-style="normal"
+     line-height="125%"
+     font-size="40px"
+     xml:space="preserve"
+     font-weight="normal"
+     style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;font-family:sans-serif"
+     id="flowRoot5286"
+     transform="translate(0,92)"><flowRegion
+       id="flowRegion5288"><rect
+         height="46.782001"
+         x="46.5"
+         width="41.145"
+         y="50.882"
+         id="rect5290" /></flowRegion><flowPara
+       id="flowPara5292" /></flowRoot></svg>

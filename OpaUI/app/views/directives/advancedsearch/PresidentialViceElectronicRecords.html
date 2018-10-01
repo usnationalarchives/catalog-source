@@ -1,0 +1,298 @@
+<fieldset ng-disabled="!showSection(sections.PRESIDENTIAL)" name="PresidentialViceElectronicRecords"
+          class="col-xs-12" ng-class="{grayedOut: !showSection(sections.DESCRIPTIONS)}">
+  <!--
+  <legend title="{{toolTips.PRESIDENTIAL_ELECTRONIC_RECORDS}}">
+    Presidential/Vice Presidential Electronic Records Fields<span class="sr-only" ng-bind="toolTips.PRESIDENTIAL_ELECTRONIC_RECORDS"></span>
+  </legend>
+  <div class="form-group">
+    <label for="caseNumber" class="control-label col-sm-3 col-xs-12" title="{{toolTips.FOIA_CASE_NUMBER}}">
+      FOIA Case Number:<span class="sr-only" ng-bind="toolTips.FOIA_CASE_NUMBER"></span>
+    </label>
+    <input type="text" id="caseNumber" ng-model="caseNumber" class="col-xs-12 col-sm-9" title="{{toolTips.FOIA_CASE_NUMBER}}">
+  </div>
+  <div class="form-group">
+    <label for="recordType" class="control-label col-sm-3 col-xs-12" title="{{toolTips.TYPE_OF_RECORD}}">
+      Type of Record:<span class="sr-only" ng-bind="toolTips.TYPE_OF_RECORD"></span>
+    </label>
+    <select
+      ng-class="{disabledOption:whiteHouseDropdown==0}"
+      ng-model="whiteHouseDropdown" id="recordType" class="col-xs-12 col-sm-9">
+      <option value="0" selected disabled>Select type of record...</option>
+      <option value="whEmails" class="enabledOption">White House Emails</option>
+      <option value="whPhoto" class="enabledOption">White House Photo System</option>
+      <option value="whWorker" class="enabledOption">White House Worker and Visitor Entry System</option>
+    </select>
+  </div>
+  <div ng-show="whiteHouseDropdown =='whEmails'">
+    <label for="whEmailsDate" class="control-label padding-input col-xs-12 col-sm-3" title="{{toolTips.WH_EMAILS_DATE}}">
+      Date:<span class="sr-only" ng-bind="toolTips.WH_EMAILS_DATE"></span>
+    </label>
+    <input type="text" id="whEmailsDate" class="hidden">
+
+    <div class="col-sm-9 col-xs-12" title="{{toolTips.WH_EMAILS_DATE}}">
+      <div class="dateCalendar row col-xs-offset-0">
+        <div class="col-xs-4 col-sm-2">
+          <label for="date1" class="control-label padding-label">From:</label>
+        </div>
+        <div class="noPaddingSides col-xs-6 col-sm-3 col-md-2">
+          <input id="date1" kendo-date-picker
+                 k-options="calendarOptions"
+                 ng-disabled="!showSection(sections.PRESIDENTIAL)"
+                 ng-model="FromCalendar1"
+                 class="calendarKendoFull"
+                 placeholder="MM/DD/YYYY"/>
+        </div>
+        <div class="col-xs-4 col-sm-offset-2 col-sm-2">
+          <label for="date2" class="control-label padding-label">To:</label>
+        </div>
+        <div class="noPaddingSides col-xs-6 col-sm-3 col-md-2">
+          <input id="date2" kendo-date-picker
+                 k-options="calendarOptions"
+                 ng-disabled="!showSection(sections.PRESIDENTIAL)"
+                 ng-model="ToCalendar2"
+                 class="calendarKendoFull"
+                 placeholder="MM/DD/YYYY"/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <span class="note padding-note pull-left col-xs-12 col-sm-2">(Requires at least one additional Email Field)</span>
+    </div>
+    <div class="form-group">
+      <label for="From" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_EMAIL_FROM}}">
+        From:<span class="sr-only" ng-bind="toolTips.WH_EMAIL_FROM"></span>
+      </label>
+      <input type="text" id="From" ng-model="from" class="col-sm-9 col-xs-12" title="{{toolTips.WH_EMAIL_FROM}}">
+    </div>
+    <div class="form-group">
+      <label for="To" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_EMAIL_TO}}">
+        To:<span class="sr-only" ng-bind="toolTips.WH_EMAIL_TO"></span>
+      </label>
+      <input type="text" id="To" ng-model="to" class="col-sm-9 col-xs-12" title="{{toolTips.WH_EMAIL_TO}}">
+    </div>
+    <label for="cc" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_EMAIL_CC}}">
+      CC:<span class="sr-only" ng-bind="toolTips.WH_EMAIL_CC"></span>
+    </label>
+    <input type="text" id="cc" ng-model="cc" class="col-sm-9 col-xs-12" title="{{toolTips.WH_EMAIL_CC}}">
+
+    <div class="form-group">
+      <label for="bcc" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_EMAIL_BCC}}">
+        BCC:<span class="sr-only" ng-bind="toolTips.WH_EMAIL_BCC"></span>
+      </label>
+      <input type="text" id="bcc" ng-model="bcc" class="col-sm-9 col-xs-12" title="{{toolTips.WH_EMAIL_BCC}}">
+    </div>
+    <div class="form-group">
+      <label for="subject" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_EMAIL_SUBJECT}}">
+        Subject:<span class="sr-only" ng-bind="toolTips.WH_EMAIL_SUBJECT"></span>
+      </label>
+      <input type="text" id="subject" ng-model="subject" class="col-sm-9 col-xs-12" title="{{toolTips.WH_EMAIL_SUBJECT}}">
+    </div>
+  </div>
+
+  <div ng-show="whiteHouseDropdown =='whPhoto'">
+    <label for="whPhotoDate" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_PHOTO_DATE}}">
+      Date:<span class="sr-only" ng-bind="toolTips.WH_PHOTO_DATE"></span>
+    </label>
+    <input type="text" id="whPhotoDate" class="hidden">
+
+    <div class="col-sm-9 col-xs-12" title="{{toolTips.WH_PHOTO_DATE}}">
+      <div class="dateCalendar row col-xs-offset-0">
+        <div class="col-xs-4 col-sm-2">
+          <label for="date3" class="control-label padding-label">From:</label>
+        </div>
+        <div class="noPaddingSides col-xs-6 col-sm-3 col-md-2">
+          <input id="date3" kendo-date-picker
+                 k-options="calendarOptions"
+                 ng-disabled="!showSection(sections.PRESIDENTIAL)"
+                 ng-model="FromCalendar"
+                 class="calendarKendoFull"
+                 placeholder="MM/DD/YYYY"/>
+        </div>
+        <div class="col-xs-4 col-md-offset-1 col-sm-offset-2 col-sm-2">
+          <label for="date4" class="control-label padding-label">To:</label>
+        </div>
+        <div class="noPaddingSides col-xs-6 col-sm-3 col-md-2 col-lg-2">
+          <input id="date4" kendo-date-picker
+                 k-options="calendarOptions"
+                 ng-disabled="!showSection(sections.PRESIDENTIAL)"
+                 ng-model="ToCalendar"
+                 class="calendarKendoFull"
+                 placeholder="MM/DD/YYYY"/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <span class="note padding-note pull-left col-xs-12 col-sm-2">(Requires at least one Photo System Field)</span>
+    </div>
+
+    <div class="form-group">
+      <label for="photographer" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_PHOTO_PHOTOGRAPHER}}">
+        Photographer:<span class="sr-only" ng-bind="toolTips.WH_PHOTO_PHOTOGRAPHER"></span>
+      </label>
+      <input type="text" id="photographer" ng-model="photographer" class="col-sm-9 col-xs-12" title="{{toolTips.WH_PHOTO_PHOTOGRAPHER}}">
+    </div>
+    <div class="form-group">
+      <label for="city" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_PHOTO_CITY}}">
+        City:<span class="sr-only" ng-bind="toolTips.WH_PHOTO_CITY"></span>
+      </label>
+      <input type="text" id="city" ng-model="city" class="col-sm-9 col-xs-12" title="{{toolTips.WH_PHOTO_CITY}}">
+    </div>
+    <div class="form-group">
+      <label for="state" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_PHOTO_STATE}}">
+        State:<span class="sr-only" ng-bind="toolTips.WH_PHOTO_STATE"></span>
+      </label>
+      <input type="text" id="state" ng-model="state" class="col-sm-9 col-xs-12" title="{{toolTips.WH_PHOTO_STATE}}">
+    </div>
+    <div class="form-group">
+      <label for="country" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_PHOTO_COUNTRY}}">
+        Country:<span class="sr-only" ng-bind="toolTips.WH_PHOTO_COUNTRY"></span>
+      </label>
+      <input type="text" id="country" ng-model="country" class="col-sm-9 col-xs-12" title="{{toolTips.WH_PHOTO_COUNTRY}}">
+    </div>
+    <div class="form-group">
+      <label for="whPhotoTitle" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_PHOTO_TITLE}}">
+        Title:<span class="sr-only" ng-bind="toolTips.WH_PHOTO_TITLE"></span>
+      </label>
+      <input type="text" id="whPhotoTitle" ng-model="title2" class="col-sm-9 col-xs-12" title="{{toolTips.WH_PHOTO_TITLE}}">
+    </div>
+    <div class="form-group">
+      <label for="frameNumber" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_PHOTO_FRAME_NUMBER}}">
+        Frame Number:<span class="sr-only" ng-bind="toolTips.WH_PHOTO_FRAME_NUMBER"></span>
+      </label>
+      <input type="text" id="frameNumber" ng-model="frameNumber" class="col-sm-9 col-xs-12" title="{{toolTips.WH_PHOTO_FRAME_NUMBER}}">
+    </div>
+    <div class="form-group">
+      <label for="rollNumber" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_PHOTO_ROLL_NUMBER}}">
+        Roll Number:<span class="sr-only" ng-bind="toolTips.WH_PHOTO_ROLL_NUMBER"></span>
+      </label>
+      <input type="text" id="rollNumber" ng-model="rollNumber" class="col-sm-9 col-xs-12" title="{{toolTips.WH_PHOTO_ROLL_NUMBER}}">
+    </div>
+    <div class="form-group">
+      <label for="caption" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_PHOTO_CAPTION}}">
+        Caption:<span class="sr-only" ng-bind="toolTips.WH_PHOTO_CAPTION"></span>
+      </label>
+      <input type="text" id="caption" ng-model="caption" class="col-sm-9 col-xs-12" title="{{toolTips.WH_PHOTO_CAPTION}}">
+    </div>
+    <div class="form-group">
+      <label for="keywords" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_PHOTO_KEYWORDS}}">
+        Keywords:<span class="sr-only" ng-bind="toolTips.WH_PHOTO_KEYWORDS"></span>
+      </label>
+      <input type="text" id="keywords" ng-model="keywords" class="col-sm-9 col-xs-12" title="{{toolTips.WH_PHOTO_KEYWORDS}}">
+    </div>
+  </div>
+
+  <div ng-show="whiteHouseDropdown =='whWorker'">
+    <label for="whWorkerDate" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_WORKER_ARRIVAL_DATE_RANGE}}">
+      Arrival Date Range:<span class="sr-only" ng-bind="toolTips.WH_WORKER_ARRIVAL_DATE_RANGE"></span>
+    </label>
+    <input type="text" id="whWorkerDate" class="hidden">
+
+    <div class="col-sm-9 col-xs-12" title="{{toolTips.WH_WORKER_ARRIVAL_DATE_RANGE}}">
+      <div class="dateCalendar row col-xs-offset-0">
+        <div class="col-xs-4 col-sm-2">
+          <label for="date5" class="control-label padding-label">From:</label>
+        </div>
+        <div class="noPaddingSides col-xs-6 col-sm-3 col-md-2">
+          <input id="date5" kendo-date-picker
+                 k-options="calendarOptions"
+                 ng-disabled="!showSection(sections.PRESIDENTIAL)"
+                 ng-model="FromCalendar2"
+                 class="calendarKendoFull"
+                 placeholder="MM/DD/YYYY"/>
+        </div>
+        <div class="col-xs-4 col-sm-offset-2 col-lg-offset-1 col-sm-2">
+          <label for="date6" class="control-label padding-label">To:</label>
+        </div>
+        <div class="noPaddingSides col-xs-6 col-sm-3 col-md-2">
+          <input id="date6" kendo-date-picker
+                 k-options="calendarOptions"
+                 ng-disabled="!showSection(sections.PRESIDENTIAL)"
+                 ng-model="ToCalendar2"
+                 class="calendarKendoFull"
+                 placeholder="MM/DD/YYYY"/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <span class="note padding-note2 pull-left col-xs-12 col-sm-2">(Requires at least one additional Worker/Visitor Entry System Field)</span>
+    </div>
+
+    <label for="whDepartureDate" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_WORKER_DEPARTURE_DATE_RANGE}}">
+      Departure Date Range:<span class="sr-only" ng-bind="toolTips.WH_WORKER_ARRIVAL_DATE_RANGE"></span>
+    </label>
+    <input type="text" id="whDepartureDate" class="hidden">
+
+    <div class="col-sm-9 col-xs-12" title="{{toolTips.WH_WORKER_DEPARTURE_DATE_RANGE}}">
+      <div class="dateCalendar row col-xs-offset-0">
+        <div class="col-xs-4 col-sm-2">
+          <label for="date7" class="control-label padding-label">From:</label>
+        </div>
+        <div class="noPaddingSides col-xs-6 col-sm-3 col-md-2">
+          <input id="date7" kendo-date-picker
+                 k-options="calendarOptions"
+                 ng-disabled="!showSection(sections.PRESIDENTIAL)"
+                 ng-model="FromCalendar3"
+                 class="calendarKendoFull"
+                 placeholder="MM/DD/YYYY"/>
+        </div>
+        <div class="col-xs-4 col-sm-offset-2 col-lg-offset-1 col-sm-2">
+          <label for="date8" class="control-label padding-label">To:</label>
+        </div>
+        <div class="noPaddingSides col-xs-6 col-sm-3 col-md-2">
+          <input id="date8" kendo-date-picker
+                 ng-disabled="!showSection(sections.PRESIDENTIAL)"
+                 k-options="calendarOptions"
+                 ng-model="ToCalendar3"
+                 class="calendarKendoFull"
+                 placeholder="MM/DD/YYYY"/>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <span class="note padding-note2 pull-left col-xs-12 col-sm-2">(Requires at least one additional Worker/Visitor Entry System Field)</span>
+    </div>
+    <div class="form-group">
+      <label for="lastName" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_WORKER_LAST_NAME}}">
+        Last Name:<span class="sr-only" ng-bind="toolTips.WH_WORKER_LAST_NAME"></span>
+      </label>
+      <input type="text" id="lastName" ng-model="lastName" class="col-sm-9 col-xs-12" title="{{toolTips.WH_WORKER_LAST_NAME}}">
+    </div>
+    <div class="form-group">
+      <label for="firstName" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_WORKER_FIRST_NAME}}">
+        First Name:<span class="sr-only" ng-bind="toolTips.WH_WORKER_FIRST_NAME"></span>
+      </label>
+      <input type="text" id="firstName" ng-model="firstName" class="col-sm-9 col-xs-12" title="{{toolTips.WH_WORKER_FIRST_NAME}}">
+    </div>
+    <div class="form-group">
+      <label for="middleInitial" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_WORKER_MIDDLE_INITIAL}}">
+        Middle Initial:<span class="sr-only" ng-bind="toolTips.WH_WORKER_MIDDLE_INITIAL"></span>
+      </label>
+      <input type="text" id="middleInitial" ng-model="middleInitial" class="col-sm-9 col-xs-12" title="{{toolTips.WH_WORKER_MIDDLE_INITIAL}}">
+    </div>
+    <div class="form-group">
+      <label for="visitorLastName" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_WORKER_VISITEE_LAST_NAME}}">
+        Visitee Last Name:<span class="sr-only" ng-bind="toolTips.WH_WORKER_VISITEE_LAST_NAME"></span>
+      </label>
+      <input type="text" id="visitorLastName" ng-model="visitorLastName" class="col-sm-9 col-xs-12" title="{{toolTips.WH_WORKER_VISITEE_LAST_NAME}}">
+    </div>
+    <div class="form-group">
+      <label for="visitorFirstName" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_WORKER_VISITEE_FIRST_NAME}}">
+        Visitee First Name:<span class="sr-only" ng-bind="toolTips.WH_WORKER_VISITEE_FIRST_NAME"></span>
+      </label>
+      <input type="text" id="visitorFirstName" ng-model="visitorFirstName" class="col-sm-9 col-xs-12" title="{{toolTips.WH_WORKER_VISITEE_FIRST_NAME}}">
+    </div>
+    <div class="form-group">
+      <label for="callerLastName" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_WORKER_CALLER_LAST_NAME}}">
+        Caller Last Name:<span class="sr-only" ng-bind="toolTips.WH_WORKER_CALLER_LAST_NAME"></span>
+      </label>
+      <input type="text" id="callerLastName" ng-model="callerLastName" class="col-sm-9 col-xs-12" title="{{toolTips.WH_WORKER_CALLER_LAST_NAME}}">
+    </div>
+    <div class="form-group">
+      <label for="callerFirstName" class="control-label padding-input col-sm-3 col-xs-12" title="{{toolTips.WH_WORKER_CALLER_FIRST_NAME}}">
+        Caller First Name:<span class="sr-only" ng-bind="toolTips.WH_WORKER_CALLER_FIRST_NAME"></span>
+      </label>
+      <input type="text" id="callerFirstName" ng-model="callerFirstName" class="col-sm-9 col-xs-12" title="{{toolTips.WH_WORKER_CALLER_FIRST_NAME}}">
+    </div>
+  </div>
+  -->
+</fieldset>

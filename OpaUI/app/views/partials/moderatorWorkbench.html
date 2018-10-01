@@ -1,0 +1,80 @@
+<div class="container-fluid">
+    <div class="row noMarginsSides">
+        <div data-multibar-actions-common></div>
+    </div>
+
+    <div id="headerModerator" class="row noMarginsSides">
+        <h1>Moderator Workbench</h1>
+    </div>
+
+    <div id="tabsModerator" class="row noMarginsSides">
+        <ul class="nav nav-tabs" data-tabs="tabs">
+            <li id="tagTab" ng-class="{active: currentTab === 'tg'}"><a href="" rel="#" data-target="#tagModerator" data-toggle="tab" ng-click="SelectTab('tg');">Tags<span ng-if="totalTags > 0">&nbsp;({{totalTags}})</span></a></li>
+            <li id="commentTab" ng-class="{active: currentTab === 'cm'}"><a href="" rel="#" data-target="#commentModerator" data-toggle="comment" ng-click="SelectTab('cm');">Comments<span ng-if="totalComments > 0">&nbsp;({{totalComments}})</span></a></li>
+            <li id="transcriptionTab" ng-class="{active: currentTab === 'tr'}"><a href="" rel="#" data-target="#transcribeModerator" data-toggle="tab" ng-click="SelectTab('tr');">Transcriptions<span ng-if="totalTranscriptions > 0">&nbsp;({{totalTranscriptions}})</span></a></li>
+            <!--<li><a data-target="#traslate" data-toggle="tab">Translate</a></li>-->
+            <li id="onlineAvailabilityTab" ng-class="{active: currentTab === 'oa'}"><a href="" rel="#" data-target="#onlineAvailabilityModerator" data-toggle="tab" ng-click="SelectTab('oa');">Online Availability</a></li>
+            <li id="moderatorActionTab" ng-class="{active: currentTab === 'ma'}"><a href="" rel="#" data-target="#moderatorAction" data-toggle="tab" ng-click="SelectTab('ma');">Moderator Actions<span ng-if="totalModerator > 0">&nbsp;({{totalModerator}})</span></a></li>
+        </ul>
+    </div>
+
+    <div id="headerTabContentModerator" class="row noMarginsSides" ng-hide="currentTab === 'oa'">
+        <h2>Latest <span ng-bind="header"></span></h2>
+    </div>
+
+    <div id="navigationRow" class="row noMarginsSides" ng-hide="currentTab === 'oa'">
+        <div id="numberResultModeratorWorkbench" class="col-xs-2 col-lg-2">
+            <span ng-if="noResults">0 - 0 of 0</span>
+            <span ng-if="!noResults" ng-bind-template="{{offset + 1}} – {{(offsetEnd)}} of {{totalRecords}}"></span>
+        </div>
+
+      <div paging-dynamic class="col-xs-4 col-lg-3"></div>
+
+
+        <div id="resultPerPageModeratorWorkbench" class="col-xs-3 col-lg-3">
+            <label for="resultsPerPageSelectModerator" >Rows per page:</label>
+            <div class="btn-group">
+                <select id="resultsPerPageSelectModerator" class="btn btn-default btn-sm" ng-model="resultPerPage">
+                    <option value=25>25</option>
+                    <option value=50>50</option>
+                    <option value=100>100</option>
+                </select>
+            </div>
+        </div>
+        <div id="filerResultModeratorWorkbench" class="col-xs-2 col-lg-3">
+            <form role="form" ng-submit="ModeratorService.notifyUpdaters()">
+                <div class="form-inline">
+                    <label class="sr-only" for="filterInputModerator">Enter text or NAID then click Enter key to submit</label>
+                    <input title="Enter text or NAID then click Enter key to submit" type="text" class="form-control" id="filterInputModerator" placeholder="Enter text or NAID then click Enter key to submit" ng-model="ModeratorService.filterText">
+                    <span class="glyphicons glyphicons-circle-remove filterClear" ng-show="ModeratorService.filterText" ng-click="clearFilter()"></span>
+                </div>
+            </form>
+        </div>
+
+        <div id="lookIdModeratorWorkbench" class="col-xs-1 col-lg-1">
+            <button type="button" class="btn btn-default lookupButton" ng-click="openModalLookupID()">Lookup ID…</button>
+        </div>
+    </div>
+
+    <div id="tabsContentModerator" class="tab-content row noMarginsSides">
+        <div class="tab-pane" ng-class="{active: currentTab == 'tg'}" id="tagModerator">
+            <div data-tag-table></div>
+        </div>
+
+      <div class="tab-pane" ng-class="{active: currentTab == 'cm'}" id="commentModerator">
+        <div data-comment-table></div>
+      </div>
+
+        <div class="tab-pane" ng-class="{active: currentTab == 'tr'}" id="transcribeModerator">
+            <div data-transcription-table></div>
+        </div>
+
+      <div class="tab-pane" ng-class="{active: currentTab == 'oa'}" id="onlineAvailabilityModerator">
+        <div data-online-availability-table></div>
+      </div>
+
+        <div class="tab-pane" ng-class="{active: currentTab == 'ma'}" id="moderatorAction">
+            <div data-moderator-action-table></div>
+        </div>
+    </div>
+</div>

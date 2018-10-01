@@ -1,0 +1,106 @@
+<div class="row" ng-if="selectedList">
+    <ul class="list-inline pull-right noMargins">
+        <li>
+            <a class="btn btn-link noPaddingSides" addthis-toolbox></a>
+        </li>
+    </ul>
+</div>
+<hr class="noMargins"/>
+
+<div id="myLists" class="container">
+    <div class="row">
+        <h1 class="title" ng-if="!isViewedbyPublic()">My Lists</h1>
+        <a class="float-right" ng-href="/accounts/{{Auth.userName()}}" ng-if="Auth.isLoggedIn()"><span class="glyphicons glyphicons-restart"></span> Go back to My Account</a>
+        <h1 class="title" ng-if="isViewedbyPublic()">Shared List</h1>
+        <h2 class="instructions" ng-if="!isViewedbyPublic()">Select a list from the left to view or edit.</h2>
+        <hr/>
+    </div>
+    <div id="successMessage" class="row alert alert-success" data-ng-show="showSuccessAlert">
+        <button type="button" class="close" data-ng-click="switchBool('showSuccessAlert')">×</button> <span ng-bind="successTextAlert"></span>
+    </div>
+    <div id="errorMessage" class="row alert alert-info" data-ng-show="showErrorAlert">
+        <button type="button" class="close" data-ng-click="switchBool('showErrorAlert')">×</button> <span ng-bind="errorTextAlert"></span>
+    </div>
+    <div class="row">
+        <div class="col-md-2 MyLists" ng-if="!isViewedbyPublic()">
+            <ul class="list-unstyled" ng-class="listType">
+                <li class="margin-bottom" ng-repeat="list in userList">
+                    <a href="" rel="#" tabindex="0" ng-click="selectList(list['@name'])" ng-class="{selectedLink: selectedList == list['@name']}"><span class="word-wrap" ng-bind="list['@name']"></span> <span ng-bind-template="({{list['total']}})"></span></a>
+                </li>
+            </ul>
+            <a href="" rel="#" data-toggle="modal" data-target="#deleteListsConfirmation" tabindex="0" class="margin-top-25-a" ng-show="userList.length > 0">
+                <span class="linkItem">
+                    <span class="glyphicons glyphicons-bin"></span> Delete All Lists
+                </span>
+            </a>
+            <div delete-lists-confirmation></div>
+        </div>
+        <div class="col-md-10 MyLists " ng-show="selectedList" ng-class="{'col-md-12': isViewedbyPublic()}">
+            <div class="row listView">
+                <div class="col-md-6 ">Records in <strong ng-bind="selectedList"></strong></div>
+                <div class="col-md-6 manageLists pull-right">
+                    <div class="col-xs-12 col-md-4" ng-if="!isViewedbyPublic()">
+                        <a href="" rel="#" tabindex="0" data-toggle="modal"  data-target="#renameListConfirmation"><span class="glyphicons glyphicons-edit"></span> Rename List</a>
+                    </div>
+                    <div class="col-xs-12 col-md-4 hidden-inline-xs">
+                        <a href="" rel="#" tabindex="0" ng-click="showPrintListModal()"><span class="glyphicons glyphicons-print"></span> Print List</a>
+                    </div>
+                    <div class="col-xs-12 col-md-4" ng-if="!isViewedbyPublic()">
+                        <a href="" rel="#" tabindex="0" data-toggle="modal" data-target="#deleteListConfirmation"><span class="glyphicons glyphicons-bin"></span> Delete List</a>
+                    </div>
+                </div>
+            </div>
+            <div delete-list-confirmation  ng-if="!isViewedbyPublic()"></div>
+            <div rename-list-confirmation  ng-if="!isViewedbyPublic()"></div>
+            <div class="row heading" data-ng-show="ListContent.length > 0">
+                <div class="col-xs-12 col-md-4"><span class="listActions"><span ng-bind-template="{{bottomLimit}} - {{topLimit}} of {{total}}"></span></div>
+                <div class="col-xs-12 col-md-4">
+                   <div class="centre">
+                    <ul id="paginationControl2" class="pagination pagination-sm center-div" data-ng-model="currentPage">
+                        <li data-ng-class="{disabledArrows: currentPage <= 1}"><a href="" rel="#" data-ng-click="decreasePageNumber()">Prev</a></li>
+                        <li><span class="enabledOption" ng-bind="currentPage"></span></li>
+                        <li data-ng-class="{disabledArrows: last()}"><a href="" rel="#" data-ng-click="increasePageNumber()">Next</a></li>
+                    </ul>
+                   </div>
+                </div>
+                <div class="pull-right margin-right">
+                    <label for="rowsPerPageControl">Saved results per page:</label>
+                    <div class="btn-group">
+                        <select id="rowsPerPageControl" class="btn btn-default btn-sm" data-ng-model="rowsPerPage" ng-change="setRows(rowsPerPage)">
+                            <option value=25>25</option>
+                            <option value=50>50</option>
+                            <option value=100>100</option>
+                            <option value=200>200</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row padding-20-left heading" data-ng-show="showNoElementsMessage == true">
+                <span>There are no items in this list.</span>
+            </div>
+            <div class="listActions" data-ng-show="ListContent.length > 0">
+                Select records to: &nbsp; <a href="" rel="#" class="linkItem hidden-inline-xs" ng-click="showPrintModal()"><span class="glyphicons glyphicons-print"></span>&nbsp;Print</a>&nbsp;&nbsp;&nbsp;
+                <a href="" rel="#" class="linkItem" data-toggle="modal" data-target="#deleteRecordsConfirmation" ng-if="!isViewedbyPublic()"> <span class="glyphicons glyphicons-bin"></span>&nbsp;Remove </a>
+            </div>
+            <div delete-records-confirmation></div>
+
+            <div class="row itemListTableHeader" data-ng-show="ListContent.length > 0">
+                <div class="col-xs-2">
+                    <label for="selectAll" class="hidden">Select all lists</label>
+                    <input id="selectAll" type="checkbox" ng-model="ListsService.selectedAllIndex[currentPage - 1]" ng-change="selectOnPage()" ng-checked="ListsService.selectedAllIndex[currentPage - 1]"><span class="listItemHeader"> Page</span>
+                </div>
+                <div class="col-xs-1">
+                    <span class="listItemHeader abbreviation" title="NUMBER">NO.
+                    </span>
+                </div>
+                <div class="col-xs-9">
+                    <div class="listItemHeader">TITLE</div>
+                </div>
+            </div>
+            <div data-list-item data-ng-repeat="viewList in ListContent">
+            </div>
+            <div print-dialog></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="container-fluid">
+  <div class="row tabsBar noMarginsSides">
+    <div id="ResultsNavs" class="col-xs-12 col-md-6 col-lg-7" ng-hide="noResults && tabType=='all'">
+      <ul class="resultTabs nav nav-tabs nav-justified results font-size-10pt">
+        <li id="all" ng-mouseover="getCounts()" ng-class="{active: selectedTab == 1}"><a href="" rel="#"
+                                                                                         ng-click="setTab(1,'all');"
+                                                                                         tabindex="0">All</a></li>
+        <li id="online" ng-mouseover="getCounts()" ng-class="{active: selectedTab == 2}"><a href="" rel="#"
+                                                                                            ng-click="setTab(2,'online')"
+                                                                                            tabindex="0"><span
+          class="hidden-inline-xs hidden-inline-sm hidden-inline-md">Available</span> Online</a></li>
+        <li id="web" ng-mouseover="getCounts()" ng-class="{active: selectedTab == 3}"><a href="" rel="#"
+                                                                                         ng-click="setTab(3,'web')"
+                                                                                         tabindex="0">Web <span
+          class="hidden-inline-xs hidden-inline-sm hidden-inline-md">Pages</span></a></li>
+        <li id="document" ng-mouseover="getCounts()" ng-class="{active: selectedTab == 4}"><a href="" rel="#"
+                                                                                              ng-click="setTab(4,'document')"
+                                                                                              tabindex="0">Doc<span
+          class="hidden-inline-xs hidden-inline-sm hidden-inline-md">ument</span>s</a></li>
+        <li id="image" ng-mouseover="getCounts()" ng-class="{active: selectedTab == 5}"><a href="" rel="#"
+                                                                                           ng-click="setTab(5,'image')"
+                                                                                           tabindex="0">Images</a></li>
+        <li id="video" ng-mouseover="getCounts()" ng-class="{active: selectedTab == 6}"><a href="" rel="#"
+                                                                                           ng-click="setTab(6,'video')"
+                                                                                           tabindex="0">Videos</a></li>
+      </ul>
+    </div>
+    <div class="col-md-6 col-lg-5 noPadding hidden-print" ng-hide="noResults">
+      <div class="hidden-xs hidden-sm">
+        <div paging class="pull-left" ng-show="!hidePaging()"></div>
+      </div>
+      <div class="pull-right hidden-xs hidden-sm resultsPerPageContainer">
+        <label id="resultsPerPageLabel" class="resultsPerPageLabel" for="resultsPerPageSelect">Results per page:</label>
+        <div id="resultsPerPageControl" class="btn-group">
+          <select id="resultsPerPageSelect" tabindex="0" class="btn btn-default btn-sm" ng-model="resultPerPage"
+                  data-ng-Change="resultPerPageChange()"
+                  ng-options="valuePerPage for valuePerPage in configServices.RESULTS_PER_PAGE"></select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- tab content -->
+  <div class="row noMarginsSides">
+    <div class="tab-content">
+      <div class="tab-pane active" id="tab1" ng-show="selectedTab == 1">
+        <div data-results-view ng-if="selectedTab == 1"></div>
+      </div>
+      <div class="tab-content" id="tab2" ng-show="selectedTab == 2">
+        <div data-results-view ng-if="selectedTab == 2"></div>
+      </div>
+      <div class="tab-content" id="tab3" ng-show="selectedTab == 3">
+        <div data-results-view ng-if="selectedTab == 3"></div>
+      </div>
+      <div class="tab-content" id="tab4" ng-show="selectedTab == 4">
+        <div data-results-view ng-if="selectedTab == 4"></div>
+      </div>
+
+      <div class="tab-content" id="tab5" ng-show="selectedTab == 5">
+        <div data-results-view ng-if="selectedTab == 5"></div>
+      </div>
+      <div class="tab-content" id="tab6" ng-show="selectedTab == 6">
+        <div data-results-view ng-if="selectedTab == 6"></div>
+      </div>
+    </div>
+  </div>
+</div>

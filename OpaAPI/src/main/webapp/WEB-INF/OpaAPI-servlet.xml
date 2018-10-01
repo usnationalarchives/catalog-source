@@ -1,0 +1,787 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd      
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context-3.2.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security-3.2.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<!-- xmlns:mvc="http://www.springframework.org/schema/mvc" http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd -->
+	<context:component-scan base-package="gov.nara.opa" />
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<context:property-placeholder location="classpath:application.properties,file:${gov.nara.opa.api.config}/application.properties"
+		system-properties-mode="FALLBACK" ignore-unresolvable="true"/>
+
+	<mvc:annotation-driven>
+		<mvc:argument-resolvers>
+			<bean
+				class="gov.nara.opa.architecture.web.validation.annotation.HttpParameterNameRenamingProcessor">
+				<constructor-arg name="annotationNotRequired" value="true" />
+			</bean>
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
+
+	<mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" />
+	<mvc:default-servlet-handler />
+	
+	<mvc:interceptors>
+        <bean class="gov.nara.opa.api.controller.EncodingInterceptor"/>
+    </mvc:interceptors>
+
+	<!-- Security Changes START -->
+	<!-- Enable Spring Security -->
+	<security:http entry-point-ref="restAuthenticationEntryPoint"
+		use-expressions="true">
+
+		<security:session-management
+			session-fixation-protection="newSession"></security:session-management>
+
+		<security:custom-filter ref="corsHandler"
+			after="PRE_AUTH_FILTER" />
+
+
+
+		<!-- Start the configuration of the security rules of the INTERNAL API -->
+
+		<security:custom-filter ref="loginFilter"
+			position="FORM_LOGIN_FILTER" />
+
+		<!-- NameValue List manager -->
+		<security:intercept-url pattern="/iapi/v1/listManager"
+			method="GET" access="permitAll" />
+		<security:intercept-url pattern="/iapi/v1/listManager"
+			method="POST"
+			access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/listManager"
+			method="PUT"
+			access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/listManager"
+			method="DELETE"
+			access="hasAnyRole('accountAdmin','accountAdminMod')" />
+
+
+		<!-- Login/Logout -->
+		<!-- <security:logout logout-url="/iapi/v1/logout" delete-cookies="true" 
+			invalidate-session="true" success-handler-ref="restLogoutSuccessHandler" 
+			/> -->
+		<security:intercept-url pattern="/iapi/v1/logout"
+			access="permitAll" />
+
+		<!-- Log Clicks -->
+		<security:intercept-url pattern="/iapi/v1/logclick"
+			access="permitAll" />
+			
+		<!-- URL Mapping -->
+		<security:intercept-url pattern="/iapi/v1/urlmapping/**/**"
+			method="GET" access="permitAll" />
+
+		<!-- Ingestion -->
+		<!-- Update Page Numbers -->
+		<security:intercept-url pattern="/iapi/v1/ingestion/updatepagenumber/**"
+			method="POST" access="permitAll" />
+
+		<!-- User Account Management -->
+		<!-- Register Account -->
+		<security:intercept-url pattern="/iapi/v1/accounts/register"
+			method="POST" access="permitAll" />
+		<!-- Verify Email -->
+		<security:intercept-url pattern="/iapi/v1/accounts/verifyemail"
+			method="GET" access="permitAll" />
+		<!-- Resend Verification Email -->
+		<security:intercept-url pattern="/iapi/v1/accounts/resendverification"
+			method="GET" access="permitAll" />
+		<security:intercept-url pattern="/api/v1/accounts/resendverification"
+			method="GET" access="permitAll" />
+		<!-- Forgot User Name -->
+		<security:intercept-url pattern="/iapi/v1/accounts/forgotname"
+			method="GET" access="permitAll" />
+		<!-- Modify Account -->
+		<security:intercept-url pattern="/iapi/v1/accounts/modify/**"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- Deactivate Account -->
+		<security:intercept-url pattern="/iapi/v1/accounts/deactivate/**"
+			method="PUT"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- View User Profile -->
+		<security:intercept-url pattern="/iapi/v1/accounts/profile/**"
+			method="GET"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- Request Password Reset -->
+		<security:intercept-url pattern="/iapi/v1/accounts/requestpasswordreset/**"
+			method="POST" access="permitAll" />
+		<!-- Reset Password -->
+		<security:intercept-url pattern="/iapi/v1/accounts/resetpassword/**"
+			method="GET" access="permitAll" />
+		<!-- Set New Password -->
+		<security:intercept-url pattern="/iapi/v1/accounts/setnewpassword/**"
+			method="POST" access="permitAll" />
+
+		<!-- User List Management -->
+		<!-- Create New List -->
+		<security:intercept-url pattern="/iapi/v1/lists/create"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- Rename List -->
+		<security:intercept-url pattern="/iapi/v1/lists/rename"
+			method="PUT"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- Add To List -->
+		<security:intercept-url pattern="/iapi/v1/lists/add/**"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- View List Entries -->
+		<security:intercept-url pattern="/iapi/v1/lists/viewentries/**"
+			method="GET" access="permitAll" />
+		<!-- View My Lists -->
+		<security:intercept-url pattern="/iapi/v1/lists/view"
+			method="GET"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- Delete List / Delete From List -->
+		<security:intercept-url pattern="/iapi/v1/lists/delete/**"
+			method="DELETE"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- Delete All User's Lists -->
+		<security:intercept-url pattern="/iapi/v1/lists/deleteall"
+			method="DELETE"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+
+		<!-- User Downloads Management -->
+		<!-- Create New Download -->
+		<security:intercept-url pattern="/iapi/v1/downloads/create/**"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- View My Downloads -->
+		<security:intercept-url pattern="/iapi/v1/downloads/view/**"
+			method="GET"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- Get Download -->
+		<security:intercept-url pattern="/iapi/v1/downloads/getfile/**"
+			method="GET"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- Get Download Status -->
+		<security:intercept-url pattern="/iapi/v1/downloads/status/**"
+			method="GET"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- Get Download Status -->
+		<security:intercept-url pattern="/iapi/v1/downloads/delete/**"
+			method="DELETE"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+
+		<!-- User ` -->
+		<!-- Get User Contributions -->
+		<security:intercept-url pattern="/iapi/v1/contributions/summary/**"
+			method="GET" access="permitAll" />
+		<!-- Get User Tags -->
+		<security:intercept-url pattern="/iapi/v1/contributions/tags/**"
+			method="GET" access="permitAll" />
+		<!-- Get User Comments -->
+		<security:intercept-url pattern="/iapi/v1/contributions/comments/**"
+			method="GET" access="permitAll" />
+		<!-- Get User Transcriptions -->
+		<security:intercept-url pattern="/iapi/v1/contributions/transcriptions/**"
+			method="GET" access="permitAll" />
+		<!-- Get Transcripted Titles -->
+		<security:intercept-url
+			pattern="/iapi/v1/contributions/transcriptions/titles/**" method="GET"
+			access="permitAll" />
+		<!-- Get Tagged Titles -->
+		<security:intercept-url pattern="/iapi/v1/contributions/tags/titles/**"
+			method="GET" access="permitAll" />
+		<!-- Get Contributions by NaIds -->
+		<security:intercept-url
+			pattern="/iapi/v1/contributions/contributionsbynaids/**" method="GET"
+			access="permitAll" />
+
+		<!-- User Account Summary -->
+		<!-- Get Summary -->
+		<security:intercept-url pattern="/iapi/v1/accounts/summary/**"
+			method="GET"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+
+		<!-- User Account Notifications -->
+		<!-- Get Notifications -->
+		<security:intercept-url pattern="/iapi/v1/accounts/notifications/**"
+			method="GET"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- Delete Notifications -->
+		<security:intercept-url pattern="/iapi/v1/accounts/notifications/**"
+			method="DELETE"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+
+		<!-- Tag Annotations -->
+		<!-- Create Tag(s) -->
+		<security:intercept-url pattern="/iapi/v1/id/**/tags"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/id/**/objects/**/tags"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- View Tag / View All Tags -->
+		<security:intercept-url pattern="/iapi/v1/id/**/tags"
+			method="GET" access="permitAll" />
+		<security:intercept-url pattern="/iapi/v1/id/**/objects/**/tags"
+			method="GET" access="permitAll" />
+		<!-- Delete Tag -->
+		<security:intercept-url pattern="/iapi/v1/id/**/tags"
+			method="DELETE"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/id/**/objects/**/tags"
+			method="DELETE"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+
+		<!-- Comment Annotations -->
+		<!-- Create Comment(s) -->
+		<security:intercept-url pattern="/iapi/v1/id/**/comments"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/id/**/objects/**/comments"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- View Comment / View All Comments -->
+		<security:intercept-url pattern="/iapi/v1/id/**/comments"
+			method="GET" access="permitAll" />
+		<security:intercept-url pattern="/iapi/v1/id/**/objects/**/comments"
+			method="GET" access="permitAll" />
+		<!-- Delete Comment -->
+		<security:intercept-url pattern="/iapi/v1/id/**/comments/**"
+			method="DELETE"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/id/**/objects/**/comments/**"
+			method="DELETE"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- Delete Comment -->
+		<security:intercept-url pattern="/iapi/v1/id/**/comments/**"
+			method="PUT"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/id/**/objects/**/comments/**"
+			method="PUT"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		
+
+		<!-- Transcription Annotations -->
+		<!-- Create Transcription -->
+		<security:intercept-url pattern="/iapi/v1/id/**/objects/**/transcriptions"
+			method="PUT"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- View Transcription -->
+		<security:intercept-url pattern="/iapi/v1/id/**/objects/**/transcriptions"
+			method="GET" access="permitAll" />
+
+		<!-- Translations Annotations -->
+		<!-- View all languages supported by NARA Catalog -->
+		<security:intercept-url pattern="/iapi/v1/languages"
+			method="GET" access="permitAll" />
+		<!-- Create Translation(s) -->
+		<security:intercept-url pattern="/iapi/v1/id/**/objects/**/translations"
+			method="PUT"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- View Translations / View All Translations -->
+		<security:intercept-url pattern="/iapi/v1/id/**/objects/**/translations"
+			method="GET" access="permitAll" />
+
+		<!-- Annotations Summary -->
+		<!-- Get Annotations Summary -->
+		<security:intercept-url pattern="/iapi/v1/id/**/contributions"
+			method="GET"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/id/**/objects/**/contributions"
+			method="GET"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+
+		<!-- Bulk Imports -->
+		<!-- Perform Bulk Import -->
+		<security:intercept-url pattern="/iapi/v1/bulk-imports"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+
+		<!-- Moderator API -->
+		<!-- View Moderator Stream -->
+		<security:intercept-url pattern="/iapi/v1/moderator/stream"
+			method="GET" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- View Tag -->
+		<security:intercept-url pattern="/iapi/v1/moderator/tags/**"
+			method="GET" access="hasAnyRole('moderator','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/moderator/tags/id/**/objects/**"
+			method="GET" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Remove Tag -->
+		<security:intercept-url pattern="/iapi/v1/moderator/tags/id/**"
+			method="DELETE" access="hasAnyRole('moderator','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/moderator/tags/id/**/objects/**"
+			method="DELETE" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Restore Tag -->
+		<security:intercept-url pattern="/iapi/v1/moderator/tags/id/**"
+			method="PUT" access="hasAnyRole('moderator','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/moderator/tags/id/**/objects/**"
+			method="PUT" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Remove Comment -->
+		<security:intercept-url pattern="/iapi/v1/moderator/comments/id/**"
+			method="DELETE" access="hasAnyRole('moderator','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/moderator/comments/id/**/objects/**"
+			method="DELETE" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Restore Comment -->
+		<security:intercept-url pattern="/iapi/v1/moderator/comments/id/**"
+			method="PUT" access="hasAnyRole('moderator','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/moderator/comments/id/**/objects/**"
+			method="PUT" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- View (All) Transcription Version(s) -->
+		<security:intercept-url pattern="/iapi/v1/moderator/transcriptions/**"
+			method="GET" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Remove Transcription -->
+		<security:intercept-url
+			pattern="/iapi/v1/moderator/transcriptions/id/**/objects/**" method="DELETE"
+			access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Restore Transcription -->
+		<security:intercept-url
+			pattern="/iapi/v1/moderator/transcription/id/**/objects/**" method="PUT"
+			access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- View Contribution Notes -->
+		<security:intercept-url pattern="/iapi/v1/moderator/contributions/notes/**"
+			method="GET" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Add Contribution Reason -->
+		<security:intercept-url pattern="/iapi/v1/moderator/contributions/reasons"
+			method="POST" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- View Contribution Reason -->
+		<security:intercept-url pattern="/iapi/v1/moderator/contributions/reasons"
+			method="GET" access="hasAnyRole('moderator','accountAdminMod')" />
+		
+		<!-- View Announcements -->
+		<security:intercept-url pattern="/iapi/v1/moderator/announcements"
+			method="GET" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Update Announcements -->
+		<security:intercept-url pattern="/iapi/v1/moderator/announcements**"
+			method="PUT" access="hasAnyRole('moderator','accountAdminMod')" />
+			
+		<!-- View Online Availability Header -->
+		<security:intercept-url pattern="/iapi/v1/moderator/online-availability**"
+			method="GET" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Add/Update Online Availability Header -->
+		<security:intercept-url pattern="/iapi/v1/moderator/online-availability**"
+			method="POST" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Restore Online Availability Header Moderator-->
+		<security:intercept-url pattern="/iapi/v1/moderator/online-availability**"
+			method="PUT" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Remove Online Availability Header Moderator-->
+		<security:intercept-url pattern="/iapi/v1/moderator/online-availability**"
+			method="DELETE" access="hasAnyRole('moderator','accountAdminMod')" />
+			
+		<!-- Background Images -->
+		<security:intercept-url pattern="/iapi/v1/moderator/background-image"
+			method="GET" access="hasAnyRole('moderator','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/moderator/background-image**"
+			method="POST" access="hasAnyRole('moderator','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/moderator/background-image**"
+			method="DELETE" access="hasAnyRole('moderator','accountAdminMod')" />
+
+		<!-- Administrator API -->
+		<!-- Register Account -->
+		<security:intercept-url pattern="/iapi/v1/administrator/accounts/register"
+			method="POST" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/administrator/users"
+			method="POST" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<!-- Search User Accounts -->
+		<security:intercept-url pattern="/api/v1/administrator/accounts/search"
+			method="GET" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/administrator/accounts/search"
+			method="GET" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+
+		<!-- Modify Account -->
+		<security:intercept-url pattern="/iapi/v1/administrator/accounts/modify/**"
+			method="POST" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/users/**/accounts"
+			method="PUT" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<!-- Deactivate Account -->
+		<security:intercept-url
+			pattern="/iapi/v1/administrator/accounts/deactivate/**" method="PUT"
+			access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<security:intercept-url
+			pattern="/iapi/v1/administrator/accounts/requestpasswordreset/**"
+			method="POST" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<!-- AutoDisable -->
+<!-- 		<security:intercept-url pattern="/iapi/v1/administrator/accounts/auto-disable" -->
+<!-- 			method="POST" access="hasAnyRole('accountAdmin','accountAdminMod')" /> -->
+<!-- 		<security:intercept-url pattern="/iapi/v1/administrator/accounts/remove-unverified" -->
+<!-- 			method="POST" access="hasAnyRole('accountAdmin','accountAdminMod')" /> -->
+<!-- 		<security:intercept-url pattern="/iapi/v1/administrator/accounts/cancel-email-modifications" -->
+<!-- 			method="POST" access="hasAnyRole('accountAdmin','accountAdminMod')" /> -->
+		<!-- AutoDisable -->
+		<security:intercept-url pattern="/iapi/v1/administrator/accounts/auto-disable"
+			method="POST" access="permitAll" />
+		<security:intercept-url pattern="/iapi/v1/administrator/accounts/remove-unverified"
+			method="POST" access="permitAll" />
+		<security:intercept-url pattern="/iapi/v1/administrator/accounts/cancel-email-modifications"
+			method="POST" access="permitAll" />
+		<security:intercept-url pattern="/iapi/v1/administrator/exports/remove-expired-exports"
+			method="POST" access="permitAll" />
+		<!-- Reactivate Account -->
+		<security:intercept-url
+			pattern="/iapi/v1/administrator/accounts/reactivate/**" method="PUT"
+			access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<!-- View User Profile -->
+		<security:intercept-url pattern="/iapi/v1/administrator/accounts/profile/**"
+			method="GET" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/users/**"
+			method="GET" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<!-- View Account Notes -->
+		<security:intercept-url pattern="/iapi/v1/administrator/accounts/notes/**"
+			method="GET" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/users/**/notes"
+			method="GET" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<!-- Add Account Reason -->
+		<security:intercept-url pattern="/iapi/v1/administrator/accounts/reasons"
+			method="POST" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/system/reasons"
+			method="POST" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<!-- View Account Reason -->
+		<security:intercept-url pattern="/iapi/v1/administrator/accounts/reasons"
+			method="GET" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/system/reasons"
+			method="GET" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<!-- Get System configuration -->
+		<security:intercept-url pattern="/iapi/v1/administrator/configuration"
+			method="GET" access="hasRole('accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/system/configuration"
+			method="GET" access="hasRole('accountAdminMod')" />
+			
+		<!-- Get Public user configuration -->
+		<security:intercept-url pattern="/iapi/v1/public/configuration"
+			method="GET" access="permitAll" />
+			
+		<!-- Get Announcements -->
+		<security:intercept-url
+			pattern="/iapi/v1/announcements" method="GET"
+			access="permitAll" />
+			
+		<!-- Get Background-Images -->
+		<security:intercept-url
+			pattern="/iapi/v1/background-image" method="GET"
+			access="permitAll" />
+
+		<!-- Search/Get Content Detail -->
+		<security:intercept-url pattern="/iapi/v1/id/**"
+			method="GET" access="permitAll" />
+
+		<!-- End the configuration of the security rules of the INTERNAL API -->
+
+
+
+
+		<!-- Start the configuration of the security rules of the PUBLIC API -->
+
+		<!-- NameValue List manager -->
+		<security:intercept-url pattern="/api/v1/listManager"
+			method="GET" access="permitAll" />
+		<security:intercept-url pattern="/api/v1/listManager"
+			method="POST"
+			access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/listManager"
+			method="PUT"
+			access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/listManager"
+			method="DELETE"
+			access="hasAnyRole('accountAdmin','accountAdminMod')" />
+
+
+		<!-- Login/Logout -->
+		<security:intercept-url pattern="/api/v1/logout"
+			access="permitAll" />
+
+		<!-- Register Account - All Users -->
+		<security:intercept-url pattern="/api/v1/users"
+			method="POST" access="permitAll" />
+		
+		<!-- Register Account - Administrators -->
+		<security:intercept-url pattern="/api/v1/administrator"
+			method="POST" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+
+		<!-- Search Accounts - Administrators -->
+		<security:intercept-url pattern="/api/v1/users"
+			method="GET" access="permitAll" />
+
+		<!-- Tag Annotations -->
+		<!-- Create Tag(s) -->
+		<security:intercept-url pattern="/api/v1/id/**/tags"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/id/**/objects/**/tags"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- View Tag / View All Tags -->
+		<security:intercept-url pattern="/api/v1/id/**/tags"
+			method="GET" access="permitAll" />
+		<security:intercept-url pattern="/api/v1/id/**/objects/**/tags"
+			method="GET" access="permitAll" />
+		<!-- Delete Tag -->
+		<security:intercept-url pattern="/api/v1/id/**/tags"
+			method="DELETE"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/id/**/objects/**/tags"
+			method="DELETE"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+			
+		<!-- View Announcements -->
+		<security:intercept-url pattern="/api/v1/moderator/announcements"
+			method="GET" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Update Announcements -->
+		<security:intercept-url pattern="/api/v1/moderator/announcements**"
+			method="PUT" access="hasAnyRole('moderator','accountAdminMod')" />
+		
+		<!-- View Online Availability Header -->
+		<security:intercept-url pattern="/api/v1/moderator/online-availability**"
+			method="GET" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Add/Update Online Availability Header -->
+		<security:intercept-url pattern="/api/v1/moderator/online-availability**"
+			method="POST" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Restore Online Availability Header Moderator-->
+		<security:intercept-url pattern="/api/v1/moderator/online-availability**"
+			method="PUT" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Remove Online Availability Header Moderator-->
+		<security:intercept-url pattern="/api/v1/moderator/online-availability**"
+			method="DELETE" access="hasAnyRole('moderator','accountAdminMod')" />
+			
+		<!-- Background Images -->
+		<security:intercept-url pattern="/api/v1/moderator/background-image"
+			method="GET" access="hasAnyRole('moderator','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/moderator/background-image**"
+			method="POST" access="hasAnyRole('moderator','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/moderator/background-image**"
+			method="DELETE" access="hasAnyRole('moderator','accountAdminMod')" />
+
+		<!-- Comment Annotations -->
+		<!-- Create Comment(s) -->
+		<security:intercept-url pattern="/api/v1/id/**/comments"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/id/**/objects/**/comments"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- View Comments / View All Comments -->
+		<security:intercept-url pattern="/api/v1/id/**/comments"
+			method="GET" access="permitAll" />
+		<security:intercept-url pattern="/api/v1/id/**/objects/**/comments"
+			method="GET" access="permitAll" />
+		<!-- Delete Comment/Reply -->
+		<security:intercept-url pattern="/api/v1/id/**/comments/**"
+			method="DELETE"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/id/**/objects/**/comments/**"
+			method="DELETE"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/comments/**"
+			method="DELETE" 
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- Update Comment/Reply -->
+		<security:intercept-url pattern="/api/v1/id/**/comments/**"
+			method="PUT"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/id/**/objects/**/comments/**"
+			method="PUT"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/comments/**"
+			method="PUT"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+			
+		<!-- Remove Comment -->
+		<security:intercept-url pattern="/api/v1/moderator/comments/id/**"
+			method="DELETE" access="hasAnyRole('moderator','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/moderator/comments/id/**/objects/**"
+			method="DELETE" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Restore Comment -->
+		<security:intercept-url pattern="/api/v1/moderator/comments/id/**"
+			method="PUT" access="hasAnyRole('moderator','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/moderator/comments/id/**/objects/**"
+			method="PUT" access="hasAnyRole('moderator','accountAdminMod')" />
+
+		<!-- Remove Tags -->
+		<security:intercept-url pattern="/api/v1/moderator/tags/id/**"
+			method="DELETE" access="hasAnyRole('moderator','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/moderator/tags/id/**/objects/**"
+			method="DELETE" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Restore Tags -->
+		<security:intercept-url pattern="/api/v1/moderator/tags/id/**"
+			method="PUT" access="hasAnyRole('moderator','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/moderator/tags/id/**/objects/**"
+			method="PUT" access="hasAnyRole('moderator','accountAdminMod')" />
+
+		<!-- Remove Transcription -->
+		<security:intercept-url pattern="/api/v1/moderator/transcriptions/id/**/objects/**"
+			method="DELETE" access="hasAnyRole('moderator','accountAdminMod')" />
+		<!-- Restore Transcription -->
+		<security:intercept-url pattern="/api/v1/moderator/transcriptions/id/**/objects/**"
+			method="PUT" access="hasAnyRole('moderator','accountAdminMod')" />
+
+		<!-- Exports -->
+		<security:intercept-url pattern="/api/v1/exports/auth"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/exports/auth"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/api/v1/exports/auth"
+			method="GET"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<security:intercept-url pattern="/iapi/v1/exports/auth"
+			method="GET"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+
+		<!-- Image tiles retrieval -->
+		<security:intercept-url pattern="/api/v1/id/**/objects/**/image-tiles"
+			method="GET" access="permitAll" />
+
+		<!-- Transcription Annotations -->
+		<!-- Create Transcription -->
+		<security:intercept-url pattern="/api/v1/id/**/objects/**/transcriptions"
+			method="PUT"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- View Transcription -->
+		<security:intercept-url pattern="/api/v1/id/**/objects/**/transcriptions"
+			method="GET" access="permitAll" />
+
+		<!-- Bulk Imports -->
+		<!-- Perform Bulk Import -->
+		<security:intercept-url pattern="/api/v1/bulk-imports"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+
+		<!-- Contributions through search -->
+		<security:intercept-url pattern="/api/v1"
+			method="POST"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- Contributions through search -->
+		<security:intercept-url pattern="/api/v1"
+			method="PUT"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+		<!-- Contributions through search -->
+		<security:intercept-url pattern="/api/v1"
+			method="DELETE"
+			access="hasAnyRole('regular','moderator','accountAdmin','accountAdminMod')" />
+
+		<!-- Search/Get Content Detail -->
+		<security:intercept-url pattern="/api/v1/**"
+			method="GET" access="permitAll" />
+
+		<!-- Data Migration -->
+		<!-- Accounts -->
+		<security:intercept-url pattern="/api/v1/migration/accounts"
+			method="POST" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<!-- Lists -->
+		<security:intercept-url pattern="/api/v1/migration/lists"
+			method="POST" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<!-- Lists Items -->
+		<security:intercept-url pattern="/api/v1/migration/listitems"
+			method="POST" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+		<!-- Tags -->
+		<security:intercept-url pattern="/api/v1/migration/tags"
+			method="POST" access="hasAnyRole('accountAdmin','accountAdminMod')" />
+			
+		<!-- Get Announcements -->
+		<security:intercept-url
+			pattern="/api/v1/announcements" method="GET"
+			access="permitAll" />
+			
+		<!-- Get Background-Image -->
+		<security:intercept-url
+			pattern="/api/v1/background-image" method="GET"
+			access="permitAll" />
+			
+		<!-- End the configuration of the security rules of the PUBLIC API -->
+
+
+	</security:http>
+
+	<security:debug />
+
+	<bean id="corsHandler"
+		class="gov.nara.opa.api.security.CrossOriginRequestSharingFilter" />
+
+	<!-- Configures the authentication entry point that returns HTTP status 
+		code 401 -->
+	<bean id="restAuthenticationEntryPoint" class="gov.nara.opa.api.security.RestAuthenticationEntryPoint" />
+
+	<bean id="sas"
+		class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy" />
+
+	<bean id="loginFilter" class="gov.nara.opa.api.security.OPAAuthenticationFilter">
+		<property name="authenticationManager" ref="authenticationManager" />
+		<property name="authenticationFailureHandler" ref="restAuthenticationFailureHandler" />
+		<property name="authenticationSuccessHandler" ref="restAuthenticationSuccessHandler" />
+		<property name="sessionAuthenticationStrategy" ref="sas" /> 
+		<property name="filterProcessesUrl" value="/api/v1/login" />
+		<property name="usernameParameter" value="user" />
+		<property name="passwordParameter" value="password" />
+		<property name="postOnly" value="true" />
+	</bean>
+
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider
+			ref="customAuthenticationProvider" />
+	</security:authentication-manager>
+
+	<bean id="customAuthenticationProvider" class="gov.nara.opa.api.security.OPAAuthenticationProvider" />
+
+	<!-- Configures a custom authentication success handler that returns HTTP 
+		status code 200 -->
+	<bean id="restAuthenticationSuccessHandler"
+		class="gov.nara.opa.api.security.RestAuthenticationSuccessHandler" />
+
+	<!-- Configures a custom authentication failure handler that returns HTTP 
+		status code 401 -->
+	<bean id="restAuthenticationFailureHandler"
+		class="gov.nara.opa.api.security.RestAuthenticationFailureHandler" />
+
+	<!-- Configures a custom logout success handler that returns HTTP status 
+		code 200 -->
+	<bean id="restLogoutSuccessHandler" class="gov.nara.opa.api.security.RestLogoutSuccessHandler" />
+
+	<!-- Security Changes END -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/pages/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/messages" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="opaDbDataSource" />
+	</bean>
+
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="java.util.ArrayList"
+					value="gov.nara.opa.api.validation.common.propertyeditor.OpaArrayListPropertyEditor" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="opaDbDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="${mysql.opaconnection.url}" />
+		<property name="username" value="${mysql.opaconnection.username}" />
+		<property name="password" value="${mysql.opaconnection.password}" />
+		<property name="defaultAutoCommit" value="false" />
+	</bean>
+</beans>

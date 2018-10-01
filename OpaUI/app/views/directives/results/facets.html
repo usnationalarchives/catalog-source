@@ -1,0 +1,25 @@
+<div id="facets" class="container-fluid">
+    <div class="row filter noMargins" ng-repeat="facet in searchSvc.facets track by $index">
+        <hr ng-if="$index != 0"/>
+        <button type="button" class="btn btn-link noPadding content-toggle" data-toggle="collapse" data-target="#filter{{$index}}"></button>
+        &nbsp;<strong data-toggle="collapse" data-target="#filter{{$index}}">Refine By: {{facet.displayName}}</strong>
+
+        <div id="filter{{$index}}" class="panel-collapse collapse in">
+            <ul>
+                <li ng-repeat="value in facet.v | facetOrderBy:'count':true:facet.searchEngineName"
+                    ng-class="{colorGuardsmanRed: value.isApplied}"
+                    ng-show="$index < 10 || facet.expandFilters">
+
+                    <button type="button" class="btn btn-link noPadding"
+                     ng-class="{colorGuardsmanRed: value.isApplied}" tabindex="0"
+                     ng-click="applyFacetFilter(facet.searchEngineName, value.searchEngineName,value)">
+                        {{value.displayName}}
+                        <span ng-class="{colorGuardsmanRed: value.isApplied}" class="color-gray">({{value.count}}) </span>
+                        <span ng-show="value.isApplied" class="glyphicons glyphicons-circle-remove colorGuardsmanRed"></span>
+                    </button>
+                </li>
+            </ul>
+            <button type="button" class="btn btn-link noPadding expandFiltersLabel" ng-show="facet.v.length > 10" ng-click="toggleExpandedFilters($index)" tabindex="0">{{expandFiltersLabel(facet.expandFilters)}}</button>
+        </div>
+    </div>
+</div>

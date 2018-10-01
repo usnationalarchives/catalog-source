@@ -1,0 +1,20 @@
+<div id="modalMessageTitle" class="modal-header">
+    <button type="button" class="close" ng-click="cancel()"><span class="glyphicons glyphicons-remove-2"></span>&nbsp;<span>Close</span></button>
+    <div class="modal-title ">Configure Reason Selector</div>
+</div>
+<div id="modalMessageBody" class="modal-body">
+    <div class="row">
+        <form role="form" class="form" ng-submit="add()">
+            <div class="col-xs-3 noPaddingSides text-center">
+                <label for="newReason" class="color-midnight-blue">New Reason:</label>
+            </div>
+            <div class="col-xs-9">
+                <input type="text" class="form-control col-xs-10" id="newReason" ng-model="ui.newReason" placeholder="Enter new reason...">
+            </div>
+        </form>
+    </div>
+</div>
+<div id="modalMessageButtons" class="modal-footer" ng-class="{moderatorReasonDialog: moderator, administratorReasonDialog: !moderator}">
+    <button class="btn btn-primary" ng-click="add()">Add</button>
+    <button class="btn btn-link" ng-click="cancel()">Cancel</button>
+</div>

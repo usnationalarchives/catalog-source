@@ -1,0 +1,57 @@
+<div class="modal fade open" id="expandedQuery" tabindex="-1" role="dialog" aria-labelledby="expandedQueryModalLabel"
+     aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close &times;</button>
+    <span class="modal-title" id="expandedQueryModalLabel">Expanded Sets</span>
+</div>
+<div class="modal-body">
+<div class="padding-10-bottom">Select additional search terms to apply to your search:</div>
+<span ng-repeat="term in searchSvc.thesaurus track by $index">
+    <span class="term" ng-class="{termSelected : selectedTerm === $index}" ng-click="selectTerm($index)">{{term['@name']}}</span>
+    <span class="termConnector">{{!$last ? ' AND ':''}}</span>
+</span>
+
+  <form role="form" class="">
+    <div ng-repeat="category in searchSvc.thesaurusCategories">
+      <div class="row"
+           ng-if="searchSvc.thesaurus[selectedTerm][category] && searchSvc.thesaurus[selectedTerm][category].val &&
+                    searchSvc.thesaurus[selectedTerm][category].val.length > 0">
+        <div class="panel panel-default form-group col-xs-12 no-padding-left no-padding-right">
+          <div class="panel-heading">
+            <span class="panel-title es-title">{{ category | uppercase}} TERMS</span>
+          </div>
+          <div id="query_related" class="expandedTerms">
+            <div class="checkbox select-all">
+              <label>
+                <input type="checkbox" ng-model="searchSvc.thesaurus[selectedTerm][category].isSelected"
+                       ng-change="selectAllExpandedTerms(searchSvc.thesaurus[selectedTerm][category])">Select All
+                {{ category | capitalize}} Terms
+              </label>
+            </div>
+            <hr>
+            <ul class="list-unstyled">
+              <li class="" ng-repeat="term in searchSvc.thesaurus[selectedTerm][category].val">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" ng-model="term.isSelected"
+                           ng-change="searchSvc.thesaurus[selectedTerm][category].isSelected = false">
+                    <span ng-bind-html="term.value"></span>
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="searchExpandedTerms()">Search</button>
+    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+</div>
+</div>
+</div>
+</div>

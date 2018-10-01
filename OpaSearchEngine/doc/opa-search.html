@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta name="generator" content=
+"HTML Tidy for Cygwin (vers 1st September 2004), see www.w3.org">
+<title>OPA Release 1</title>
+
+<script type="text/javascript">
+
+var queryWindow = 0
+
+function SubmitURLOnEnter(myfield, e) {
+  var keycode;
+  if (window.event) {
+    keycode = window.event.keyCode;
+  } else if (e) {
+    keycode = e.which;
+  } else {
+    return true;
+  }
+
+  if (keycode == 13) {
+    SubmitURL();
+    return false;
+  } else {
+    return true;
+  }
+  return true;
+}
+
+function SubmitURL() {
+  var launch_url = document.InputForm.host.value + "/" + document.InputForm.path.value + "?";
+  var i;
+  var numWritten = 0;
+
+  for(i = 0 ; i < 28 ; i++) {
+    thiscb = eval("document.InputForm.cb" + i + ".checked")
+    thisname = eval("document.InputForm.name" + i + ".value")
+    thisval = eval("document.InputForm.val" + i + ".value")
+    if (thiscb) {
+      if (thisname == "+") {
+        launch_url = launch_url + " " + encodeURIComponent(thisval);
+      } else {
+        if (numWritten > 0) {
+          launch_url = launch_url + "&";
+        }
+        launch_url = launch_url + encodeURIComponent(thisname);
+        if (undefined === thisname) {
+        } else {
+          launch_url = launch_url + "=" + encodeURIComponent(thisval);
+        }
+      }
+      numWritten++;
+    }
+  }
+
+  usexsl = eval("document.InputForm.cbxsl.checked");
+  if (usexsl) {
+    launch_url = launch_url + "&wt=xslt&tr=" + document.InputForm.xslfile.value;
+  }
+  launch_url = launch_url + "&rand=" + Math.random()
+  
+//  if(queryWindow == 0)
+    queryWindow = window.open(launch_url,'QueryWindow','toolbar=1,menubar=1,location=1,status=1,scrollbars=1,resizable=1,height=600,width=800');
+//  else
+//    queryWindow.location.href = launch_url
+}
+
+function splitUrl() {
+  var s = document.InputForm.parseUrl.value;
+  s = decodeURIComponent(s);
+  var sp1 = s.split("?");
+  var toSplit;
+  if (sp1.length > 1) {
+    toSplit = sp1[1];
+  } else {
+    toSplit = s;
+  }
+  if (1) {
+    var args = toSplit.split("&");
+    for(i = 0 ; i < 28 ; i++) {
+      if (i < args.length) {
+        argnv = args[i].split("=");
+        thiscb = eval("document.InputForm.cb" + i + ".checked = true")
+        if (argnv.length > 1) {
+          thisname = eval("document.InputForm.name" + i + ".value = '" + argnv[0] + "'");
+          thisname = eval("document.InputForm.val" + i + ".value = '" + argnv[1] + "'");
+        } else {
+          thisname = eval("document.InputForm.name" + i + ".value = '" + argnv[0] + "'");
+          thisname = eval("document.InputForm.val" + i + ".value = ''");
+        }
+        thiscb = eval("document.InputForm.cb" + i + ".checked = true")
+      } else {
+        thiscb = eval("document.InputForm.cb" + i + ".checked = false")
+        thisname = eval("document.InputForm.name" + i + ".value = ''");
+        thisval = eval("document.InputForm.val" + i + ".value = ''");
+      }
+    }
+  } else {
+    alert("error processing url");
+  }
+  return 1;
+}
+
+function uncheckAll() {
+  var i
+  for(i = 0 ; i < 28 ; i++) {
+    thiscb = eval("document.InputForm.cb" + i + ".checked = false")
+  }
+}
+
+function checkAll() {
+  var i
+  for(i = 0 ; i < 28 ; i++) {
+    thisname = eval("document.InputForm.name" + i + ".value");
+    if (thisname.length > 0) {
+      thiscb = eval("document.InputForm.cb" + i + ".checked = true")
+    }
+  }
+}
+
+function openAdminWindow() {
+  //window.open('url to open','window name','attribute1,attribute2')
+  
+  var admin_url = document.InputForm.host.value + "/solr/#/";
+  window.open(admin_url,'window name','attribute1,attribute2') 
+}
+</script>
+</head>
+<body onunload="queryWindow.close()">
+<h2>OPA Release 1</h2>
+<br/>
+<form name="InputForm" id="InputForm">
+<textarea name="parseUrl" cols="100" rows="3"></textarea>
+<br/><br/>
+<span style="margin-left:10px;padding:3px;background-color:grey" onclick="splitUrl()">splitUrl</span>
+<span style="margin-left:10px;padding:3px;background-color:grey" onclick="uncheckAll()">uncheckAll</span>
+<span style="margin-left:10px;padding:3px;background-color:grey" onclick="checkAll()">checkAll</span>
+<span style="margin-left:10px;padding:3px;background-color:grey" onclick="openAdminWindow()">openAdminWindow</span>
+<table width="100%">
+<tr>
+<td><input type="button" value="Submit" onclick="SubmitURL()"></td>
+<td><input type="checkbox" name="cbxsl" value="true"></td>
+<td><input type="text" size="20" name="xslfile" value="simple.xsl"></td>
+</tr>
+</table>
+
+<table id="theTable" border="1" width="100%">
+<tr bgcolor="#DDDDDD">
+<td>Enable</td>
+<td>Name</td>
+<td>Value</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>Host</td>
+<td><input type="text" size="150" name="host" value="http://localhost:8983"></td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>Path</td>
+<td>
+<!--input type="text" size="150" name="path" value="/rex/v2/search"-->
+<select name="path">
+<option value="solr/select">solr/select</option>
+</select>
+</td>
+</tr>
+<tr>
+  <td><input type="checkbox" name="cb0" value="true"></td>
+  <td><input type="text" size="20" name="name0" value="hl"></td>
+  <td><input type="text" size="150" name="val0" value="true" onKeyPress="return SubmitURLOnEnter(this,event)"></td>
+  </tr>
+  
+<tr>
+  <td><input type="checkbox" name="cb1" value="true"></td>
+  <td><input type="text" size="20" name="name1" value="hl.fl"></td>
+  <td><input type="text" size="150" name="val1" value="title,allTitles" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input type="checkbox" name="cb2" value="true"></td>
+  <td><input type="text" size="20" name="name2" value="resultFields"></td>
+  <td><input type="text" size="150" name="val2" value="title" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input type="checkbox" name="cb3" value="true"></td>
+  <td><input type="text" size="20" name="name3" value="rows"></td>
+  <td><input type="text" size="150" name="val3" value="100" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input checked type="checkbox" name="cb4" value="true"></td>
+  <td><input type="text" size="20" name="name4" value="q"></td>
+  <td><input type="text" size="150" name="val4" value="truman" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input type="checkbox" name="cb5" value="true"></td>
+  <td><input type="text" size="20" name="name5" value=""></td>
+  <td><input type="text" size="150" name="val5" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input type="checkbox" name="cb6" value="true"></td>
+  <td><input type="text" size="20" name="name6" value=""></td>
+  <td><input type="text" size="150" name="val6" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb7" value="true"></td>
+  <td><input type="text" size="20" name="name7" value=""></td>
+  <td><input type="text" size="150" name="val7" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb8" value="true"></td>
+  <td><input type="text" size="20" name="name8" value=""></td>
+  <td><input type="text" size="150" name="val8" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb9" value="true"></td>
+  <td><input type="text" size="20" name="name9" value=""></td>
+  <td><input type="text" size="150" name="val9" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb10" value="true"></td>
+  <td><input type="text" size="20" name="name10" value=""></td>
+  <td><input type="text" size="150" name="val10" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb11" value="true"></td>
+  <td><input type="text" size="20" name="name11" value=""></td>
+  <td><input type="text" size="150" name="val11" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb12" value="true"></td>
+  <td><input type="text" size="20" name="name12" value=""></td>
+  <td><input type="text" size="150" name="val12" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb13" value="true"></td>
+  <td><input type="text" size="20" name="name13" value=""></td>
+  <td><input type="text" size="150" name="val13" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb14" value="true"></td>
+  <td><input type="text" size="20" name="name14" value=""></td>
+  <td><input type="text" size="150" name="val14" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb15" value="true"></td>
+  <td><input type="text" size="20" name="name15" value=""></td>
+  <td><input type="text" size="150" name="val15" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb16" value="true"></td>
+  <td><input type="text" size="20" name="name16" value=""></td>
+  <td><input type="text" size="150" name="val16" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb17" value="true"></td>
+  <td><input type="text" size="20" name="name17" value=""></td>
+  <td><input type="text" size="150" name="val17" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb18" value="true"></td>
+  <td><input type="text" size="20" name="name18" value=""></td>
+  <td><input type="text" size="150" name="val18" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb19" value="true"></td>
+  <td><input type="text" size="20" name="name19" value=""></td>
+  <td><input type="text" size="150" name="val19" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb20" value="true"></td>
+  <td><input type="text" size="20" name="name20" value=""></td>
+  <td><input type="text" size="150" name="val20" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb21" value="true"></td>
+  <td><input type="text" size="20" name="name21" value=""></td>
+  <td><input type="text" size="150" name="val21" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb22" value="true"></td>
+  <td><input type="text" size="20" name="name22" value=""></td>
+  <td><input type="text" size="150" name="val22" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb23" value="true"></td>
+  <td><input type="text" size="20" name="name23" value=""></td>
+  <td><input type="text" size="150" name="val23" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb24" value="true"></td>
+  <td><input type="text" size="20" name="name24" value=""></td>
+  <td><input type="text" size="150" name="val24" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb25" value="true"></td>
+  <td><input type="text" size="20" name="name25" value=""></td>
+  <td><input type="text" size="150" name="val25" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb26" value="true"></td>
+  <td><input type="text" size="20" name="name26" value=""></td>
+  <td><input type="text" size="150" name="val26" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+<tr>
+  <td><input  type="checkbox" name="cb27" value="true"></td>
+  <td><input type="text" size="20" name="name27" value=""></td>
+  <td><input type="text" size="150" name="val27" value="" onKeyPress="SubmitURLOnEnter()"></td>
+  </tr>
+  
+</table>
+</form>
+</body>
+</html>

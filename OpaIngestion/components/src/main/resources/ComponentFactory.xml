@@ -1,0 +1,121 @@
+<componentFactory name="opa-ingestion">
+  
+  <subType name="populateHMSEntryNumber" implementation="gov.nara.opa.ingestion.PopulateHMSEntryNumberStage" />
+
+  <subType name="saveRecordInXmlStore" implementation="gov.nara.opa.ingestion.SaveRecordInXmlStoreStage" />
+
+  <subType name="initializeDasExport" implementation="gov.nara.opa.ingestion.InitializeDasExportStage" />
+  
+  <subType name="das-export-scanner" implementation="gov.nara.opa.ingestion.DasExportScanner" />
+  
+  <subType name="initializeDasUpdate" implementation="gov.nara.opa.ingestion.InitializeDasUpdateStage" />
+  
+  <subType name="das-scanner" implementation="gov.nara.opa.ingestion.DasScanner" />
+    
+  <subType name="post-http" implementation="com.searchtechnologies.aspire.docprocessing.PostHttpStage" />
+
+  <subType name="logger" implementation="gov.nara.opa.ingestion.Logger" />
+
+  <subType name="clearFilesCopiedFromPreIngestion" implementation="gov.nara.opa.ingestion.ClearFilesCopiedFromPreIngestionStage" />
+
+  <subType name="digitalObjectSubJobExtractor" implementation="gov.nara.opa.ingestion.DigitalObjectSubJobExtractorStage" />
+
+  <subType name="settings" implementation="gov.nara.opa.ingestion.Settings" />
+
+  <subType name="opaStorageFactory" implementation="gov.nara.opa.ingestion.OpaStorageFactory" />
+
+  <subType name="quarantine" implementation="gov.nara.opa.ingestion.Quarantine" />
+
+  <subType name="setRecord" implementation="gov.nara.opa.ingestion.SetRecordStage" />
+
+  <subType name="validateRecordHasChanged" implementation="gov.nara.opa.ingestion.ValidateRecordHasChangedStage" />
+
+  <subType name="ingestionDb" implementation="gov.nara.opa.ingestion.IngestionDbImpl">
+    <description>Parents, Authority Records, and Counts database.</description>
+  </subType>
+
+  <subType name="dasPathsWhiteList" implementation="gov.nara.opa.ingestion.DasPathsWhiteList">
+    <description>Permitted DAS data model XML paths for Solr indexing.</description>
+  </subType>
+  
+  <subType name="initializeAnnotationUpdate" implementation="gov.nara.opa.ingestion.InitializeAnnotationUpdateStage">
+    <description>Sets fields required for processing records when initialized by AnnotationsFeeder</description>
+  </subType>
+  <subType name="dateRangeFacetsForArchivalDescription" implementation="gov.nara.opa.ingestion.DateRangeFacetsForArchivalDescriptionStage">
+    <description>Populate dateRangeFacet for an Archival Description.</description>
+  </subType>
+  <subType name="dateRangeFacetsForAuthorityRecord" implementation="gov.nara.opa.ingestion.DateRangeFacetsForAuthorityRecordStage">
+    <description>Populate dateRangeFacet for an Authority Record.</description>
+  </subType>
+  <subType name="checkForAnnotations" implementation="gov.nara.opa.ingestion.CheckForAnnotationsStage">
+      <description>Determine whether a document has Annotations.</description>
+  </subType>
+  <subType name="processAnnotations" implementation="gov.nara.opa.ingestion.ProcessAnnotationsStage">
+    <description>Adds Annotations to the document, based on NAID/ObjectId.</description>
+  </subType>
+  <subType name="branchOnRecordType" implementation="gov.nara.opa.ingestion.BranchOnRecordTypeStage">
+    <description>Branches a job to a branch for either archival descriptions or autority records.</description>
+  </subType>
+  <subType name="saveRecordToDir" implementation="gov.nara.opa.ingestion.SaveRecordToDirStage" />
+
+  <subType name="validateMandatoryADFields" implementation="gov.nara.opa.ingestion.ValidateMandatoryADFieldsStage">
+    <description>Validate AD mandatory fields.</description>
+  </subType>
+  <subType name="validateMandatoryARFields" implementation="gov.nara.opa.ingestion.ValidateMandatoryARFieldsStage">
+    <description>Validate AD mandatory fields.</description>
+  </subType>
+
+  <subType name="saveRecordHash" implementation="gov.nara.opa.ingestion.SaveRecordHashStage" />
+
+  <subType name="sendMessage" implementation="gov.nara.opa.ingestion.SendMessageStage" />
+
+  <subType name="sendPreIngestionMessage" implementation="gov.nara.opa.ingestion.SendPreIngestionMessageStage" />
+  
+  <subType name="setFirstIngestDate" implementation="gov.nara.opa.ingestion.SetFirstIngestDateStage">
+    <description>Persists the date a record was ingested for the first time.</description>
+  </subType>
+
+  <subType name="PopulateOpaTitlesTable" implementation="gov.nara.opa.ingestion.PopulateOpaTitlesTableStage">
+    <description>Stage to populate index fields in archival descriptions. Also addes Content Detail Highlighting (cdh) if enabled.</description>
+  </subType>
+
+  <!-- object processing components -->
+  <subType name="checkForObjects" implementation="gov.nara.opa.ingestion.CheckForObjectsStage">
+      <description>Determine whether this description has objects.</description>
+  </subType>
+  <subType name="downloadDigitalObjects" implementation="gov.nara.opa.ingestion.DownloadDigitalObjectsStage">
+      <description>Attach and update the objects in the Aspire Object from the objects.xml file</description>
+  </subType>
+  <subType name="convertJpeg2000" implementation="gov.nara.opa.ingestion.ConvertJpeg2000Stage">
+      <description>Convert Jpeg2000 images to an alternative representation.</description>
+  </subType>
+  <subType name="createThumbnails" implementation="gov.nara.opa.ingestion.CreateThumbnailsStage">
+      <description>Create thumbnails.</description>
+  </subType>
+  <subType name="createImageZoom" implementation="gov.nara.opa.ingestion.CreateImageZoomStage">
+      <description>Create image zoom data.</description>
+  </subType>
+  <subType name="branchForObjects" implementation="gov.nara.opa.ingestion.BranchForObjectsStage">
+    <description>Branch processing based on whether digital objects are present.</description>
+  </subType>
+  <subType name="populateContent" implementation="gov.nara.opa.ingestion.PopulateContentStage">
+      <description>Populate IE/content field with extracted text.</description>
+  </subType>
+  <!-- END object processing components -->
+
+  <subType name="opaStorage" implementation="gov.nara.opa.ingestion.FileSystemOpaStorageImpl" />
+
+  <subType name="writeDescriptionXml" implementation="gov.nara.opa.ingestion.WriteDescriptionXmlStage" />
+
+  <subType name="createObjectsXmlNode" implementation="gov.nara.opa.ingestion.CreateObjectsXmlNodeStage" />
+  
+  <subType name="writeObjectsXml" implementation="gov.nara.opa.ingestion.WriteObjectsXmlStage" />
+
+  <subType name="processRemovedDigitalObjects" implementation="gov.nara.opa.ingestion.ProcessRemovedDigitalObjectsStage" />
+
+  <subType name="loadSortNums" implementation="gov.nara.opa.ingestion.LoadSortNumsStage" />
+
+  <subType name="sendPageUpdateNotification" implementation="gov.nara.opa.ingestion.SendPageUpdateNotificationStage" />
+
+  <subType name="loadRecordFromXmlStore" implementation="gov.nara.opa.ingestion.LoadRecordFromXmlStoreStage" />
+</componentFactory>

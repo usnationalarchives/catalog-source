@@ -1,0 +1,46 @@
+<div class="col-xs-12 noPaddingSides">
+  <div class="comment-text" ng-if="!editMode">
+    <span class="" ng-bind="comment['@text']"></span>
+    &nbsp;<a href="" rel="#" ng-show="canEditDelete(comment['@user']) && comment['@removedByModerator'] === 'false'" alt="Edit comment" title="Edit comment" ng-click="editComment()" class="glyphicons glyphicons-pencil color-torea-bay"></a>
+    &nbsp;<a href="" rel="#" ng-show="canEditDelete(comment['@user']) && comment['@removedByModerator'] === 'false'" alt="Delete comment" title="Delete comment" ng-click="remove()"  class="glyphicons glyphicons-circle-remove color-torea-bay"></a>
+    <span ng-show="clickedRemove" class="confirmPanel">Are you sure you want to delete this comment?
+      &nbsp;&nbsp;&nbsp;
+      <button type="button" class="btn btn-primary btn-xs" ng-click="confirmRemove()">Yes</button>
+      <button type="button" ng-click="cancelRemove()" class="btn btn-link btn-xs">Cancel</button>
+    </span>
+    <br>
+  </div>
+  <form class="form-inline edit-comment" ng-if="editMode">
+    <label for="commentInput" class="sr-only">Edit your comment</label>
+    <textarea class="form-control" id="commentInput" placeholder="Enter your comment..." data-ng-model="comment['@text']" required="true"></textarea>
+    <button type="button" ng-click="edit()" class="btn btn-primary btn-comments">Save</button>
+    <button type="button" ng-click="cancelEdit()" class="btn btn-link btn-comments">Cancel</button>
+  </form>
+  <div class="col-xs-12 noPaddingSides">
+    <small ng-if="comment['@removedByModerator'] === 'false'">
+      <a class="comment-user-link" ng-href="{{getUserUrl()}}" ng-bind="getUserDisplayName()" target="_blank"></a>&nbsp;
+      <a ng-if="!OpaUtils.isMobileDevice()" id="t{{comment['@id']}}" kendo-tooltip k-content="comment.tooltipContent" href="" rel="#" class="padding-5-left color-torea-bay" target="_blank">
+        <span ng-if="!comment.edited" ng-bind="OpaUtils.fancyDate(comment['@created'])"></span>
+        <span ng-if="comment.edited" ng-bind-template="{{OpaUtils.fancyDate(comment['@created'])}} - Edited"></span>
+      </a>
+      <a ng-if="OpaUtils.isMobileDevice()" id="t{{comment['@id']}}" href="" rel="#" class="padding-5-left color-torea-bay" target="_blank">
+        <span ng-if="!comment.edited" ng-bind="OpaUtils.fancyDate(comment['@created'])"></span>
+        <span ng-if="comment.edited" ng-bind-template="{{OpaUtils.fancyDate(comment['@created'])}} - Edited"></span>
+      </a>
+      <a ng-href="{{getPersistentURL()}}" class="padding-5-left glyphicons glyphicons-link color-torea-bay" target="_blank" title="Right click to copy the URL of this comment"></a>
+    </small>
+    <strong ng-if="comment['@removedByModerator'] === 'false'"><a href="" ng-click="addNewReply()" tabindex="0" ng-if="Auth.isLoggedIn() && !isReply && comment['@user'] !== Auth.getUserId()" ng-hide="addReply" class="reply">Reply</a></strong>
+    <a href="" rel="#" ng-if="!isReply && comment.replies.length > 0" ng-hide="comment.replies.length <= 2 && $parent.$parent.isWorkspace" class="pull-right show-hide-replies" ng-click="showHideReplies()" ng-bind="showHideLink()"></a>
+  </div>
+
+
+  <!--ADD REPLY FORM-->
+  <div class=" col-xs-11 col-xs-offset-1 noPaddingSides">
+    <form class="form-inline reply-comment" ng-if="addReply">
+      <label for="replyInput" class="sr-only">Add a new Reply</label>
+      <textarea class="form-control" id="replyInput" placeholder="Enter your reply..." data-ng-model="reply.text" required="true"></textarea>
+      <button type="button" ng-click="addCommentReply()" class="btn btn-primary btn-comments">Reply</button>
+      <button type="button" ng-click="cancelReply()" class="btn btn-link btn-comments">Cancel</button>
+    </form>
+  </div>
+</div>

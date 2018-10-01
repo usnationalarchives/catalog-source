@@ -1,0 +1,107 @@
+<div class="visible-lg visible-md visible-sm visible-xs">
+	<div class="panel-group row" id="accordion">
+        <div class="panel row">
+            <div id="listscollapse" class="panel-collapse collapse" ng-class="{in: searchSvc.panel === 'lists', collapse: searchSvc.panel !== 'lists'}">
+                <div class="panel-body">
+                    <div class="col-md-2"></div>
+                    <div class="pull-left col-xs-12 col-sm-5 col-md-4 checkboxes">
+                        <form class="form-inline" ng-show="!ContetDetails">
+                            <strong>Select:</strong>
+                            <label>
+                                <input type="checkbox" ng-click="selectOnPage()" ng-model="searchSvc.allSelected"> Results on Page
+                            </label>
+                            <label class="disabledOption">
+                                <input type="checkbox" ng-click="selectTop()" ng-model="searchSvc.selectedTop" disabled> Top {{Auth.topResults()}} Results
+                            </label>
+                        </form>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 noPaddingSides">
+                        <label for="selectAddToList1" class="hidden">Add to existing list</label>
+                        <select id="selectAddToList1" ng-model="searchSvc.selectedList" ng-options="list['@name'] as list['@name'] for list in userList" ng-show="!ContetDetails">
+                            <option value="" disabled>Add to existing list</option>
+                        </select>
+
+                        <label for="selectAddToList2" class="hidden">Add to existing list</label>
+                        <select id="selectAddToList2" ng-model="selectedList" ng-options="list['@name'] as list['@name'] for list in userList" ng-show="ContetDetails">
+                            <option value="" disabled>Add to existing list</option>
+                        </select>
+                        <button type="button" class="btn btn-sm btn-link link hidden-xs visible-inline-sm visible-inline-md visible-inline-lg" data-toggle="modal" data-target="#createList">Create New List</button>
+                    </div>
+                    <div class="pull-right col-xs-6 col-sm-3 col-md-2 button-bar">
+                        <span class="pull-right">
+                            <button class="btn btn-primary btn-sm" ng-click="addToList()" title="Please select an existing list name or create a new list" ng-class="{addToListbutton: !searchSvc.selectedList && !selectedList}">
+                                Add To List
+                            </button>
+                            <button type="button" class="btn btn-sm btn-link link" data-toggle="collapse" data-parent="#accordion" data-target="#listscollapse">Cancel</button>
+                        </span>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-link link hidden-sm hidden-md hidden-lg visible-xs" data-toggle="modal" data-target="#createList">Create New List</button>
+                </div>
+            </div>
+        </div>
+        <div create-list></div>
+		<div class="panel row" hidden-xs>
+			<div id="printcollapse" class="panel-collapse collapse" ng-class="{in: searchSvc.panel === 'print', collapse: searchSvc.panel !== 'print'}">
+				<div class="panel-body">
+					<div class="col-md-2"></div>
+					<div class="pull-left col-md-4 checkboxes">
+						<form class="form-inline">
+							<strong>Select:</strong>
+
+							<div class="checkbox">
+								<label>
+                                    <input type="checkbox" ng-click="selectOnPage()" ng-model="searchSvc.allSelected"> Results on Page
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" ng-click="selectTop()" ng-model="searchSvc.selectedTop"> Top {{Auth.topResults()}} Results
+								</label>
+							</div>
+						</form>
+					</div>
+					<div class="pull-right col-md-4 button-bar">
+                        <span class="pull-right">
+                            <button class="btn btn-primary btn-sm" data-toggle="modal" ng-click="showPrintModal()">
+                                Print
+                            </button>
+                            <button type="button" class="btn btn-sm btn-link link"  data-toggle="collapse" data-parent="#accordion" data-target="#printcollapse">Cancel</button>
+                        </span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel row" hidden-xs>
+			<div id="exportcollapse" class="panel-collapse collapse" ng-class="{in: searchSvc.panel === 'export', collapse: searchSvc.panel !== 'export'}">
+				<div class="panel-body">
+					<div class="col-md-2"></div>
+					<div class="pull-left col-md-4 checkboxes">
+
+						<form class="form-inline">
+							<strong>Select:</strong>
+
+							<div class="checkbox">
+								<label>
+                                    <input type="checkbox" ng-click="selectOnPage()" ng-model="searchSvc.allSelected"> Results on Page
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" ng-click="selectTop()" ng-model="searchSvc.selectedTop"> Top {{Auth.topResults()}} Results
+								</label>
+							</div>
+						</form>
+					</div>
+					<div class="pull-right col-md-4 button-bar">
+                        <span class="pull-right">
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ng-click="showExportModal()">
+                                Export
+                            </button>
+                            <button type="button" class="btn btn-sm btn-link link"  data-toggle="collapse" data-parent="#accordion" data-target="#exportcollapse">Cancel</button>
+                        </span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
