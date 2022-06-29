@@ -319,7 +319,7 @@ http://groovy.codehaus.org/Groovy-Eclipse+compiler+plugin+for+Maven
     <dependency>
       <groupId>org.apache.pdfbox</groupId>
       <artifactId>pdfbox</artifactId>
-      <version>1.8.6</version>
+      <version>1.8.16</version>
     </dependency>
 
     <dependency>
